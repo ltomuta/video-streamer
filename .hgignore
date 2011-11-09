@@ -1,0 +1,22 @@
+glob:*.pro.user
+glob:Makefile*
+glob:.make.cache
+glob:*.o
+glob:*-build-*
+glob:moc_*
+glob:*.orig
+glob:*.exe
+glob:*.sis
+glob:*.mmp
+glob:*.pkg
+glob:*.rss
+glob:*.loc
+glob:*resource.rc
+glob:*.deb
+glob:*.changes
+glob:bld.inf
+glob:debian/*
+glob:object_script.*
+glob:*-stamp
+syntax: glob
+code/VideoStreamer
