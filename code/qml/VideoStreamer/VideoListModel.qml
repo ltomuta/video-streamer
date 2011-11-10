@@ -1,14 +1,67 @@
 import QtQuick 1.1
 
-ListModel {
-    id: dummyListModel
+XmlListModel {
+    id: model
 
-    ListElement { title: "QML Shaders"; lengthInSecs: "460"; provider: "nokiadevforum" }
-    ListElement { title: "Qt Quick Components 1.1"; lengthInSecs: "560"; provider: "nokiadevforum" }
-    ListElement { title: "Qt 4.8"; lengthInSecs: "800"; provider: "nokiadevforum" }
-    ListElement { title: "QML Performance Optimization tips"; lengthInSecs: "200"; provider: "nokiadevforum" }
-    ListElement { title: "QML tips 'n tricks"; lengthInSecs: "360"; provider: "nokiadevforum" }
-    ListElement { title: "OpenGL ES 2.0 with QML"; lengthInSecs: "750"; provider: "nokiadevforum" }
-    ListElement { title: "Qt in Everyday Life"; lengthInSecs: "42"; provider: "nokiadevforum" }
-    ListElement { title: "QML Rock n Roll around the clock"; lengthInSecs: "240"; provider: "nokiadevforum" }
+    property string channelName: "nokiadevforum"
+    property string channelNameUserReadable: "Nokia Developer"
+    property int startIndex: 1
+    property int maxResults: 10
+
+
+    source: "http://gdata.youtube.com/feeds/mobile/videos?" +
+            "author=" + model.channelName +
+            "&start-index=" + model.startIndex +
+            "&max-results=" + model.maxResults +
+            "&v=2"
+
+    namespaceDeclarations: "declare default element namespace 'http://www.w3.org/2005/Atom';
+                            declare namespace media = 'http://search.yahoo.com/mrss/';
+                            declare namespace openSearch = 'http://a9.com/-/spec/opensearch/1.1/';
+                            declare namespace gd = 'http://schemas.google.com/g/2005';
+                            declare namespace yt = 'http://gdata.youtube.com/schemas/2007';"
+
+    query: "/feed/entry"
+    XmlRole {
+        name: "m_title";
+        query: "media:group/media:title/string()"
+
+    }
+    XmlRole {
+        name: "m_contentUrl";
+        query: "media:group/media:content[1]/@url/string()"
+    }
+    XmlRole {
+        name: "m_thumbnailUrl";
+        query: "media:group/media:thumbnail[1]/@url/string()"
+    }
+    XmlRole {
+        name: "m_duration"; // In seconds
+        query: "media:group/media:content[1]/@duration/string()"
+    }
+    XmlRole {
+        name: "m_viewCount";
+        query: "yt:statistics/@viewCount/string()"
+    }
+    XmlRole {
+        name: "m_numDislikes";
+        query: "yt:rating/@numDislikes/string()"
+    }
+    XmlRole {
+        name: "m_numLikes";
+        query: "yt:rating/@numLikes/string()"
+    }
+    XmlRole {
+        name: "m_author";
+        query: "author/name/string()"
+    }
+
+    onStatusChanged: {
+        if (status === XmlListModel.Error) {
+            console.log("Error in XmlListModel: " + errorString())
+        }
+    }
 }
+
+
+

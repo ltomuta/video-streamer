@@ -46,22 +46,22 @@ ListItem {
 
             Text {
                 id: videoTitle
-                text: title
+                text: model.m_title
                 wrapMode: Text.WordWrap
             }
             Text {
                 id: videoLength
-                text: lengthInSecs + "seconds, by " + provider
+                text: model.m_duration + "seconds, by " + model.m_author
             }
 
             Text {
                 id: viewAmount
-                text: "355" + " views"
+                text: model.m_viewCount + " views"
             }
 
             Text {
                 id: likesAmount
-                text: "0" + " likes " + "0" + " dislikes"
+                text: model.m_numLikes + " likes " + model.m_numDislikes + " dislikes"
 //                font {
 //                    family: container.fontName
 //                    pointSize: container.fontSize
