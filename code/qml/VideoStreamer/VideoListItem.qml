@@ -23,45 +23,50 @@ ListItem {
             // Thumbnail image
             Image {
                 id: thumbImg
+
                 width: visual.videoImageWidth
                 height: visual.videoImageHeight
                 anchors.centerIn: parent
-
-                fillMode: Image.PreserveAspectFit
-                source: "gfx/test_thumb.png"
+                clip: true
+                source: m_thumbnailUrl
+                fillMode: Image.PreserveAspectCrop
             }
             // Mask image on top of the thumbnail
             Image {
-                width: visual.videoImageWidth
-                height: visual.videoImageHeight
+                width: thumb.width
+                height: thumb.height
+                anchors.centerIn: thumbImg
 
                 source: "gfx/squircle_thumb_mask.png"
-                anchors.centerIn: thumbImg
             }
         }
 
         Column {
-            width: parent.width-thumb.width //appState.inLandscape ? parent.width * 0.9 : parent.width * 0.8
+            width: parent.width - thumb.width //appState.inLandscape ? parent.width * 0.9 : parent.width * 0.8
             height: thumbImg.height
 
             Text {
                 id: videoTitle
+                width: parent.width
+
+                maximumLineCount: 2
                 text: model.m_title
                 wrapMode: Text.WordWrap
+                elide: Text.ElideRight
             }
             Text {
                 id: videoLength
-                text: model.m_duration + "seconds, by " + model.m_author
+                text: model.m_duration + qsTr(" seconds, by ") + model.m_author
             }
 
             Text {
                 id: viewAmount
-                text: model.m_viewCount + " views"
+                text: model.m_viewCount + qsTr(" views")
             }
 
             Text {
                 id: likesAmount
-                text: model.m_numLikes + " likes " + model.m_numDislikes + " dislikes"
+                text: model.m_numLikes + qsTr(" likes ") + model.m_numDislikes + qsTr(" dislikes")
 //                font {
 //                    family: container.fontName
 //                    pointSize: container.fontSize
