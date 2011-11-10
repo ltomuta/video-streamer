@@ -7,6 +7,11 @@ PageStackWindow {
     showStatusBar: true
     showToolBar: true
 
+    // VisualStyle has platform differentiation attribute definitions.
+    VisualStyle {
+        id: visual
+    }
+
     ToolBarLayout {
         id: toolBarLayout
         ToolButton {
