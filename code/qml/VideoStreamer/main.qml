@@ -51,7 +51,17 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-back"
-            onClicked: window.pageStack.depth <= 1 ? Qt.quit() : window.pageStack.pop()
+            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-search"
+            onClicked: console.log("SEARCH CLICKED! CHANGE PAGE")
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-settings"
+            onClicked: console.log("SETTINGS CLICKED! CHANGE PAGE")
         }
     }
 
