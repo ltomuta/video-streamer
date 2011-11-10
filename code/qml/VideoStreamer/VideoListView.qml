@@ -4,13 +4,6 @@ import com.nokia.symbian 1.1
 Page {
     id: mainPage
 
-    // Background, shown everywhere
-    Image {
-        id: backgroundImg
-        anchors.fill: parent
-        source: "gfx/portrait_background.png"
-    }
-
     ListView {
         id: listView
         anchors {

@@ -10,6 +10,7 @@ Item {
     // Property value definitions
     height: 30
 
+    // Background gradient
     Rectangle {
         anchors.fill: parent
         opacity: 0.7
