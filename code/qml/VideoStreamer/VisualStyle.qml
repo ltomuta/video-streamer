@@ -9,10 +9,14 @@ Item {
     // Font properties
     property int generalFontSize: platformStyle.fontSizeMedium
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
-    property int defaultFontSize: 14
-    property color defaultFontColor: "#45291a"
+    property color defaultFontColor: "#45291A"
 
     // Properties for the ListView
     property int videoImageWidth: 90
     property int videoImageHeight: 90
+
+    // For the TitleBar
+    property color captionFontColor: "#FFFFFF"
+    property color gradientStart: "#1C7DCB"
+    property color gradientEnd: "#2156B9"
 }

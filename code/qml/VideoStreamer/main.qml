@@ -3,7 +3,7 @@ import com.nokia.symbian 1.1
 
 PageStackWindow {
     id: window
-    initialPage: MainPage {tools: toolBarLayout}
+    initialPage: VideoListView {tools: toolBarLayout}
     showStatusBar: true
     showToolBar: true
 
