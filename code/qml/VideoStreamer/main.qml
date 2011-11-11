@@ -60,10 +60,9 @@ Window {
         }
         ToolButton {
             flat: true
-            iconSource: "toolbar-settings"
+            iconSource: "toolbar-menu"
             onClicked: {
-                aboutDlg.open();
-                console.log("SETTINGS CLICKED! CHANGE PAGE");
+                mainMenu.open();
             }
         }
     }
@@ -181,6 +180,23 @@ Window {
             }
         ]
     }
+
+    // define the menu
+     Menu {
+         id: mainMenu
+         // define the items in the menu and corresponding actions
+         content: MenuLayout {
+             MenuItem {
+                 text: "About"
+                 onClicked: aboutDlg.open()
+             }
+             // VKN TODO! Create a checkable MenuItem for this!
+             MenuItem {
+                 text: "Lock to landscape"
+                 onClicked: console.log("Lock to landscape clicked!")
+             }
+         }
+     }
 
     // About dialog
     QueryDialog {
