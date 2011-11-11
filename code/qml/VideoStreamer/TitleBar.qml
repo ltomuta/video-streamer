@@ -8,7 +8,7 @@ Item {
     property color gradientEnd: visual.gradientEnd
 
     // Property value definitions
-    height: 30
+    height: visual.titleBarHeight
 
     // Background gradient
     Rectangle {

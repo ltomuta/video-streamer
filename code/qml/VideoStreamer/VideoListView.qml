@@ -22,7 +22,7 @@ Page {
     TitleBar {
         id: titleBar
 
-        height: 30
+        height: visual.titleBarHeight
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right

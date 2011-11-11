@@ -7,15 +7,17 @@ Item {
     property int spacing: 8
 
     // Font properties
-    property int generalFontSize: platformStyle.fontSizeMedium
+    property int generalFontSize: platformStyle.fontSizeSmall
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
-    property color defaultFontColor: "#45291A"
+    property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
+    property int videoListItemHeight: 110
     property int videoImageWidth: 90
     property int videoImageHeight: 90
 
     // For the TitleBar
+    property int titleBarHeight: 30
     property color captionFontColor: "#FFFFFF"
     property color gradientStart: "#1C7DCB"
     property color gradientEnd: "#2156B9"

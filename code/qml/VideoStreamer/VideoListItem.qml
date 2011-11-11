@@ -4,7 +4,7 @@ import com.nokia.symbian 1.1
 ListItem {
     id: container
 
-    height: 92
+    height: visual.videoListItemHeight
 //    property int margins: 8
 //    property int spacing: 8
 //    property string fontName: "Helvetica"
@@ -18,7 +18,8 @@ ListItem {
         Item {
             id: thumb
             width: parent.width * 0.3   // Reserve 30% of width for the thumb
-            height: parent.height
+            height: visual.videoImageWidth
+            anchors.verticalCenter: parent.verticalCenter
 
             // Thumbnail image
             Image {
@@ -33,8 +34,8 @@ ListItem {
             }
             // Mask image on top of the thumbnail
             Image {
-                width: thumb.width
-                height: thumb.height
+                width: thumbImg.width
+                height: thumbImg.height
                 anchors.centerIn: thumbImg
 
                 source: "gfx/squircle_thumb_mask.png"
@@ -49,6 +50,11 @@ ListItem {
                 id: videoTitle
                 width: parent.width
 
+                font {
+                    family: visual.defaultFontFamily
+                    pixelSize: visual.generalFontSize
+                }
+                color: visual.defaultFontColor
                 maximumLineCount: 2
                 text: model.m_title
                 wrapMode: Text.WordWrap
@@ -57,21 +63,31 @@ ListItem {
             Text {
                 id: videoLength
                 text: model.m_duration + qsTr(" seconds, by ") + model.m_author
+                font {
+                    family: visual.defaultFontFamily
+                    pixelSize: visual.generalFontSize
+                }
+                color: visual.defaultFontColor
             }
 
             Text {
                 id: viewAmount
                 text: model.m_viewCount + qsTr(" views")
+                font {
+                    family: visual.defaultFontFamily
+                    pixelSize: visual.generalFontSize
+                }
+                color: visual.defaultFontColor
             }
 
             Text {
                 id: likesAmount
                 text: model.m_numLikes + qsTr(" likes ") + model.m_numDislikes + qsTr(" dislikes")
-//                font {
-//                    family: container.fontName
-//                    pointSize: container.fontSize
-//                }
-//                color: container.fontColor
+                font {
+                    family: visual.defaultFontFamily
+                    pixelSize: visual.generalFontSize
+                }
+                color: visual.defaultFontColor
             }
         }
     }
