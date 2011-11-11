@@ -61,7 +61,10 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-settings"
-            onClicked: console.log("SETTINGS CLICKED! CHANGE PAGE")
+            onClicked: {
+                aboutDlg.open();
+                console.log("SETTINGS CLICKED! CHANGE PAGE");
+            }
         }
     }
 
@@ -177,6 +180,20 @@ Window {
                 }
             }
         ]
+    }
+
+    // About dialog
+    QueryDialog {
+        id: aboutDlg
+
+        titleText: qsTr("QML VideoStreamer Application")
+        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example demonstrating the " +
+                      "QML Video playing capabilies." +
+                      "<p>MORE DESCRIPTION HERE</p>" +
+                      "<p>Learn more at " +
+                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
+                      "developer.nokia.com</a>.</p>")
+        acceptButtonText: qsTr("Ok")
     }
 
     // event preventer when page transition is active
