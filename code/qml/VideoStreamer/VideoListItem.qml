@@ -5,6 +5,9 @@ ListItem {
     id: container
 
     height: visual.videoListItemHeight
+
+    onClicked: {pageStack.push(videoPlayView, {}); videoPlayView.playVideo(model.m_contentUrl)}
+
 //    property int margins: 8
 //    property int spacing: 8
 //    property string fontName: "Helvetica"
