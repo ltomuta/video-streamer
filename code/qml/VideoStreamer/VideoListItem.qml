@@ -6,7 +6,14 @@ ListItem {
 
     height: visual.videoListItemHeight
 
-    onClicked: {pageStack.push(videoPlayView, {}); videoPlayView.playVideo(model.m_contentUrl)}
+    onClicked: {
+        var component = Qt.createComponent("VideoPlayView.qml");
+        if (component.status == Component.Ready) {
+            var player = component.createObject(container);
+            pageStack.push(player)
+            player.playVideo(model.m_contentUrl)
+        }
+    }
 
 //    property int margins: 8
 //    property int spacing: 8

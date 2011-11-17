@@ -45,10 +45,6 @@ Window {
         id: visual
     }
 
-    VideoPlayView {
-        id: videoPlayView
-    }
-
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout

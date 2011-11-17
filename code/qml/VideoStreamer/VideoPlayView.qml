@@ -36,10 +36,7 @@ Page {
         }
     }
 
-    property string videoPlayView: ""
-
     anchors.fill: parent
-
 
     tools: ToolBarLayout {
         id: toolBarLayout
@@ -96,33 +93,34 @@ Page {
         }
     }
 
+    Rectangle {
+        id: videoBackground
+        anchors.fill: parent
+        color: "black"
+    }
 
-   // Rectangle {
-   //     anchors.fill: parent
-   //     color: "black"
+    Video {
+        id: videoPlayer
 
-        Video {
-            id: videoPlayer
+        z: videoBackground.z + 1
+        volume: 0.5
+        autoLoad: true
+        anchors {
+            top: titleBar.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
+        fillMode: Video.PreserveAspectFit
+        focus: true
 
-            volume: 0.5
-            autoLoad: true
-            anchors {
-                top: titleBar.bottom
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-            }
-            fillMode: Video.PreserveAspectFit
-            focus: true
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                        __toggleFullScreen()
-                }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                __toggleFullScreen()
             }
         }
-    //}
+    }
 
     states: State {
         name: "BufferingDone"
