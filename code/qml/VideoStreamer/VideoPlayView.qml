@@ -109,7 +109,7 @@ Page {
         }
 
         color: "black"
-        z: 1
+        z: videoPlayer.z + 1
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -128,7 +128,6 @@ Page {
     Video {
         id: videoPlayer
 
-        z: videoBackground.z + 1
         volume: 0.5
         autoLoad: true
         anchors {
