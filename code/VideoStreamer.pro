@@ -40,6 +40,11 @@ symbian {
     # range value if unprotected UID is defined for the application and
     # 0x2002CCCF value if protected UID is given to the application
     #DEPLOYMENT.installer_header = 0x2002CCCF
+
+   SOURCES += volumekeys.cpp
+   HEADERS += volumekeys.h
+
+   LIBS += -lremconcoreapi -lremconinterfacebase
 }
 
 contains(MEEGO_EDITION,harmattan) {

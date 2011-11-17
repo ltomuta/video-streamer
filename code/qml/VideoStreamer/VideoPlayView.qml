@@ -36,7 +36,33 @@ Page {
         }
     }
 
+    function __volumeUp() {
+        var maxVol = 1.0
+        var volThreshold = 0.1
+        if (videoPlayer.volume < maxVol - volThreshold) {
+            videoPlayer.volume += volThreshold
+        } else {
+            videoPlayer.volume = maxVol
+        }
+    }
+
+    function __volumeDown() {
+        var minVol = 0.0
+        var volThreshold = 0.1
+        if (videoPlayer.volume > minVol + volThreshold) {
+            videoPlayer.volume -= volThreshold
+        } else {
+            videoPlayer.volume = minVol
+        }
+    }
+
     anchors.fill: parent
+
+    Connections {
+        target: volumeKeys
+        onVolumeKeyUp: __volumeUp()
+        onVolumeKeyDown: __volumeDown()
+    }
 
     tools: ToolBarLayout {
         id: toolBarLayout
