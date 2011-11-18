@@ -25,7 +25,7 @@ Page {
         titleBar.height = visual.titleBarHeight
         titleBar.visible = true
         root.showToolBar = true
-        root.showStatusBar = true
+        //root.showStatusBar = true
     }
 
     function __toggleFullScreen() {
