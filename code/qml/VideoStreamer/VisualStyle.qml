@@ -21,4 +21,9 @@ Item {
     property color captionFontColor: "#FFFFFF"
     property color gradientStart: "#1C7DCB"
     property color gradientEnd: "#2156B9"
+
+    // Player ViewSection
+    property int controlMargins: 10
+    property int controlWidth: 50
+    property int controlHeight: 50
 }

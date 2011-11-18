@@ -7,32 +7,42 @@ Page {
 
     orientationLock: PageOrientation.LockLandscape
 
+    property bool isFullScreen: true
+
     function playVideo(videoUrl) {
         videoPlayer.stop()
         __enterFullScreen()
         videoPlayer.source = videoUrl
         videoPlayer.play()
+        videoPlayerControls.isPlaying = true
     }
 
     function __enterFullScreen() {
+        console.log("__enterFullScreen")
         titleBar.height = 0
         titleBar.visible = false
         root.showToolBar = false
         root.showStatusBar = false
+        videoPlayerControls.visible = false
     }
 
     function __exitFullScreen() {
-        titleBar.height = visual.titleBarHeight
-        titleBar.visible = true
-        root.showToolBar = true
+        console.log("__exitFullScreen")
+
+        //titleBar.height = visual.titleBarHeight
+        //titleBar.visible = true
+        //root.showToolBar = true
         //root.showStatusBar = true
+        videoPlayerControls.visible = true
     }
 
     function __toggleFullScreen() {
-        if (titleBar.visible) {
+        if (!isFullScreen) {
             __enterFullScreen()
+            videoPlayView.isFullScreen = true;
         } else {
             __exitFullScreen()
+            videoPlayView.isFullScreen = false;
         }
     }
 
@@ -64,24 +74,20 @@ Page {
         onVolumeKeyDown: __volumeDown()
     }
 
-    tools: ToolBarLayout {
-        id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: {
-                //root.showToolBar = true
-                videoPlayer.stop()
-                __exitFullScreen()
-                root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-            }
+    Connections {
+        target: videoPlayerControls
+        onBackButtonPressed: {
+            videoPlayer.stop()
+            __exitFullScreen()
+            root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
         }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-menu"
-            onClicked: {
-                mainMenu.open();
-            }
+        onPausePressed: {
+            videoPlayer.pause()
+            videoPlayerControls.isPlaying = false
+        }
+        onPlayPressed: {
+            videoPlayer.play()
+            videoPlayerControls.isPlaying = true
         }
     }
 
@@ -128,7 +134,12 @@ Page {
     Video {
         id: videoPlayer
 
-        volume: 0.5
+        onPositionChanged: {
+            videoPlayerControls.timePlayed = position
+            videoPlayerControls.timeRemaining = duration - position
+        }
+
+        volume: 0.1
         autoLoad: true
         anchors {
             top: titleBar.bottom
@@ -145,6 +156,11 @@ Page {
                 __toggleFullScreen()
             }
         }
+    }
+
+    VideoPlayerControls {
+        id: videoPlayerControls
+        anchors.bottom: parent.bottom
     }
 
     states: State {
