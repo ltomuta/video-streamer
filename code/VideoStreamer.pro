@@ -2,12 +2,11 @@
 # Basic Qt configuration
 #
 QT += declarative
-CONFIG += qt-components
+CONFIG += qt qt-components mobility
+MOBILITY += multimedia
 VERSION = 0.0.1
-#CONFIG += qt-components mobility
 #Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 #CONFIG += qdeclarative-boostable
-#MOBILITY +=
 
 # Add more folders to ship with the application, here
 qml_sources.source = qml/VideoStreamer
