@@ -12,6 +12,7 @@ Page {
     function playVideo(videoUrl) {
         videoPlayer.stop()
         __enterFullScreen()
+        __showVideoControls(false)
         videoPlayer.source = videoUrl
         videoPlayer.play()
     }
@@ -20,25 +21,20 @@ Page {
         console.log("__enterFullScreen")
         root.showToolBar = false
         root.showStatusBar = false
-        videoPlayerControls.visible = false
     }
 
     function __exitFullScreen() {
         console.log("__exitFullScreen")
-
-        //root.showToolBar = true
-        //root.showStatusBar = true
-        videoPlayerControls.visible = true
+        root.showToolBar = true
+        root.showStatusBar = true
     }
 
-    function __toggleFullScreen() {
-        if (!isFullScreen) {
-            __enterFullScreen()
-            videoPlayView.isFullScreen = true;
-        } else {
-            __exitFullScreen()
-            videoPlayView.isFullScreen = false;
-        }
+    function __showVideoControls(showControls) {
+        videoPlayerControls.visible = showControls
+    }
+
+    function __toggleVideoControls() {
+        videoPlayerControls.visible = !videoPlayerControls.visible
     }
 
     function __volumeUp() {
@@ -73,8 +69,7 @@ Page {
         target: videoPlayerControls
         onBackButtonPressed: {
             videoPlayer.stop()
-            root.showToolBar = true
-            root.showStatusBar = true
+            __exitFullScreen()
             root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
         }
         onPausePressed: {
@@ -129,7 +124,7 @@ Page {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                __toggleFullScreen()
+                __toggleVideoControls()
             }
         }
 
