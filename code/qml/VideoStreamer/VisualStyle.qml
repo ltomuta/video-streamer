@@ -26,4 +26,5 @@ Item {
     property int controlMargins: 10
     property int controlWidth: 50
     property int controlHeight: 50
+    property int controlAreaHeight: 75
 }
