@@ -26,10 +26,6 @@ Window {
         }
     }
 
-    onOrientationChangeStarted: {
-        statusBar.orientation = screen.currentOrientation
-    }
-
     // Attribute definitions
     initialPage: VideoListView {tools: toolBarLayout}
 
