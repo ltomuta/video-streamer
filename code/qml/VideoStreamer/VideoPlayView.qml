@@ -74,7 +74,8 @@ Page {
         target: videoPlayerControls
         onBackButtonPressed: {
             videoPlayer.stop()
-            __exitFullScreen()
+            root.showToolBar = true
+            root.showStatusBar = true
             root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
         }
         onPausePressed: {
@@ -143,7 +144,7 @@ Page {
 
     states: State {
         name: "BufferingDone"
-        when: (videoPlayer.status == Video.Buffered)
+        when: (videoPlayer.status !== Video.Buffering)
 
         PropertyChanges {
             target: waitView;
