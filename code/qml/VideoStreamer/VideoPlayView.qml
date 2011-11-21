@@ -14,7 +14,6 @@ Page {
         __enterFullScreen()
         videoPlayer.source = videoUrl
         videoPlayer.play()
-        videoPlayerControls.isPlaying = true
     }
 
     function __enterFullScreen() {
@@ -80,11 +79,9 @@ Page {
         }
         onPausePressed: {
             videoPlayer.pause()
-            videoPlayerControls.isPlaying = false
         }
         onPlayPressed: {
             videoPlayer.play()
-            videoPlayerControls.isPlaying = true
         }
     }
 
@@ -135,6 +132,9 @@ Page {
                 __toggleFullScreen()
             }
         }
+
+        onPlayingChanged: videoPlayerControls.isPlaying = playing
+        onPausedChanged: videoPlayerControls.isPlaying = !paused
     }
 
     VideoPlayerControls {
