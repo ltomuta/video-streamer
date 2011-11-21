@@ -19,8 +19,6 @@ Page {
 
     function __enterFullScreen() {
         console.log("__enterFullScreen")
-        titleBar.height = 0
-        titleBar.visible = false
         root.showToolBar = false
         root.showStatusBar = false
         videoPlayerControls.visible = false
@@ -29,8 +27,6 @@ Page {
     function __exitFullScreen() {
         console.log("__exitFullScreen")
 
-        //titleBar.height = visual.titleBarHeight
-        //titleBar.visible = true
         //root.showToolBar = true
         //root.showStatusBar = true
         videoPlayerControls.visible = true
@@ -91,23 +87,10 @@ Page {
         }
     }
 
-
-    TitleBar {
-        id: titleBar
-
-        height: visual.titleBarHeight
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        visible: true
-    }
-
     Rectangle {
         id: waitView
 
         anchors {
-            //top: titleBar.bottom
             top: parent.top
             bottom: parent.bottom
             left: parent.left
@@ -141,12 +124,7 @@ Page {
 
         volume: 0.1
         autoLoad: true
-        anchors {
-            top: titleBar.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: parent
         fillMode: Video.PreserveAspectFit
         focus: true
 

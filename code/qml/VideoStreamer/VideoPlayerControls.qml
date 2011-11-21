@@ -5,7 +5,7 @@ Item {
     id: videoPlayerControls
 
     width: screen.width
-    height: 120
+    height: visual.controlAreaHeight
 
 
     property bool isPlaying: true
@@ -19,7 +19,6 @@ Item {
     function __milliSecondsToString(milliseconds) {
         var timeInSeconds = Math.floor(milliseconds / 1000)
         var minutes = Math.floor(timeInSeconds / 60)
-        console.log(minutes)
         var minutesString = minutes < 10 ? "0" + minutes : minutes
         var seconds = Math.floor(timeInSeconds % 60)
         var secondsString = seconds < 10 ? "0" + seconds : seconds
@@ -34,59 +33,67 @@ Item {
         timeRemainingLabel.text = __milliSecondsToString(timeRemaining)
     }
 
-    Button {
-        id: backButton
+    Rectangle {
+        anchors.fill: parent
+        radius: 10
+        color: Qt.rgba(0.75, 0.75, 0.75, 0.75)
 
-        text: "<-"
-        width: visual.controlWidth
-        height: visual.controlHeight
-        anchors.bottom: parent.bottom
-        anchors.margins: visual.controlMargins
-        onClicked: videoPlayerControls.backButtonPressed()
-    }
+        Button {
+            id: backButton
 
-    Button {
-        id: playButton
+            text: "<-"
+            width: visual.controlWidth
+            height: visual.controlHeight
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.margins: visual.controlMargins
+            anchors.leftMargin: visual.controlMargins * 2
+            onClicked: videoPlayerControls.backButtonPressed()
+        }
 
-        text: videoPlayerControls.isPlaying ? "||" : ">"
-        width: visual.controlWidth
-        height: visual.controlHeight
-        anchors.left: backButton.right
-        anchors.bottom: parent.bottom
-        anchors.margins: visual.controlMargins
-        onClicked: {
-            if (videoPlayerControls.isPlaying) {
-                videoPlayerControls.pausePressed()
-            } else {
-                videoPlayerControls.playPressed()
+        Button {
+            id: playButton
+
+            text: videoPlayerControls.isPlaying ? "||" : ">"
+            width: visual.controlWidth
+            height: visual.controlHeight
+            anchors.left: backButton.right
+            anchors.bottom: parent.bottom
+            anchors.margins: visual.controlMargins
+            onClicked: {
+                if (videoPlayerControls.isPlaying) {
+                    videoPlayerControls.pausePressed()
+                } else {
+                    videoPlayerControls.playPressed()
+                }
             }
         }
-    }
 
-    Label {
-        id: timeElapsedLabel
+        Label {
+            id: timeElapsedLabel
 
-        text: ""
-        anchors.top: playButton.top
-        anchors.left: playButton.right
-        anchors.margins: visual.controlMargins
-    }
+            text: ""
+            anchors.top: playButton.top
+            anchors.left: playButton.right
+            anchors.margins: visual.controlMargins
+        }
 
-    Label {
-        id: timeRemainingLabel
+        Label {
+            id: timeRemainingLabel
 
-        text: ""
-        anchors.top: playButton.top
-        anchors.right: parent.right
-        anchors.margins: visual.controlMargins
-    }
+            text: ""
+            anchors.top: playButton.top
+            anchors.right: parent.right
+            anchors.margins: visual.controlMargins
+        }
 
-    ProgressBar {
-        id: progressBar
+        ProgressBar {
+            id: progressBar
 
-        anchors.top: timeElapsedLabel.bottom
-        anchors.left: playButton.right
-        anchors.right: timeRemainingLabel.right
-        anchors.margins: visual.controlMargins
+            anchors.top: timeElapsedLabel.bottom
+            anchors.left: playButton.right
+            anchors.right: timeRemainingLabel.right
+            anchors.margins: visual.controlMargins
+        }
     }
 }
