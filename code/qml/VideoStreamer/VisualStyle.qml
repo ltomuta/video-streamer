@@ -27,4 +27,10 @@ Item {
     property int controlWidth: 50
     property int controlHeight: 50
     property int controlAreaHeight: 75
+
+    // Busy indicator
+    property int busyIndicatorHeight: screen.width < screen.height ? screen.width / 4 : screen.height / 4
+    property int busyIndicatorWidth: busyIndicatorHeight
+
+
 }

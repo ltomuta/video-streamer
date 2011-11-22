@@ -18,13 +18,11 @@ Page {
     }
 
     function __enterFullScreen() {
-        console.log("__enterFullScreen")
         root.showToolBar = false
         root.showStatusBar = false
     }
 
     function __exitFullScreen() {
-        console.log("__exitFullScreen")
         root.showToolBar = true
         root.showStatusBar = true
     }
@@ -81,23 +79,18 @@ Page {
     }
 
     Rectangle {
-        id: waitView
+        id: bufferingIndicator
 
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-
+        anchors.fill: parent
         color: "black"
         z: videoPlayer.z + 1
+        opacity: 1
 
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            text: qsTr("Buffering...")
+        BusyIndicator {
+            anchors.centerIn: parent
+            height: visual.busyIndicatorHeight
+            width: visual.busyIndicatorWidth
+            running: true
         }
     }
 
@@ -139,13 +132,11 @@ Page {
 
     states: State {
         name: "BufferingDone"
-        when: (videoPlayer.status !== Video.NoMedia &&
-               videoPlayer.status !== Video.Loading &&
-               videoPlayer.status !== Video.Buffering &&
-               videoPlayer.status !== Video.UnknownStatus)
+        when: (videoPlayer.status === Video.Buffered ||
+               videoPlayer.status === Video.EndOfMedia)
 
         PropertyChanges {
-            target: waitView;
+            target: bufferingIndicator
             opacity: 0
         }
     }
