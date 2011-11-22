@@ -139,7 +139,10 @@ Page {
 
     states: State {
         name: "BufferingDone"
-        when: (videoPlayer.status !== Video.Buffering)
+        when: (videoPlayer.status !== Video.NoMedia &&
+               videoPlayer.status !== Video.Loading &&
+               videoPlayer.status !== Video.Buffering &&
+               videoPlayer.status !== Video.UnknownStatus)
 
         PropertyChanges {
             target: waitView;
