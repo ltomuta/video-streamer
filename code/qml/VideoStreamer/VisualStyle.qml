@@ -8,6 +8,7 @@ Item {
 
     // Font properties
     property int generalFontSize: platformStyle.fontSizeSmall
+    property int largeFontSize: platformStyle.fontSizeLarge
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
     property color defaultFontColor: "#FFFFFF"
 

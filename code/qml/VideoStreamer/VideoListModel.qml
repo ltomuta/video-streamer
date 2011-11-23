@@ -5,12 +5,14 @@ XmlListModel {
 
     property string channelName: "nokiadevforum"
     property string channelNameUserReadable: "Nokia Developer"
+    property string searchTerm: ""
     property int startIndex: 1
     property int maxResults: 10
 
 
     source: "http://gdata.youtube.com/feeds/mobile/videos?" +
-            "author=" + model.channelName +
+            "q=" + model.searchTerm +
+            "&author=" + model.channelName +
             "&start-index=" + model.startIndex +
             "&max-results=" + model.maxResults +
             "&v=2"

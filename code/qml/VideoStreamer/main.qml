@@ -41,6 +41,10 @@ Window {
         id: visual
     }
 
+    SearchView {
+        id: searchView
+    }
+
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
@@ -52,7 +56,7 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-search"
-            onClicked: console.log("SEARCH CLICKED! CHANGE PAGE")
+            onClicked: pageStack.push(searchView)
         }
         ToolButton {
             flat: true
