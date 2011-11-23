@@ -33,5 +33,7 @@ Item {
     property int busyIndicatorHeight: screen.width < screen.height ? screen.width / 4 : screen.height / 4
     property int busyIndicatorWidth: busyIndicatorHeight
 
+    // Video information
+    property int informationFieldHorizontalSpacing: 15
 
 }

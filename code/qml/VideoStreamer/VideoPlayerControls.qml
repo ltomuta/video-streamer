@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
+import "util.js" as Util
 
 Item {
     id: videoPlayerControls
@@ -16,21 +17,12 @@ Item {
     signal playPressed
     signal pausePressed
 
-    function __milliSecondsToString(milliseconds) {
-        var timeInSeconds = Math.floor(milliseconds / 1000)
-        var minutes = Math.floor(timeInSeconds / 60)
-        var minutesString = minutes < 10 ? "0" + minutes : minutes
-        var seconds = Math.floor(timeInSeconds % 60)
-        var secondsString = seconds < 10 ? "0" + seconds : seconds
-        return minutesString + ":" + secondsString
-    }
-
     onTimePlayedChanged: {
-        timeElapsedLabel.text = __milliSecondsToString(timePlayed)
+        timeElapsedLabel.text = Util.milliSecondsToString(timePlayed)
         progressBar.value = timePlayed / (timePlayed + timeRemaining)
     }
     onTimeRemainingChanged: {
-        timeRemainingLabel.text = __milliSecondsToString(timeRemaining)
+        timeRemainingLabel.text = Util.milliSecondsToString(timeRemaining)
     }
 
     Rectangle {
