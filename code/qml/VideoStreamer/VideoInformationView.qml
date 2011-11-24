@@ -9,7 +9,7 @@ Item {
 
     property string videoTitle: "Title"
     property int videoLength: 222
-    property string videoAuthor: "nokiadevforum"
+    property string videoAuthor: ""
     property int numLikes: 12
     property int numDislikes: 332
     property int viewCount: 404

@@ -57,6 +57,10 @@ XmlListModel {
         name: "m_author";
         query: "author/name/string()"
     }
+    XmlRole {
+        name: "m_description";
+        query: "media:group/media:description[1]/string()"
+    }
 
     onStatusChanged: {
         if (status === XmlListModel.Error) {

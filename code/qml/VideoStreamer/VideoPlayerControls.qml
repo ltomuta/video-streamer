@@ -12,6 +12,8 @@ Item {
     property bool isPlaying: true
     property int timePlayed: 0
     property int timeRemaining: 0
+    property bool showBackground: true
+    property bool showBackButton: true
 
     signal backButtonPressed
     signal playPressed
@@ -28,19 +30,38 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 10
-        color: Qt.rgba(0.75, 0.75, 0.75, 0.75)
+        color: videoPlayerControls.showBackground ? Qt.rgba(0.75, 0.75, 0.75, 0.75) : Qt.rgba(0,0,0,0)
 
-        Button {
-            id: backButton
+        Loader {
+            id: backButtonLoader
 
-            text: "<-"
-            width: visual.controlWidth
-            height: visual.controlHeight
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.margins: visual.controlMargins
-            anchors.leftMargin: visual.controlMargins * 2
-            onClicked: videoPlayerControls.backButtonPressed()
+            sourceComponent: videoPlayerControls.showBackButton ? backButtonComponent : emptyPlaceholder
+            anchors.margins: videoPlayerControls.showBackButton ? visual.controlMargins : 0
+
+        }
+
+        Component {
+            id: backButtonComponent
+
+            Button {
+
+                text: "<-"
+                //width: visual.controlWidth
+                height: visual.controlHeight
+                //anchors.bottom: parent.bottom
+                //anchors.left: parent.left
+                anchors.leftMargin: visual.controlMargins * 2
+                onClicked: videoPlayerControls.backButtonPressed()
+            }
+        }
+
+        Component {
+            id: emptyPlaceholder
+
+            Item {
+            }
         }
 
         Button {
@@ -49,8 +70,8 @@ Item {
             text: videoPlayerControls.isPlaying ? "||" : ">"
             width: visual.controlWidth
             height: visual.controlHeight
-            anchors.left: backButton.right
-            anchors.bottom: parent.bottom
+            anchors.left: backButtonLoader.right
+            anchors.bottom: backButtonLoader.bottom
             anchors.margins: visual.controlMargins
             onClicked: {
                 if (videoPlayerControls.isPlaying) {

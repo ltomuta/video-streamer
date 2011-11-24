@@ -6,11 +6,11 @@ Page {
 
     property bool isFullScreen: true
 
-    function playVideo(videoUrl) {
+    function playVideo(model) {
         videoPlayer.stop()
         __enterFullScreen()
         __showVideoControls(false)
-        videoPlayer.source = videoUrl
+        videoPlayer.source = model.m_contentUrl
         videoPlayer.play()
     }
 
@@ -47,18 +47,17 @@ Page {
         timePlayed: videoPlayer.timePlayed
         timeRemaining: videoPlayer.timeRemaining
         isPlaying: videoPlayer.isPlaying
-    }
 
-    Connections {
-        target: videoPlayerControls
         onBackButtonPressed: {
             videoPlayer.stop()
             __exitFullScreen()
             root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
         }
+
         onPausePressed: {
             videoPlayer.pause()
         }
+
         onPlayPressed: {
             videoPlayer.play()
         }

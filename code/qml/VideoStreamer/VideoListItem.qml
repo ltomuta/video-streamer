@@ -11,7 +11,7 @@ ListItem {
         if (component.status == Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)
-            player.playVideo(model.m_contentUrl)
+            player.playVideo(model)
         }
     }
 
