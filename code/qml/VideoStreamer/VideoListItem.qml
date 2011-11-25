@@ -65,6 +65,7 @@ ListItem {
             width: parent.width - thumb.width //visual.inPortrait ? parent.width * 0.9 : parent.width * 0.8
             height: thumbImg.height
 
+            // Text element for viewing the video title information. Maximum of 2 lines.
             Text {
                 id: videoTitle
                 text: model.m_title
@@ -79,59 +80,105 @@ ListItem {
                 elide: Text.ElideRight
             }
 
-            Row {
-                Text {
-                    id: likesAmount
-                    text: model.m_numLikes
-                    font {
-                        family: visual.defaultFontFamily
-                        pixelSize: visual.generalFontSize
+            Loader {
+                id: loader
+                visible: !visual.inPortrait
+                width: parent.width
+                sourceComponent: Component {
+                    Item {
+                        width: loader.width
+                        height: 2*author.height
+
+                        Text {
+                            id: author
+                            text: qsTr("By ") + model.m_author
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                            font {
+                                family: visual.defaultFontFamily
+                                pixelSize: visual.generalFontSize
+                            }
+                            color: visual.defaultFontColor
+                        }
+                        Text {
+                            id: date
+                            text: "11/11/2011"
+                            anchors {
+                                left: author.right
+                                right: parent.right
+                                rightMargin: visual.margins*3
+                            }
+                            horizontalAlignment: Text.AlignRight
+                            font {
+                                family: visual.defaultFontFamily
+                                pixelSize: visual.generalFontSize
+                            }
+                            color: visual.defaultFontColor
+                        }
                     }
-                    color: visual.defaultFontColor
-                }
-                Image {
-                    id: likesIcon
-                    source: visual.images.thumbsUpIcon
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    id: dislikesAmount
-                    text: model.m_numDislikes
-                    font {
-                        family: visual.defaultFontFamily
-                        pixelSize: visual.generalFontSize
-                    }
-                    color: visual.defaultFontColor
-                }
-                Image {
-                    id: dislikesIcon
-                    source: visual.images.thumbsDownIcon
-                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
-            // Item bundling the 'eye' icon & views amount together.
-            Item {
-                id: viewAmount
+            Grid {
                 width: parent.width
-                height: viewsText.height
-                anchors.left: parent.left
+                rows: visual.inPortrait ? 2 : 1
+                columns: visual.inPortrait ? 1 : 2
 
-                Image {
-                    id: viewsIcon
-                    source: visual.images.viewsIcon
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    id: viewsText
-                    anchors.left: viewsIcon.right
-                    anchors.leftMargin: visual.margins
-                    text: model.m_viewCount
-                    font {
-                        family: visual.defaultFontFamily
-                        pixelSize: visual.generalFontSize
+                // Item bundling the 'likes & dislikes' icons & amounts together.
+                Row {
+                    Text {
+                        id: likesAmount
+                        text: model.m_numLikes
+                        font {
+                            family: visual.defaultFontFamily
+                            pixelSize: visual.generalFontSize
+                        }
+                        color: visual.defaultFontColor
                     }
-                    color: visual.defaultFontColor
+                    Image {
+                        id: likesIcon
+                        source: visual.images.thumbsUpIcon
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Text {
+                        id: dislikesAmount
+                        text: model.m_numDislikes
+                        font {
+                            family: visual.defaultFontFamily
+                            pixelSize: visual.generalFontSize
+                        }
+                        color: visual.defaultFontColor
+                    }
+                    Image {
+                        id: dislikesIcon
+                        source: visual.images.thumbsDownIcon
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                // Item bundling the 'eye' icon & views amount together.
+                Item {
+                    id: viewAmount
+                    width: parent.width
+                    height: viewsText.height
+                    //anchors.left: parent.left
+
+                    Image {
+                        id: viewsIcon
+                        source: visual.images.viewsIcon
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Text {
+                        id: viewsText
+                        anchors.left: viewsIcon.right
+                        anchors.leftMargin: visual.margins
+                        text: model.m_viewCount
+                        font {
+                            family: visual.defaultFontFamily
+                            pixelSize: visual.generalFontSize
+                        }
+                        color: visual.defaultFontColor
+                    }
                 }
             }
         }
