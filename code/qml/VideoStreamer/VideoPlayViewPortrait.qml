@@ -24,10 +24,13 @@ Page {
         videoPlayer.play()
     }
 
+    anchors.fill: parent
+
     VideoInformationView {
         id: videoInformationView
 
         height: screen.height / 5
+        width: parent.width
         anchors.left: parent.left
         anchors.top: parent.top
     }
@@ -89,7 +92,7 @@ Page {
 
             elide: "ElideNone"
             wrapMode: Text.WordWrap
-            //maximumLineCount: 40
+            anchors.margins: visual.margins
         }
     }
     // Default ToolBarLayout

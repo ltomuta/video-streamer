@@ -33,6 +33,10 @@ Item {
         InfoTextLabel {
             id: titleLabel
 
+            width: screen.width
+            maximumLineCount: 2
+            wrapMode: Text.WordWrap
+            elide: Text.ElideRight
             text: videoInformationView.videoTitle
             font.bold: true
         }
