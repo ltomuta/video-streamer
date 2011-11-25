@@ -8,12 +8,12 @@ Page {
     property string videoDescription: ""
 
     // TODO: duplicated
-    function playVideo(videoUrl, model) {
+    function playVideo(model) {
 
 
         videoDescription = model.m_description
         videoInformationView.videoTitle = model.m_title
-        //videoInformationView.videoLength = model.m_
+        videoInformationView.videoLength = model.m_duration
         videoInformationView.videoAuthor = model.m_author
 
         videoInformationView.numLikes = model.m_numLikes

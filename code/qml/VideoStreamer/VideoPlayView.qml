@@ -38,6 +38,8 @@ Page {
     VideoPlayerView {
         id: videoPlayer
 
+        anchors.fill: parent
+
         onToggled: __toggleVideoControls()
     }
 

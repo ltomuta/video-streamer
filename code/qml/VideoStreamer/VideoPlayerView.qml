@@ -45,8 +45,6 @@ Item {
         }
     }
 
-    anchors.fill: parent
-
     Rectangle {
         id: videoBackground
 

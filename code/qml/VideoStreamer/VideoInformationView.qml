@@ -7,12 +7,12 @@ import "util.js" as Util
 Item {
     id: videoInformationView
 
-    property string videoTitle: "Title"
-    property int videoLength: 222
+    property string videoTitle: ""
+    property int videoLength: 0
     property string videoAuthor: ""
-    property int numLikes: 12
-    property int numDislikes: 332
-    property int viewCount: 404
+    property int numLikes: 0
+    property int numDislikes: 0
+    property int viewCount: 0
 
     function __prependToLength(text, len, fill) {
         text = text.toString()

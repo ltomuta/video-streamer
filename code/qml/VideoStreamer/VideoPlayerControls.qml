@@ -26,10 +26,10 @@ Item {
         Loader {
             id: backButtonLoader
 
-            anchors.bottom: parent.bottom
+            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            anchors.leftMargin: videoPlayerControls.showBackButton ? visual.controlMargins : 0
             sourceComponent: videoPlayerControls.showBackButton ? backButtonComponent : emptyPlaceholder
-            anchors.margins: videoPlayerControls.showBackButton ? visual.controlMargins : 0
         }
 
         Component {
@@ -58,8 +58,8 @@ Item {
             text: videoPlayerControls.isPlaying ? "||" : ">"
             width: visual.controlWidth
             height: visual.controlHeight
+            anchors.verticalCenter: backButtonLoader.verticalCenter
             anchors.left: backButtonLoader.right
-            anchors.bottom: backButtonLoader.bottom
             anchors.leftMargin: visual.controlMargins
             onClicked: {
                 if (videoPlayerControls.isPlaying) {
@@ -74,27 +74,29 @@ Item {
             id: timeElapsedLabel
 
             text: Util.milliSecondsToString(timePlayed)
-            anchors.top: playButton.top
+            anchors.bottom: playButton.verticalCenter
             anchors.left: playButton.right
-            anchors.margins: visual.controlMargins
+            anchors.right: parent.right
+            anchors.leftMargin: visual.controlMargins
+            anchors.rightMargin: visual.controlMargins
         }
 
         Label {
             id: timeRemainingLabel
 
             text: Util.milliSecondsToString(timeRemaining)
-            anchors.top: playButton.top
+            anchors.bottom: playButton.verticalCenter
             anchors.right: parent.right
-            anchors.margins: visual.controlMargins
+            anchors.rightMargin: visual.controlMargins
         }
 
         ProgressBar {
             id: progressBar
 
-            anchors.top: timeElapsedLabel.bottom
+            anchors.top: playButton.verticalCenter
             anchors.left: playButton.right
             anchors.right: timeRemainingLabel.right
-            anchors.margins: visual.controlMargins
+            anchors.leftMargin: visual.controlMargins
 
             value: videoPlayerControls.timePlayed / (videoPlayerControls.timePlayed + videoPlayerControls.timeRemaining)
         }
