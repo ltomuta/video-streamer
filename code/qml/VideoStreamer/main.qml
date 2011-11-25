@@ -58,13 +58,6 @@ Window {
             iconSource: "toolbar-search"
             onClicked: pageStack.push(searchView)
         }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-menu"
-            onClicked: {
-                mainMenu.open();
-            }
-        }
     }
 
     Item {
@@ -181,36 +174,19 @@ Window {
         ]
     }
 
-    // define the menu
-     Menu {
-         id: mainMenu
-         // define the items in the menu and corresponding actions
-         content: MenuLayout {
-             MenuItem {
-                 text: "About"
-                 onClicked: aboutDlg.open()
-             }
-             // VKN TODO! Create a checkable MenuItem for this!
-             MenuItem {
-                 text: "Lock to landscape"
-                 onClicked: console.log("Lock to landscape clicked!")
-             }
-         }
-     }
-
     // About dialog
-    QueryDialog {
-        id: aboutDlg
+//    QueryDialog {
+//        id: aboutDlg
 
-        titleText: qsTr("QML VideoStreamer Application")
-        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example demonstrating the " +
-                      "QML Video playing capabilies." +
-                      "<p>MORE DESCRIPTION HERE</p>" +
-                      "<p>Learn more at " +
-                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
-                      "developer.nokia.com</a>.</p>")
-        acceptButtonText: qsTr("Ok")
-    }
+//        titleText: qsTr("QML VideoStreamer Application")
+//        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example demonstrating the " +
+//                      "QML Video playing capabilies." +
+//                      "<p>MORE DESCRIPTION HERE</p>" +
+//                      "<p>Learn more at " +
+//                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
+//                      "developer.nokia.com</a>.</p>")
+//        acceptButtonText: qsTr("Ok")
+//    }
 
     // event preventer when page transition is active
     MouseArea {

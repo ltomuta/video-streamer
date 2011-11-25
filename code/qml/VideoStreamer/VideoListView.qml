@@ -6,26 +6,26 @@ Page {
 
     ListView {
         id: listView
-        anchors {
-            top: titleBar.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: parent
 
         model: VideoListModel{}
         delegate: listDelegate
         focus: true
         spacing: visual.spacing
+
+        header: titleDelegate
     }
 
-    TitleBar {
-        id: titleBar
+    Component {
+        id: titleDelegate
+        TitleBar {
+            id: titleBar
 
-        height: visual.titleBarHeight
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+            height: visual.titleBarHeight
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
     }
 
     Component {
