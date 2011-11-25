@@ -9,3 +9,7 @@ function milliSecondsToString(milliseconds) {
     var secondsString = seconds < 10 ? "0" + seconds : seconds
     return minutesString + ":" + secondsString
 }
+
+function secondsToString(seconds) {
+    return milliSecondsToString(seconds*1000);
+}

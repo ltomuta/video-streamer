@@ -39,6 +39,9 @@ Window {
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
         id: visual
+
+        // Bind the layout orientation attribute.
+        inPortrait: root.inPortrait
     }
 
     SearchView {

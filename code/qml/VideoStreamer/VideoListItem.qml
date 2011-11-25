@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
+import "util.js" as Util
 
 ListItem {
     id: container
@@ -15,21 +16,16 @@ ListItem {
         }
     }
 
-//    property int margins: 8
-//    property int spacing: 8
-//    property string fontName: "Helvetica"
-//    property int titleFontSize: 12
-//    property int fontSize: 10
-//    property color fontColorTitle: "black"
-
     Row {
         anchors.fill: parent
 
+        // Thumbnail Item, with added overlay icon + duration underneath.
         Item {
             id: thumb
-            width: parent.width * 0.3   // Reserve 30% of width for the thumb
+            // Reserve 30% of width for the thumb in portrait, and 17% in ls.
+            width: visual.inPortrait ? parent.width * 0.3 : parent.width * 0.17
             height: visual.videoImageWidth
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
 
             // Thumbnail image
             Image {
@@ -37,7 +33,7 @@ ListItem {
 
                 width: visual.videoImageWidth
                 height: visual.videoImageHeight
-                anchors.centerIn: parent
+                anchors.left: parent.left
                 clip: true
                 source: m_thumbnailUrl
                 fillMode: Image.PreserveAspectCrop
@@ -50,54 +46,93 @@ ListItem {
 
                 source: "gfx/squircle_thumb_mask.png"
             }
+
+            Text {
+                id: duration
+                text: Util.secondsToString(model.m_duration)
+                anchors.top: thumbImg.bottom
+                anchors.horizontalCenter: thumbImg.horizontalCenter
+                verticalAlignment: Text.AlignTop
+                font {
+                    family: visual.defaultFontFamily
+                    pixelSize: visual.generalFontSize
+                }
+                color: visual.defaultFontColor
+            }
         }
 
         Column {
-            width: parent.width - thumb.width //appState.inLandscape ? parent.width * 0.9 : parent.width * 0.8
+            width: parent.width - thumb.width //visual.inPortrait ? parent.width * 0.9 : parent.width * 0.8
             height: thumbImg.height
 
             Text {
                 id: videoTitle
+                text: model.m_title
                 width: parent.width
-
                 font {
                     family: visual.defaultFontFamily
                     pixelSize: visual.generalFontSize
                 }
                 color: visual.defaultFontColor
                 maximumLineCount: 2
-                text: model.m_title
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
             }
-            Text {
-                id: videoLength
-                text: model.m_duration + qsTr(" seconds, by ") + model.m_author
-                font {
-                    family: visual.defaultFontFamily
-                    pixelSize: visual.generalFontSize
+
+            Row {
+                Text {
+                    id: likesAmount
+                    text: model.m_numLikes
+                    font {
+                        family: visual.defaultFontFamily
+                        pixelSize: visual.generalFontSize
+                    }
+                    color: visual.defaultFontColor
                 }
-                color: visual.defaultFontColor
+                Image {
+                    id: likesIcon
+                    source: visual.images.thumbsUpIcon
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Text {
+                    id: dislikesAmount
+                    text: model.m_numDislikes
+                    font {
+                        family: visual.defaultFontFamily
+                        pixelSize: visual.generalFontSize
+                    }
+                    color: visual.defaultFontColor
+                }
+                Image {
+                    id: dislikesIcon
+                    source: visual.images.thumbsDownIcon
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
-            Text {
+            // Item bundling the 'eye' icon & views amount together.
+            Item {
                 id: viewAmount
-                text: model.m_viewCount + qsTr(" views")
-                font {
-                    family: visual.defaultFontFamily
-                    pixelSize: visual.generalFontSize
-                }
-                color: visual.defaultFontColor
-            }
+                width: parent.width
+                height: viewsText.height
+                anchors.left: parent.left
 
-            Text {
-                id: likesAmount
-                text: model.m_numLikes + qsTr(" likes ") + model.m_numDislikes + qsTr(" dislikes")
-                font {
-                    family: visual.defaultFontFamily
-                    pixelSize: visual.generalFontSize
+                Image {
+                    id: viewsIcon
+                    source: visual.images.viewsIcon
+                    anchors.verticalCenter: parent.verticalCenter
                 }
-                color: visual.defaultFontColor
+                Text {
+                    id: viewsText
+                    anchors.left: viewsIcon.right
+                    anchors.leftMargin: visual.margins
+                    text: model.m_viewCount
+                    font {
+                        family: visual.defaultFontFamily
+                        pixelSize: visual.generalFontSize
+                    }
+                    color: visual.defaultFontColor
+                }
             }
         }
     }
