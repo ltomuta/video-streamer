@@ -39,20 +39,15 @@ Item {
             anchors.left: parent.left
             sourceComponent: videoPlayerControls.showBackButton ? backButtonComponent : emptyPlaceholder
             anchors.margins: videoPlayerControls.showBackButton ? visual.controlMargins : 0
-
         }
 
         Component {
             id: backButtonComponent
 
             Button {
-
                 text: "<-"
-                //width: visual.controlWidth
+                width: visual.controlWidth
                 height: visual.controlHeight
-                //anchors.bottom: parent.bottom
-                //anchors.left: parent.left
-                anchors.leftMargin: visual.controlMargins * 2
                 onClicked: videoPlayerControls.backButtonPressed()
             }
         }
@@ -60,7 +55,9 @@ Item {
         Component {
             id: emptyPlaceholder
 
-            Item {
+            Rectangle {
+                width: 0
+                height: 0
             }
         }
 
@@ -72,7 +69,7 @@ Item {
             height: visual.controlHeight
             anchors.left: backButtonLoader.right
             anchors.bottom: backButtonLoader.bottom
-            anchors.margins: visual.controlMargins
+            anchors.leftMargin: visual.controlMargins
             onClicked: {
                 if (videoPlayerControls.isPlaying) {
                     videoPlayerControls.pausePressed()
