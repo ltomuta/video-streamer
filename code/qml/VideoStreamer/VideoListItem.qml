@@ -47,17 +47,12 @@ ListItem {
                 source: "gfx/squircle_thumb_mask.png"
             }
 
-            Text {
+            InfoTextLabel {
                 id: duration
                 text: Util.secondsToString(model.m_duration)
                 anchors.top: thumbImg.bottom
                 anchors.horizontalCenter: thumbImg.horizontalCenter
                 verticalAlignment: Text.AlignTop
-                font {
-                    family: visual.defaultFontFamily
-                    pixelSize: visual.generalFontSize
-                }
-                color: visual.defaultFontColor
             }
         }
 
@@ -66,15 +61,10 @@ ListItem {
             height: thumbImg.height
 
             // Text element for viewing the video title information. Maximum of 2 lines.
-            Text {
+            InfoTextLabel {
                 id: videoTitle
                 text: model.m_title
                 width: parent.width
-                font {
-                    family: visual.defaultFontFamily
-                    pixelSize: visual.generalFontSize
-                }
-                color: visual.defaultFontColor
                 maximumLineCount: 2
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
@@ -89,18 +79,13 @@ ListItem {
                         width: loader.width
                         height: 2*author.height
 
-                        Text {
+                        InfoTextLabel {
                             id: author
                             text: qsTr("By ") + model.m_author
                             anchors.top: parent.top
                             anchors.left: parent.left
-                            font {
-                                family: visual.defaultFontFamily
-                                pixelSize: visual.generalFontSize
-                            }
-                            color: visual.defaultFontColor
                         }
-                        Text {
+                        InfoTextLabel {
                             id: date
                             text: "11/11/2011"
                             anchors {
@@ -109,11 +94,6 @@ ListItem {
                                 rightMargin: visual.margins*3
                             }
                             horizontalAlignment: Text.AlignRight
-                            font {
-                                family: visual.defaultFontFamily
-                                pixelSize: visual.generalFontSize
-                            }
-                            color: visual.defaultFontColor
                         }
                     }
                 }
@@ -126,28 +106,18 @@ ListItem {
 
                 // Item bundling the 'likes & dislikes' icons & amounts together.
                 Row {
-                    Text {
+                    InfoTextLabel {
                         id: likesAmount
                         text: model.m_numLikes
-                        font {
-                            family: visual.defaultFontFamily
-                            pixelSize: visual.generalFontSize
-                        }
-                        color: visual.defaultFontColor
                     }
                     Image {
                         id: likesIcon
                         source: visual.images.thumbsUpIcon
                         anchors.verticalCenter: parent.verticalCenter
                     }
-                    Text {
+                    InfoTextLabel {
                         id: dislikesAmount
                         text: model.m_numDislikes
-                        font {
-                            family: visual.defaultFontFamily
-                            pixelSize: visual.generalFontSize
-                        }
-                        color: visual.defaultFontColor
                     }
                     Image {
                         id: dislikesIcon
@@ -168,16 +138,11 @@ ListItem {
                         source: visual.images.viewsIcon
                         anchors.verticalCenter: parent.verticalCenter
                     }
-                    Text {
+                    InfoTextLabel {
                         id: viewsText
                         anchors.left: viewsIcon.right
                         anchors.leftMargin: visual.margins
                         text: model.m_viewCount
-                        font {
-                            family: visual.defaultFontFamily
-                            pixelSize: visual.generalFontSize
-                        }
-                        color: visual.defaultFontColor
                     }
                 }
             }
