@@ -25,7 +25,10 @@ Item {
         return text
     }
 
+    anchors.margins: visual.informationViewMargins
+
     Column {
+        spacing: visual.informationFieldVerticalSpacing
         Label {
             id: titleLabel
 
@@ -52,22 +55,34 @@ Item {
 
             Label {
                 id: likesLabel
+                text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+            }
 
-                text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0) + " " + ":)"
-
+            Image {
+                source: visual.images.thumbsUpIcon
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Label {
                 id: dislikesLabel
-
-                text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0) + " " + ":("
+                text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
             }
-        }
 
-        Label {
-            id: viewCountLabel
+            Image {
+                source: visual.images.thumbsDownIcon
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-            text: "<o>" + " " + videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+            Label {
+                id: viewCountLabel
+
+                text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+            }
+
+            Image {
+                source: visual.images.viewsIcon
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
     }
 }

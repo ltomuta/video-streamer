@@ -9,8 +9,6 @@ Page {
 
     // TODO: duplicated
     function playVideo(model) {
-
-
         videoDescription = model.m_description
         videoInformationView.videoTitle = model.m_title
         videoInformationView.videoLength = model.m_duration
@@ -22,7 +20,7 @@ Page {
 
 
         videoPlayer.stop()
-        videoPlayer.source = videoUrl
+        videoPlayer.source = model.m_contentUrl
         videoPlayer.play()
     }
 

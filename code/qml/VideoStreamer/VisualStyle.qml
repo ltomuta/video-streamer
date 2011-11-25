@@ -42,6 +42,10 @@ Item {
 
     // Video information
     property int informationFieldHorizontalSpacing: 15
+    property int informationFieldVerticalSpacing: 5
+    property int informationViewMargins: 5
+
+
 
     // Visual style's images & graphics
     Item {
