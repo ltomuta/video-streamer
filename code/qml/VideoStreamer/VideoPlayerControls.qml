@@ -5,10 +5,6 @@ import "util.js" as Util
 Item {
     id: videoPlayerControls
 
-    width: screen.width
-    height: visual.controlAreaHeight
-
-
     property bool isPlaying: true
     property int timePlayed: 0
     property int timeRemaining: 0
@@ -19,13 +15,8 @@ Item {
     signal playPressed
     signal pausePressed
 
-    onTimePlayedChanged: {
-        timeElapsedLabel.text = Util.milliSecondsToString(timePlayed)
-        progressBar.value = timePlayed / (timePlayed + timeRemaining)
-    }
-    onTimeRemainingChanged: {
-        timeRemainingLabel.text = Util.milliSecondsToString(timeRemaining)
-    }
+    width: screen.width
+    height: visual.controlAreaHeight
 
     Rectangle {
         anchors.fill: parent
@@ -82,7 +73,7 @@ Item {
         Label {
             id: timeElapsedLabel
 
-            text: ""
+            text: Util.milliSecondsToString(timePlayed)
             anchors.top: playButton.top
             anchors.left: playButton.right
             anchors.margins: visual.controlMargins
@@ -91,7 +82,7 @@ Item {
         Label {
             id: timeRemainingLabel
 
-            text: ""
+            text: Util.milliSecondsToString(timeRemaining)
             anchors.top: playButton.top
             anchors.right: parent.right
             anchors.margins: visual.controlMargins
@@ -104,6 +95,8 @@ Item {
             anchors.left: playButton.right
             anchors.right: timeRemainingLabel.right
             anchors.margins: visual.controlMargins
+
+            value: videoPlayerControls.timePlayed / (videoPlayerControls.timePlayed + videoPlayerControls.timeRemaining)
         }
     }
 }
