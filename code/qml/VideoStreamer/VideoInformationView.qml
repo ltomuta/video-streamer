@@ -29,7 +29,8 @@ Item {
 
     Column {
         spacing: visual.informationFieldVerticalSpacing
-        Label {
+
+        InfoTextLabel {
             id: titleLabel
 
             text: videoInformationView.videoTitle
@@ -38,12 +39,12 @@ Item {
 
         Row {
             spacing: visual.informationFieldHorizontalSpacing
-            Label {
+            InfoTextLabel {
                 id: lengthLabel
                 text: Util.milliSecondsToString(videoInformationView.videoLength * 1000)
             }
 
-            Label {
+            InfoTextLabel {
                 id: authorLabel
 
                 text: videoInformationView.videoAuthor
@@ -53,7 +54,7 @@ Item {
         Row {
             spacing: visual.informationFieldHorizontalSpacing
 
-            Label {
+            InfoTextLabel {
                 id: likesLabel
                 text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
             }
@@ -63,7 +64,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
+            InfoTextLabel {
                 id: dislikesLabel
                 text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
             }
@@ -73,7 +74,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
+            InfoTextLabel {
                 id: viewCountLabel
 
                 text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)

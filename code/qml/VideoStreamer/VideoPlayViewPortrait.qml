@@ -82,7 +82,7 @@ Page {
         contentHeight: descriptionText.height + 300
         clip: true
 
-        Label {
+        InfoTextLabel {
 
             anchors.fill: parent
             text: videoPlayViewPortrait.videoDescription

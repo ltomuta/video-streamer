@@ -70,7 +70,7 @@ Item {
             }
         }
 
-        Label {
+        InfoTextLabel {
             id: timeElapsedLabel
 
             text: Util.milliSecondsToString(timePlayed)
@@ -81,7 +81,7 @@ Item {
             anchors.rightMargin: visual.controlMargins
         }
 
-        Label {
+        InfoTextLabel {
             id: timeRemainingLabel
 
             text: Util.milliSecondsToString(timeRemaining)
