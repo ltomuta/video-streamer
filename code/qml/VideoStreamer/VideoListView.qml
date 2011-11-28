@@ -7,6 +7,7 @@ Page {
     ListView {
         id: listView
         anchors.fill: parent
+        snapMode: ListView.SnapToItem
 
         model: VideoListModel{}
         delegate: listDelegate
