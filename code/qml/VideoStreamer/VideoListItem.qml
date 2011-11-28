@@ -93,7 +93,7 @@ ListItem {
                         }
                         InfoTextLabel {
                             id: date
-                            text: "11/11/2011"
+                            text: Util.formatDate(model.m_uploaded)
                             anchors {
                                 left: author.right
                                 right: parent.right
