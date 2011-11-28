@@ -15,9 +15,6 @@ Item {
     signal playPressed
     signal pausePressed
 
-    width: screen.width
-    height: visual.controlAreaHeight
-
     Rectangle {
         anchors.fill: parent
         radius: 10

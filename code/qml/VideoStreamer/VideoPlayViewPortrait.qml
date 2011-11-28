@@ -48,6 +48,11 @@ Page {
     VideoPlayerControls {
         id: videoPlayerControls
 
+        anchors.bottom: descriptionText.top
+        width: screen.width
+        height: visual.controlAreaHeight
+
+
         timePlayed: videoPlayer.timePlayed
         timeRemaining: videoPlayer.timeRemaining
         isPlaying: videoPlayer.isPlaying
@@ -55,7 +60,6 @@ Page {
         showBackground: false
         showBackButton: false
 
-        anchors.bottom: descriptionText.top
 
         onBackButtonPressed: {
             videoPlayer.stop()

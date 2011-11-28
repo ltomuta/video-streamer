@@ -45,10 +45,15 @@ Page {
 
     VideoPlayerControls {
         id: videoPlayerControls
+
         anchors.bottom: parent.bottom
+        width: screen.width
+        height: visual.controlAreaHeight
+
         timePlayed: videoPlayer.timePlayed
         timeRemaining: videoPlayer.timeRemaining
         isPlaying: videoPlayer.isPlaying
+
 
         onBackButtonPressed: {
             videoPlayer.stop()
