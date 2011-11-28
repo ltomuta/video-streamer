@@ -52,6 +52,8 @@ Item {
         id: images
         property string path: "gfx/"
 
+        property string thumbMask: path+"squircle_thumb_mask.png"
+        property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"
         property string thumbsDownIcon: path+"thumbs_down.png"

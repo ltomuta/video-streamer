@@ -44,7 +44,13 @@ ListItem {
                 height: thumbImg.height
                 anchors.centerIn: thumbImg
 
-                source: "gfx/squircle_thumb_mask.png"
+                source: visual.images.thumbMask
+            }
+            // Overlay play icon on top of the thumb
+            Image {
+                source: visual.images.playOverlayIcon
+                anchors.top: thumbImg.top
+                anchors.right: thumbImg.right
             }
 
             InfoTextLabel {
