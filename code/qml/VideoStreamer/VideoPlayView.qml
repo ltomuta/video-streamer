@@ -99,7 +99,6 @@ Page {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        z: 200
 
         sourceComponent: isPortrait ? videoInformation : videoInformationStub
     }
@@ -164,7 +163,6 @@ Page {
     }
 
 
-
     Component {
         id: bottomArea
 
@@ -203,13 +201,15 @@ Page {
             Flickable {
                 id: descriptionText
 
-                anchors.top: videoPlayerControls.bottom
-                anchors.bottom: parent.bottom
+                anchors {
+                    top: videoPlayerControls.bottom
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
 
-                width: parent.width
-                height: videoPlayView.height / 4
                 contentWidth: descriptionText.width
-                contentHeight: descriptionText.height + 300
+                contentHeight: descriptionText.height
                 clip: true
 
                 InfoTextLabel {
@@ -224,8 +224,6 @@ Page {
             }
         }
     }
-
-
 
 }
 
