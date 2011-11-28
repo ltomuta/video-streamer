@@ -57,5 +57,10 @@ Item {
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"
         property string thumbsDownIcon: path+"thumbs_down.png"
+
+        // For VideoPlayerControls
+        property string vpcBack: path+"back.svg"
+        property string vpcPlay: path+"play.svg"
+        property string vpcPause: path+"pause.svg"
     }
 }

@@ -36,7 +36,7 @@ Item {
             id: backButtonComponent
 
             Button {
-                text: "<-"
+                iconSource: visual.images.vpcBack
                 width: visual.controlWidth
                 height: visual.controlHeight
                 onClicked: videoPlayerControls.backButtonPressed()
@@ -55,7 +55,8 @@ Item {
         Button {
             id: playButton
 
-            text: videoPlayerControls.isPlaying ? "||" : ">"
+            iconSource: videoPlayerControls.isPlaying ? visual.images.vpcPause
+                                                      : visual.images.vpcPlay
             width: visual.controlWidth
             height: visual.controlHeight
             anchors.verticalCenter: backButtonLoader.verticalCenter
