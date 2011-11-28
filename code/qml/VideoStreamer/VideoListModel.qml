@@ -61,6 +61,10 @@ XmlListModel {
         name: "m_description";
         query: "media:group/media:description[1]/string()"
     }
+    XmlRole {
+        name: "m_uploaded";
+        query: "media:group/yt:uploaded/string()"
+    }
 
     onStatusChanged: {
         if (status === XmlListModel.Error) {

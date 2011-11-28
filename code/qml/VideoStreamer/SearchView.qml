@@ -29,6 +29,7 @@ Page {
             right: parent.right
         }
 
+        snapMode: ListView.SnapToItem
         model: searchbox.searchText ? videoListModel: null
         delegate: listDelegate
         focus: true

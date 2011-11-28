@@ -26,77 +26,100 @@ Page {
 
     anchors.fill: parent
 
-    VideoInformationView {
-        id: videoInformationView
+    Item {
+        id: topArea
 
         height: screen.height / 5
         width: parent.width
         anchors.left: parent.left
         anchors.top: parent.top
+
+        VideoInformationView {
+            id: videoInformationView
+
+            anchors.fill: parent
+        }
     }
 
-    VideoPlayerView {
-        id: videoPlayer
+    Item {
+        id: middleArea
+
+        height: screen.height / 3
+
         anchors {
             left: parent.left
             right: parent.right
-            top: videoInformationView.bottom
-            bottom: videoPlayerControls.top
-        }
-    }
-
-    VideoPlayerControls {
-        id: videoPlayerControls
-
-        anchors.bottom: descriptionText.top
-        width: screen.width
-        height: visual.controlAreaHeight
-
-
-        timePlayed: videoPlayer.timePlayed
-        timeRemaining: videoPlayer.timeRemaining
-        isPlaying: videoPlayer.isPlaying
-
-        showBackground: false
-        showBackButton: false
-
-
-        onBackButtonPressed: {
-            videoPlayer.stop()
-            __exitFullScreen()
-            root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+            top: topArea.bottom
         }
 
-        onPausePressed: {
-            videoPlayer.pause()
-        }
-
-        onPlayPressed: {
-            videoPlayer.play()
-        }
-    }
-
-    Flickable {
-        id: descriptionText
-
-        //anchors.left: parent.left
-        //anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        width: parent.width
-        height: screen.height / 4
-        contentWidth: descriptionText.width
-        contentHeight: descriptionText.height + 300
-        clip: true
-
-        InfoTextLabel {
+        VideoPlayerView {
+            id: videoPlayer
 
             anchors.fill: parent
-            text: videoPlayViewPortrait.videoDescription
+        }
+    }
 
-            elide: "ElideNone"
-            wrapMode: Text.WordWrap
-            anchors.margins: visual.margins
+    Item {
+        id: bottomArea
+
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: middleArea.bottom
+            bottom: parent.bottom
+        }
+
+        VideoPlayerControls {
+            id: videoPlayerControls
+
+            anchors.top: parent.top
+            width: screen.width
+            height: visual.controlAreaHeight
+
+
+            timePlayed: videoPlayer.timePlayed
+            timeRemaining: videoPlayer.timeRemaining
+            isPlaying: videoPlayer.isPlaying
+
+            showBackground: false
+            showBackButton: false
+
+            onBackButtonPressed: {
+                videoPlayer.stop()
+                __exitFullScreen()
+                root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+            }
+
+            onPausePressed: {
+                videoPlayer.pause()
+            }
+
+            onPlayPressed: {
+                videoPlayer.play()
+            }
+        }
+
+        Flickable {
+            id: descriptionText
+
+            anchors.top: videoPlayerControls.bottom
+            anchors.bottom: parent.bottom
+
+            width: parent.width
+            height: screen.height / 4
+            contentWidth: descriptionText.width
+            contentHeight: descriptionText.height + 300
+            clip: true
+
+            InfoTextLabel {
+
+                anchors.fill: parent
+                text: videoPlayViewPortrait.videoDescription
+
+                elide: "ElideNone"
+                wrapMode: Text.WordWrap
+                anchors.margins: visual.margins
+            }
         }
     }
     // Default ToolBarLayout
