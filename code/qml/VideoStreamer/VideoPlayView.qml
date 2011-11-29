@@ -90,7 +90,7 @@ Page {
 
             videoTitle: videoPlayView.videoTitle
             videoLength: videoPlayView.videoLength
-            videoAuthor: videoPlayView.videoLength
+            videoAuthor: videoPlayView.videoAuthor
             numLikes: videoPlayView.numLikes
             numDislikes: videoPlayView.numDislikes
             viewCount: videoPlayView.viewCount
