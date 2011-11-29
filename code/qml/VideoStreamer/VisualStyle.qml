@@ -52,6 +52,10 @@ Item {
         id: images
         property string path: "gfx/"
 
+        // Background images
+        property string portraitBackground: path+"portrait_background.png"
+        property string landscapeBackground: path+"landscape_background.png"
+
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
