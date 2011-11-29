@@ -63,7 +63,9 @@ Page {
     }
 
     function __toggleVideoControls() {
-        overlayLoader.visible = !overlayLoader.visible
+        if (!isPortrait) {
+            overlayLoader.visible = !overlayLoader.visible
+        }
     }
 
     anchors.fill: parent
@@ -120,6 +122,8 @@ Page {
 
     Loader {
         id: overlayLoader
+
+        visible: false
         sourceComponent: !isPortrait ? overlayComponent : videoInformationStub
         anchors.bottom: parent.bottom
         width: videoPlayView.width
