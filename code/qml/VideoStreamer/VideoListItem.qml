@@ -47,11 +47,15 @@ ListItem {
 
                 source: visual.images.thumbMask
             }
-            // Overlay play icon on top of the thumb
+
+            // BG image for the duration label (so that the hilight wouldn't
+            // be shown partly over the duration, but not over the thumb).
             Image {
-                source: visual.images.playOverlayIcon
-                anchors.top: thumbImg.top
-                anchors.right: thumbImg.right
+                width: thumbImg.width
+                anchors.left: thumbImg.left
+                anchors.top: thumbImg.bottom
+
+                source: visual.images.durationBackground
             }
 
             InfoTextLabel {

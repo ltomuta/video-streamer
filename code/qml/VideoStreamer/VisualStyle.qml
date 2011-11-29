@@ -55,6 +55,7 @@ Item {
         // Background images
         property string portraitBackground: path+"portrait_background.png"
         property string landscapeBackground: path+"landscape_background.png"
+        property string durationBackground: path+"duration_background.png"
 
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
