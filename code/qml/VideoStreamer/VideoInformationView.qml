@@ -77,10 +77,6 @@ Item {
                 source: visual.images.thumbsDownIcon
                 anchors.verticalCenter: parent.verticalCenter
             }
-        }
-
-        Row {
-            spacing: visual.informationFieldHorizontalSpacing
 
             InfoTextLabel {
                 id: viewCountLabel

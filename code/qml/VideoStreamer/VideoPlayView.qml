@@ -4,15 +4,6 @@ import com.nokia.symbian 1.1
 Page {
     id: videoPlayView
 
-    tools: ToolBarLayout {
-        id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-        }
-    }
-
     property bool isFullScreen: true
     property bool isPortrait: screen.width < screen.height
 
@@ -49,13 +40,17 @@ Page {
     }
 
     function __enterFullScreen() {
-        root.showToolBar = false
-        root.showStatusBar = false
+        if (!isPortrait) {
+            root.showToolBar = false
+            root.showStatusBar = false
+        }
     }
 
     function __exitFullScreen() {
-        root.showToolBar = true
-        root.showStatusBar = true
+        if (!isPortrait) {
+            root.showToolBar = true
+            root.showStatusBar = true
+        }
     }
 
     function __showVideoControls(showControls) {
@@ -63,15 +58,31 @@ Page {
     }
 
     function __toggleVideoControls() {
-        overlayLoader.visible = !overlayLoader.visible
+        if (!isPortrait) {
+            overlayLoader.visible = !overlayLoader.visible
+        }
+    }
+
+    function __handleExit() {
+        videoPlayer.stop()
+        __exitFullScreen()
+        root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+    }
+
+    onIsPortraitChanged: {
+        if (!isPortrait) {
+            root.showToolBar = false
+            root.showStatusBar = false
+        } else {
+            root.showToolBar = true
+            root.showStatusBar = true
+        }
     }
 
     anchors.fill: parent
 
-
     Component {
         id: videoInformation
-
 
         VideoInformationView {
             width: videoPlayView.width
@@ -83,13 +94,11 @@ Page {
             numLikes: videoPlayView.numLikes
             numDislikes: videoPlayView.numDislikes
             viewCount: videoPlayView.viewCount
-
         }
-
     }
 
     Component {
-        id: videoInformationStub
+        id: emptyStub
 
         Item {}
     }
@@ -100,7 +109,7 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        sourceComponent: isPortrait ? videoInformation : videoInformationStub
+        sourceComponent: isPortrait ? videoInformation : emptyStub
     }
 
     // Video player area
@@ -120,7 +129,9 @@ Page {
 
     Loader {
         id: overlayLoader
-        sourceComponent: !isPortrait ? overlayComponent : videoInformationStub
+
+        visible: false
+        sourceComponent: !isPortrait ? overlayComponent : emptyStub
         anchors.bottom: parent.bottom
         width: videoPlayView.width
         height: visual.controlAreaHeight
@@ -137,9 +148,7 @@ Page {
 
 
             onBackButtonPressed: {
-                videoPlayer.stop()
-                __exitFullScreen()
-                root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+                __handleExit()
             }
 
             onPausePressed: {
@@ -159,7 +168,7 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        sourceComponent: isPortrait ? bottomArea : videoInformationStub
+        sourceComponent: isPortrait ? bottomArea : emptyStub
     }
 
 
@@ -182,12 +191,6 @@ Page {
 
                 showBackground: false
                 showBackButton: false
-
-                onBackButtonPressed: {
-                    videoPlayer.stop()
-                    __exitFullScreen()
-                    root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-                }
 
                 onPausePressed: {
                     videoPlayer.pause()
@@ -225,5 +228,12 @@ Page {
         }
     }
 
+    tools: ToolBarLayout {
+        id: toolBarLayout
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: __handleExit()
+        }
+    }
 }
-
