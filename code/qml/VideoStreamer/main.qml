@@ -45,10 +45,6 @@ Window {
         inPortrait: root.inPortrait
     }
 
-    SearchView {
-        id: searchView
-    }
-
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
@@ -60,7 +56,8 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-search"
-            onClicked: pageStack.push(searchView)
+            // Create the SearchView to the pageStack dynamically.
+            onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
         }
         ToolButton {
             flat: true
