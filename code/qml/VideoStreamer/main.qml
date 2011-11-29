@@ -190,7 +190,7 @@ Window {
         titleText: qsTr("YouTube Video Channel")
         message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example " +
                       "demonstrating the  QML Video playing capabilies." +
-                      "<p>Version: </p>" +
+                      "<p>Version: " + cp_versionNumber + "</p>" +
                       "<p>Developed and published by Nokia. All rights reserved.</p>" +
                       "<p>Learn more at " +
                       "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
