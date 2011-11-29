@@ -44,7 +44,8 @@ Page {
         videoPlayer.stop()
         __enterFullScreen()
         __showVideoControls(false)
-        videoPlayer.source = model.m_contentUrl
+        //videoPlayer.source = model.m_contentUrl'
+        videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4"
         videoPlayer.play()
     }
 

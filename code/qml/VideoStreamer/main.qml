@@ -33,7 +33,8 @@ Window {
     Image {
         id: backgroundImg
         anchors.fill: parent
-        source: "gfx/portrait_background.png"
+        source: visual.inPortrait ? visual.images.portraitBackground
+                                  : visual.images.landscapeBackground
     }
 
     // VisualStyle has platform differentiation attribute definitions.
