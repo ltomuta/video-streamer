@@ -30,7 +30,7 @@ Page {
         }
 
         snapMode: ListView.SnapToItem
-        model: searchbox.searchText ? videoListModel: null
+        model: searchbox.searchText ? videoListModel : null
         delegate: listDelegate
         focus: true
         spacing: visual.spacing

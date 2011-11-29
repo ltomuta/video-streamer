@@ -62,6 +62,11 @@ Window {
             iconSource: "toolbar-search"
             onClicked: pageStack.push(searchView)
         }
+        ToolButton {
+            flat: true
+            iconSource: visual.images.infoIcon
+            onClicked: aboutDlg.open()
+        }
     }
 
     Item {
@@ -179,18 +184,19 @@ Window {
     }
 
     // About dialog
-//    QueryDialog {
-//        id: aboutDlg
+    QueryDialog {
+        id: aboutDlg
 
-//        titleText: qsTr("QML VideoStreamer Application")
-//        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example demonstrating the " +
-//                      "QML Video playing capabilies." +
-//                      "<p>MORE DESCRIPTION HERE</p>" +
-//                      "<p>Learn more at " +
-//                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
-//                      "developer.nokia.com</a>.</p>")
-//        acceptButtonText: qsTr("Ok")
-//    }
+        titleText: qsTr("YouTube Video Channel")
+        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example " +
+                      "demonstrating the  QML Video playing capabilies." +
+                      "<p>Version: </p>" +
+                      "<p>Developed and published by Nokia. All rights reserved.</p>" +
+                      "<p>Learn more at " +
+                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
+                      "developer.nokia.com</a>.</p>")
+        acceptButtonText: qsTr("Ok")
+    }
 
     // event preventer when page transition is active
     MouseArea {

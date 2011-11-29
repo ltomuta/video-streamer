@@ -63,6 +63,9 @@ Item {
         property string thumbsUpIcon: path+"thumbs_up.png"
         property string thumbsDownIcon: path+"thumbs_down.png"
 
+        // Extra ToolBar icons
+        property string infoIcon: path+"information_userguide.svg"
+
         // For VideoPlayerControls
         property string vpcBack: path+"back.svg"
         property string vpcPlay: path+"play.svg"
