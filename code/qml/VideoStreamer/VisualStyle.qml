@@ -55,12 +55,16 @@ Item {
         // Background images
         property string portraitBackground: path+"portrait_background.png"
         property string landscapeBackground: path+"landscape_background.png"
+        property string durationBackground: path+"duration_background.png"
 
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"
         property string thumbsDownIcon: path+"thumbs_down.png"
+
+        // Extra ToolBar icons
+        property string infoIcon: path+"information_userguide.svg"
 
         // For VideoPlayerControls
         property string vpcBack: path+"back.svg"

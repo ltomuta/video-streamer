@@ -45,10 +45,6 @@ Window {
         inPortrait: root.inPortrait
     }
 
-    SearchView {
-        id: searchView
-    }
-
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
@@ -60,7 +56,13 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-search"
-            onClicked: pageStack.push(searchView)
+            // Create the SearchView to the pageStack dynamically.
+            onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
+        }
+        ToolButton {
+            flat: true
+            iconSource: visual.images.infoIcon
+            onClicked: aboutDlg.open()
         }
     }
 
@@ -179,18 +181,19 @@ Window {
     }
 
     // About dialog
-//    QueryDialog {
-//        id: aboutDlg
+    QueryDialog {
+        id: aboutDlg
 
-//        titleText: qsTr("QML VideoStreamer Application")
-//        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example demonstrating the " +
-//                      "QML Video playing capabilies." +
-//                      "<p>MORE DESCRIPTION HERE</p>" +
-//                      "<p>Learn more at " +
-//                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
-//                      "developer.nokia.com</a>.</p>")
-//        acceptButtonText: qsTr("Ok")
-//    }
+        titleText: qsTr("YouTube Video Channel")
+        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example " +
+                      "demonstrating the  QML Video playing capabilies." +
+                      "<p>Version: " + cp_versionNumber + "</p>" +
+                      "<p>Developed and published by Nokia. All rights reserved.</p>" +
+                      "<p>Learn more at " +
+                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
+                      "developer.nokia.com</a>.</p>")
+        acceptButtonText: qsTr("Ok")
+    }
 
     // event preventer when page transition is active
     MouseArea {

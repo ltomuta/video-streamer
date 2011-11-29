@@ -5,13 +5,15 @@ import com.nokia.extras 1.1
 Page {
     id: searchView
 
+    property variant pageStack
+
     SearchBox {
         id: searchbox
 
         focus: true
         placeHolderText: qsTr("Search Text")
         backButton: true
-        onBackClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+        onBackClicked: searchView.pageStack.depth <= 1 ? Qt.quit() : searchView.pageStack.pop()
     }
 
     VideoListModel {
@@ -30,7 +32,7 @@ Page {
         }
 
         snapMode: ListView.SnapToItem
-        model: searchbox.searchText ? videoListModel: null
+        model: searchbox.searchText ? videoListModel : null
         delegate: listDelegate
         focus: true
         spacing: visual.spacing

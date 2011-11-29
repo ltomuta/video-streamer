@@ -4,7 +4,13 @@
 QT += declarative
 CONFIG += qt qt-components mobility
 MOBILITY += multimedia
-VERSION = 0.0.1
+
+# Version number & version string definition (for using it inside the app)
+VERSION = 0.1.0
+VERSTR = '\\"$${VERSION}\\"'
+DEFINES += VER=\"$${VERSTR}\"
+
+
 #Speed up launching on MeeGo/Harmattan when using applauncherd daemon
 #CONFIG += qdeclarative-boostable
 

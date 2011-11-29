@@ -45,6 +45,15 @@ Item {
         }
     }
 
+    function __showBusyIndicator() {
+        bufferingIndicator.visible = true
+    }
+
+    function __hideBusyIndicator() {
+        bufferingIndicator.visible = false
+    }
+
+
     Rectangle {
         id: videoBackground
 
@@ -71,6 +80,20 @@ Item {
 
         onPlayingChanged: videoPlayerContainer.isPlaying = playing
         onPausedChanged: videoPlayerContainer.isPlaying = !paused
+
+        onStatusChanged: {
+            if (status === Video.Buffered) {
+                __hideBusyIndicator()
+            } else if (status === Video.EndOfMedia) {
+                __hideBusyIndicator()
+                stop()
+                position = 0
+            } else {
+                if (!videoPlayerContainer.isPlaying) {
+                    __showBusyIndicator();
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -93,16 +116,5 @@ Item {
         target: volumeKeys
         onVolumeKeyUp: __volumeUp()
         onVolumeKeyDown: __volumeDown()
-    }
-
-    states: State {
-        name: "BufferingDone"
-        when: (videoPlayerImpl.status === Video.Buffered ||
-               videoPlayerImpl.status === Video.EndOfMedia)
-
-        PropertyChanges {
-            target: bufferingIndicator
-            opacity: 0
-        }
     }
 }
