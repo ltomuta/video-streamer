@@ -72,7 +72,4 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: searchbox.bottom
     }
-
-
-
 }

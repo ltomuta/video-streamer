@@ -10,29 +10,23 @@ Page {
         snapMode: ListView.SnapToItem
 
         model: VideoListModel{}
-        delegate: listDelegate
         focus: true
         spacing: visual.spacing
+        cacheBuffer: visual.videoListItemHeight*10
 
-        header: titleDelegate
-    }
+        // List item delegate Component.
+        delegate: VideoListItem {
+            width: listView.width
+        }
 
-    Component {
-        id: titleDelegate
-        TitleBar {
+        // Single header delegate Component.
+        header: TitleBar {
             id: titleBar
 
             height: visual.titleBarHeight
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-        }
-    }
-
-    Component {
-        id: listDelegate
-        VideoListItem {
-            width: listView.width
         }
     }
 }

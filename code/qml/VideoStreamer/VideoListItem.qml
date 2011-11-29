@@ -68,7 +68,7 @@ ListItem {
         }
 
         Column {
-            width: parent.width - thumb.width //visual.inPortrait ? parent.width * 0.9 : parent.width * 0.8
+            width: parent.width - thumb.width
             height: thumbImg.height
 
             // Text element for viewing the video title information. Maximum of 2 lines.
@@ -85,7 +85,11 @@ ListItem {
                 id: loader
                 visible: !visual.inPortrait
                 width: parent.width
-                sourceComponent: Component {
+                sourceComponent: visual.inPortrait ? undefined : authorAndDate
+
+                Component {
+                    id: authorAndDate
+
                     Item {
                         width: loader.width
                         height: 2*author.height
