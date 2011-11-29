@@ -154,7 +154,7 @@ Window {
         states: [
             State {
                 name: "Visible"
-                PropertyChanges { target: tbar; y: parent.height - height; opacity: 0.7 }
+                PropertyChanges { target: tbar; y: parent.height - height; opacity: 1 }
             },
             State {
                 name: "Hidden"

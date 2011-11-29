@@ -29,4 +29,19 @@ Page {
             anchors.right: parent.right
         }
     }
+
+    Loader {
+        anchors.centerIn: parent
+        height: visual.busyIndicatorHeight
+        width: visual.busyIndicatorWidth
+        sourceComponent: listView.model.loading ? busyIndicator : undefined
+
+        Component {
+            id: busyIndicator
+
+            BusyIndicator {
+                running: true
+            }
+        }
+    }
 }

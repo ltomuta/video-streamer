@@ -3,6 +3,7 @@ import QtQuick 1.1
 XmlListModel {
     id: model
 
+    property bool loading: status == XmlListModel.Loading
     property string channelName: "nokiadevforum"
     property string channelNameUserReadable: "Nokia Developer"
     property string searchTerm: ""
