@@ -45,22 +45,15 @@ Item {
         }
     }
 
-    function __showBusyIndicator() {
-        bufferingIndicator.visible = true
-    }
-
-    function __hideBusyIndicator() {
-        bufferingIndicator.visible = false
-    }
-
-
     Rectangle {
-        id: videoBackground
+        id: background
 
-        color: "black"
         z: videoPlayerImpl.z - 1
+        color: "black"
         anchors.fill: parent
+        visible: true
     }
+
 
     Video {
         id: videoPlayerImpl
@@ -83,33 +76,46 @@ Item {
 
         onStatusChanged: {
             if (status === Video.Buffered) {
-                __hideBusyIndicator()
+                bufferingIndicator.visible = false
+                videoBackground.visible = false
             } else if (status === Video.EndOfMedia) {
-                __hideBusyIndicator()
+                bufferingIndicator.visible = false
+                videoBackground.visible = false
                 stop()
                 position = 0
             } else {
                 if (!videoPlayerContainer.isPlaying) {
-                    __showBusyIndicator();
+                    bufferingIndicator.visible = true
+
+                    // Video element will show random data
+                    // when starting video playback.
+                    if (position === 0) {
+                        videoBackground.visible = true
+                    } else {
+                        videoBackground.visible = false
+                    }
                 }
             }
         }
     }
 
     Rectangle {
+        id: videoBackground
+
+        z: videoPlayerImpl.z + 1
+        color: "black"
+        anchors.fill: parent
+        visible: false
+    }
+
+    BusyIndicator {
         id: bufferingIndicator
 
-        anchors.fill: parent
-        color: "black"
-        z: videoPlayerImpl.z + 1
-        opacity: 1
-
-        BusyIndicator {
-            anchors.centerIn: parent
-            height: visual.busyIndicatorHeight
-            width: visual.busyIndicatorWidth
-            running: true
-        }
+        z: videoBackground.z + 1
+        anchors.centerIn: parent
+        height: visual.busyIndicatorHeight
+        width: visual.busyIndicatorWidth
+        running: true
     }
 
     Connections {
