@@ -43,24 +43,6 @@ ListItem {
 
             source: visual.images.thumbMask
         }
-
-        // BG image for the duration label (so that the hilight wouldn't
-        // be shown partly over the duration, but not over the thumb).
-        Image {
-            width: thumbImg.width
-            anchors.left: thumbImg.left
-            anchors.top: thumbImg.bottom
-
-            source: visual.images.durationBackground
-        }
-
-        InfoTextLabel {
-            id: duration
-            text: Util.secondsToString(model.m_duration)
-            anchors.top: thumbImg.bottom
-            anchors.horizontalCenter: thumbImg.horizontalCenter
-            verticalAlignment: Text.AlignTop
-        }
     }
 
     // And on the right side of the thumb image+duration, lays the information.
@@ -69,6 +51,9 @@ ListItem {
         height: thumbImg.height
 
         anchors.left: thumb.right
+        anchors.top: parent.top
+        anchors.topMargin: visual.margins
+
         // Text element for viewing the video title information. Maximum of 2 lines.
         InfoTextLabel {
             id: videoTitle
@@ -92,7 +77,7 @@ ListItem {
 
                 Item {
                     width: loader.width
-                    height: 2*author.height
+                    height: author.height
 
                     InfoTextLabel {
                         id: author
@@ -114,60 +99,67 @@ ListItem {
             }
         }
 
-        // The positioning of the likes&dislikes and the views amount depends
-        // on the device orientation. In portrait they're on top of each other
-        // and in landscape they're side by side.
-        Grid {
+        // Item bundling the duration, eye, 'likes & dislikes' icons & amounts together.
+        Item {
             width: parent.width
-            rows: visual.inPortrait ? 2 : 1
-            columns: visual.inPortrait ? 1 : 2
+            height: likesIcon.height
             anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
+            anchors.topMargin: visual.margins
 
-            // Item bundling the 'likes & dislikes' icons & amounts together.
+            InfoTextLabel {
+                id: duration
+                width: parent.width/3
+                text: Util.secondsToString(model.m_duration)
+                anchors.left: parent.left
+            }
+
+            // Item bundling the 'eye' icon & views amount together.
             Item {
-                width: childrenRect.width
-                height: likesIcon.height
+                id: viewAmount
+                height: viewsText.height
+                width: parent.width/4
+                anchors.left: duration.right
+
+                InfoTextLabel {
+                    id: viewsText
+                    text: model.m_viewCount
+                    anchors.right: viewsIcon.left
+                    anchors.rightMargin: visual.margins
+                }
+                Image {
+                    id: viewsIcon
+                    source: visual.images.viewsIcon
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                width: parent.width/3
+                anchors.right: parent.right
+                anchors.rightMargin: visual.inPortrait ? 0 : visual.margins*3
 
                 InfoTextLabel {
                     id: likesAmount
                     text: model.m_numLikes
-                    anchors.left: parent.left
+                    anchors.right: likesIcon.left
                     anchors.verticalCenter: likesIcon.verticalCenter
                 }
                 Image {
                     id: likesIcon
                     source: visual.images.thumbsUpIcon
-                    anchors.left: likesAmount.right
+                    anchors.right: dislikesAmount.left
                 }
                 InfoTextLabel {
                     id: dislikesAmount
-                    anchors.left: likesIcon.right
+                    anchors.right: dislikesIcon.left
                     text: model.m_numDislikes
                     anchors.verticalCenter: dislikesIcon.verticalCenter
                 }
                 Image {
                     id: dislikesIcon
                     source: visual.images.thumbsDownIcon
-                    anchors.left: dislikesAmount.right
-                }
-            }
-
-            // Item bundling the 'eye' icon & views amount together.
-            Item {
-                id: viewAmount
-                width: parent.width
-                height: viewsText.height
-
-                Image {
-                    id: viewsIcon
-                    source: visual.images.viewsIcon
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                InfoTextLabel {
-                    id: viewsText
-                    anchors.left: viewsIcon.right
-                    anchors.leftMargin: visual.margins
-                    text: model.m_viewCount
+                    anchors.right: parent.right
                 }
             }
         }

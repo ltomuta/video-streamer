@@ -14,13 +14,14 @@ Item {
     property int spacing: 8
 
     // Font properties
-    property int generalFontSize: platformStyle.fontSizeSmall
+    property int smallFontSize: platformStyle.fontSizeSmall
+    property int generalFontSize: platformStyle.fontSizeMedium
     property int largeFontSize: platformStyle.fontSizeLarge
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: 110
+    property int videoListItemHeight: 90
     property int videoImageWidth: 90
     property int videoImageHeight: 90
 
