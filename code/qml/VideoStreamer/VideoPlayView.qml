@@ -237,6 +237,16 @@ Page {
                     wrapMode: Text.WordWrap
                     anchors.margins: visual.margins
                 }
+
+                ScrollDecorator {
+                    anchors {
+                        right: parent.right
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    // flickableItem binds the scroll decorator to the ListView.
+                    flickableItem: descriptionText
+                }
             }
         }
     }

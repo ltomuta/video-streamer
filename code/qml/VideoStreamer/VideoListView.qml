@@ -30,6 +30,16 @@ Page {
         }
     }
 
+    ScrollDecorator {
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+        // flickableItem binds the scroll decorator to the ListView.
+        flickableItem: listView
+    }
+
     Loader {
         anchors.centerIn: parent
         height: visual.busyIndicatorHeight

@@ -121,8 +121,9 @@ ListItem {
             Item {
                 id: viewAmount
                 height: viewsText.height
-                width: parent.width/4.2
-                anchors.left: duration.right
+                width: visual.inPortrait ? parent.width/4.2 : childrenRect.width
+                anchors.left: visual.inPortrait ? duration.right : undefined
+                anchors.right: visual.inPortrait ? undefined : likes.left
 
                 InfoTextLabel {
                     id: viewsText
@@ -139,7 +140,8 @@ ListItem {
             }
 
             Item {
-                width: parent.width/3
+                id: likes
+                width: visual.inPortrait ? parent.width/3 : parent.width/4.2
                 anchors.right: parent.right
                 anchors.rightMargin: visual.inPortrait ? 0 : visual.margins*3
 
