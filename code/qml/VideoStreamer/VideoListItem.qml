@@ -20,7 +20,7 @@ ListItem {
     Item {
         id: thumb
         // Reserve 30% of width for the thumb in portrait, and 17% in ls.
-        width: visual.inPortrait ? parent.width * 0.3 : parent.width * 0.17
+        width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
         height: visual.videoImageWidth
         anchors.top: parent.top
 
@@ -117,7 +117,7 @@ ListItem {
             Item {
                 id: viewAmount
                 height: viewsText.height
-                width: parent.width/4
+                width: parent.width/4.2
                 anchors.left: duration.right
 
                 InfoTextLabel {
