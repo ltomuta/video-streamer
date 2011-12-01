@@ -66,6 +66,8 @@ Item {
         property string thumbsUpIcon: path+"thumbs_up.png"
         property string thumbsDownIcon: path+"thumbs_down.png"
 
+        property string developerLogo: path+"nokia_developer_logo.png"
+
         // Extra ToolBar icons
         property string infoIcon: path+"information_userguide.svg"
 

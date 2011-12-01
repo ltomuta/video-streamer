@@ -13,32 +13,12 @@ Item {
     // Background gradient
     Rectangle {
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: gradientStart }
-            GradientStop { position: 1.0; color: gradientEnd }
-        }
+        color: "white"
     }
 
-    Text {
-        id: captionText
-
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-            leftMargin: visual.margins
-            rightMargin: visual.margins
-        }
-
-        font {
-            family: visual.defaultFontFamily
-            pixelSize: visual.generalFontSize
-        }
-
-        color: visual.captionFontColor
-        text: qsTr("NOKIA Developer")
-        elide: Text.ElideLeft
-        horizontalAlignment: Text.AlignLeft
+    Image {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        source: visual.images.developerLogo
     }
 }

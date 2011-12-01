@@ -200,42 +200,49 @@ Page {
                 }
             }
 
-            InfoTextLabel {
-                id: titleLabel
-
-                anchors.top: videoPlayerControls.bottom
-                anchors.left: parent.left
-                anchors.margins: visual.margins
-                width: screen.width
-                maximumLineCount: 2
-                wrapMode: Text.WordWrap
-                elide: Text.ElideRight
-                text: videoPlayView.videoTitle
-                font.bold: true
-            }
-
             Flickable {
                 id: descriptionText
 
                 anchors {
-                    top: titleLabel.bottom
+                    top: videoPlayerControls.bottom
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
                 }
 
                 contentWidth: descriptionText.width
-                contentHeight: videoDescriptionText.paintedHeight
+                contentHeight: titleLabel.height + videoDescriptionText.height + 2*visual.margins
                 clip: true
 
                 InfoTextLabel {
-                    id: videoDescriptionText
-                    anchors.fill: parent
-                    text: videoPlayView.videoDescription
+                    id: titleLabel
 
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        margins: visual.margins
+                    }
+                    width: parent.width
+                    maximumLineCount: 2
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    text: videoPlayView.videoTitle
+                    font.bold: true
+                }
+
+                InfoTextLabel {
+                    id: videoDescriptionText
+                    width: parent.width
+                    anchors {
+                        top: titleLabel.bottom
+                        left: parent.left
+                        right: parent.right
+                        margins: visual.margins
+                    }
+
+                    text: videoPlayView.videoDescription
                     elide: "ElideNone"
                     wrapMode: Text.WordWrap
-                    anchors.margins: visual.margins
                 }
 
                 ScrollDecorator {
