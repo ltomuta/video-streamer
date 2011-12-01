@@ -22,7 +22,8 @@ DEPLOYMENTFOLDERS = qml_sources
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-SOURCES += main.cpp
+SOURCES += main.cpp loadhelper.cpp
+HEADERS += loadhelper.h
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \
