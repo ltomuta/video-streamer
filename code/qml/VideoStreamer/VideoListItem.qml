@@ -65,11 +65,14 @@ ListItem {
         }
 
         // Author and date published information are only shown in landscape.
+        // CURRENTLY DISABLED! RE-ENABLE, IF NEEDED!
         Loader {
             id: loader
-            visible: !visual.inPortrait
+//            visible: !visual.inPortrait
+//            sourceComponent: visual.inPortrait ? undefined : authorAndDate
+            visible: false
+            sourceComponent: undefined
             width: parent.width
-            sourceComponent: visual.inPortrait ? undefined : authorAndDate
             anchors.top: videoTitle.bottom
 
             Component {
@@ -103,7 +106,8 @@ ListItem {
         Item {
             width: parent.width
             height: likesIcon.height
-            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
+//            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
+            anchors.top: videoTitle.bottom
             anchors.topMargin: visual.margins
 
             InfoTextLabel {

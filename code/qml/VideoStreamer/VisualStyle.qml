@@ -35,7 +35,7 @@ Item {
     property int controlMargins: 10
     property int controlWidth: 50
     property int controlHeight: 50
-    property int controlAreaHeight: 75
+    property int controlAreaHeight: 65
 
     // Busy indicator
     property int busyIndicatorHeight: inPortrait ? screen.width / 4 : screen.height / 4
@@ -46,7 +46,9 @@ Item {
     property int informationFieldVerticalSpacing: 5
     property int informationViewMargins: 5
 
-
+    // VideoPlayView definitions
+    property double topAreaProportion: 0.05
+    property double bottomAreaProportion: 0.55
 
     // Visual style's images & graphics
     Item {

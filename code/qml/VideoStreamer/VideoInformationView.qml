@@ -7,9 +7,6 @@ import "util.js" as Util
 Item {
     id: videoInformationView
 
-    property string videoTitle: ""
-    property int videoLength: 0
-    property string videoAuthor: ""
     property int numLikes: 0
     property int numDislikes: 0
     property int viewCount: 0
@@ -27,66 +24,60 @@ Item {
 
     anchors.margins: visual.informationViewMargins
 
-    Column {
-        spacing: visual.informationFieldVerticalSpacing
+    // Bundle each text label & image as a pair.
+    Item {
+        anchors.left: parent.left
+        anchors.leftMargin: visual.margins
 
         InfoTextLabel {
-            id: titleLabel
-
-            width: screen.width
-            maximumLineCount: 2
-            wrapMode: Text.WordWrap
-            elide: Text.ElideRight
-            text: videoInformationView.videoTitle
-            font.bold: true
+            id: likesLabel
+            text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
         }
 
-        Row {
-            spacing: visual.informationFieldHorizontalSpacing
-            InfoTextLabel {
-                id: lengthLabel
-                text: Util.milliSecondsToString(videoInformationView.videoLength * 1000)
-            }
-
-            InfoTextLabel {
-                id: authorLabel
-
-                text: videoInformationView.videoAuthor
+        Image {
+            source: visual.images.thumbsUpIcon
+            anchors {
+                left: likesLabel.right
+                leftMargin: visual.margins
+                verticalCenter: likesLabel.verticalCenter
             }
         }
+    }
 
-        Row {
-            spacing: visual.informationFieldHorizontalSpacing
+    Item {
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: childrenRect.width
 
-            InfoTextLabel {
-                id: likesLabel
-                text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+        InfoTextLabel {
+            id: dislikesLabel
+            text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+        }
+
+        Image {
+            source: visual.images.thumbsDownIcon
+            anchors {
+                left: dislikesLabel.right
+                leftMargin: visual.margins
+                verticalCenter: dislikesLabel.verticalCenter
             }
+        }
+    }
 
-            Image {
-                source: visual.images.thumbsUpIcon
-                anchors.verticalCenter: parent.verticalCenter
-            }
+    Item {
+        anchors.right: parent.right
+        anchors.rightMargin: visual.margins
+        width: childrenRect.width
 
-            InfoTextLabel {
-                id: dislikesLabel
-                text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
-            }
-
-            Image {
-                source: visual.images.thumbsDownIcon
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            InfoTextLabel {
-                id: viewCountLabel
-
-                text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
-            }
-
-            Image {
-                source: visual.images.viewsIcon
-                anchors.verticalCenter: parent.verticalCenter
+        InfoTextLabel {
+            id: viewCountLabel
+            text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+        }
+        Image {
+            source: visual.images.viewsIcon
+            anchors {
+                left: viewCountLabel.right
+                leftMargin: visual.margins
+                verticalCenter: viewCountLabel.verticalCenter
             }
         }
     }

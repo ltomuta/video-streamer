@@ -15,9 +15,8 @@ Page {
     property int viewCount: 0
     property string videoDescription: ""
 
-    property double topAreaProportion: 0.2
-    property double bottomAreaProportion: 0.3
-
+    property double topAreaProportion: visual.topAreaProportion
+    property double bottomAreaProportion: visual.bottomAreaProportion
 
     function playVideo(model) {
 
@@ -87,10 +86,6 @@ Page {
         VideoInformationView {
             width: videoPlayView.width
             height: videoPlayView.height * topAreaProportion
-
-            videoTitle: videoPlayView.videoTitle
-            videoLength: videoPlayView.videoLength
-            videoAuthor: videoPlayView.videoAuthor
             numLikes: videoPlayView.numLikes
             numDislikes: videoPlayView.numDislikes
             viewCount: videoPlayView.viewCount
@@ -105,9 +100,12 @@ Page {
 
     Loader {
         id: upperAreaLoader
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            top: parent.top
+            topMargin: visual.margins
+            left: parent.left
+            right: parent.right
+        }
 
         sourceComponent: isPortrait ? videoInformation : emptyStub
     }
@@ -143,7 +141,7 @@ Page {
             id: videoPlayerControls
 
             timePlayed: videoPlayer.timePlayed
-            timeRemaining: videoPlayer.timeRemaining
+            timeRemaining: videoPlayer.duration
             isPlaying: videoPlayer.isPlaying
 
 
@@ -163,10 +161,11 @@ Page {
 
     Loader {
         id: bottomAreaLoader
-        //anchors.top: videoPlayer.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
 
         sourceComponent: isPortrait ? bottomArea : emptyStub
     }
@@ -186,7 +185,7 @@ Page {
                 height: visual.controlAreaHeight
 
                 timePlayed: videoPlayer.timePlayed
-                timeRemaining: videoPlayer.timeRemaining
+                timeRemaining: videoPlayer.duration
                 isPlaying: videoPlayer.isPlaying
 
                 showBackground: false
@@ -201,22 +200,36 @@ Page {
                 }
             }
 
+            InfoTextLabel {
+                id: titleLabel
+
+                anchors.top: videoPlayerControls.bottom
+                anchors.left: parent.left
+                anchors.margins: visual.margins
+                width: screen.width
+                maximumLineCount: 2
+                wrapMode: Text.WordWrap
+                elide: Text.ElideRight
+                text: videoPlayView.videoTitle
+                font.bold: true
+            }
+
             Flickable {
                 id: descriptionText
 
                 anchors {
-                    top: videoPlayerControls.bottom
+                    top: titleLabel.bottom
                     bottom: parent.bottom
                     left: parent.left
                     right: parent.right
                 }
 
                 contentWidth: descriptionText.width
-                contentHeight: descriptionText.height
+                contentHeight: videoDescriptionText.paintedHeight
                 clip: true
 
                 InfoTextLabel {
-
+                    id: videoDescriptionText
                     anchors.fill: parent
                     text: videoPlayView.videoDescription
 
