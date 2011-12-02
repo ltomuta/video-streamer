@@ -6,6 +6,10 @@ Item {
     // The screen orientation will affect how the margins etc. are defined.
     property bool inPortrait: true
 
+    // E6 has different screen resolution & aspect ratio (640x480), thus
+    // there's some differentation for it separately.
+    property bool isE6: false
+
     // Property handle to get the style's gfx
     property alias images: images
 
@@ -21,7 +25,7 @@ Item {
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: 90
+    property int videoListItemHeight: isE6 ? 110 : 90
     property int videoImageWidth: 90
     property int videoImageHeight: 90
 
@@ -60,7 +64,8 @@ Item {
         property string landscapeBackground: path+"landscape_background.png"
         property string durationBackground: path+"duration_background.png"
 
-        property string thumbMask: path+"squircle_thumb_mask.png"
+        property string thumbMask: isE6 ? path+"e6_squircle_thumb_mask.png"
+                                        : path+"squircle_thumb_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"

@@ -43,6 +43,8 @@ Window {
 
         // Bind the layout orientation attribute.
         inPortrait: root.inPortrait
+        // Check, whether or not the device is E6
+        isE6: root.height == 480
     }
 
     // Default ToolBarLayout

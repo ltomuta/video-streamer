@@ -22,7 +22,8 @@ ListItem {
         // Reserve 30% of width for the thumb in portrait, and 17% in ls.
         width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
         height: visual.videoImageWidth
-        anchors.top: parent.top
+        anchors.top: visual.isE6 ? undefined : parent.top
+        anchors.verticalCenter: visual.isE6 ? parent.verticalCenter : undefined
 
         // Thumbnail image
         Image {
@@ -38,7 +39,6 @@ ListItem {
         // Mask image on top of the thumbnail
         Image {
             width: thumbImg.width
-            height: thumbImg.height
             anchors.centerIn: thumbImg
 
             source: visual.images.thumbMask
