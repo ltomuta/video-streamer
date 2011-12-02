@@ -37,9 +37,9 @@ Item {
 
     // Player ViewSection
     property int controlMargins: 10
-    property int controlWidth: 50
-    property int controlHeight: 50
-    property int controlAreaHeight: 65
+    property int controlWidth: isE6 ? 70 : 50
+    property int controlHeight: isE6 ? 70 : 50
+    property int controlAreaHeight: isE6 ? 85 : 65
 
     // Busy indicator
     property int busyIndicatorHeight: inPortrait ? screen.width / 4 : screen.height / 4
