@@ -195,6 +195,11 @@ Window {
                       "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
                       "developer.nokia.com</a>.</p>")
         acceptButtonText: qsTr("Ok")
+        onAccepted: {
+            // When backing away from the about dialog, return the keyboard
+            // focus for the ListView.
+            initialPage.forceKeyboardFocus();
+        }
     }
 
     // event preventer when page transition is active

@@ -4,6 +4,16 @@ import com.nokia.symbian 1.1
 Page {
     id: mainPage
 
+    function forceKeyboardFocus() {
+        listView.forceActiveFocus();
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating) {
+            mainPage.forceKeyboardFocus();
+        }
+    }
+
     ListView {
         id: listView
         anchors.fill: parent
