@@ -68,6 +68,31 @@ Page {
         root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
     }
 
+    Keys.onPressed: {
+        if (!event.isAutoRepeat) {
+            switch (event.key) {
+            case Qt.Key_Right:
+                console.log("TODO: Fast forward");
+                event.accepted = true;
+                break;
+            case Qt.Key_Left:
+                console.log("TODO: Reverse");
+                event.accepted = true;
+                break;
+            case Qt.Key_Select:
+            case Qt.Key_Enter:
+            case Qt.Key_Return:
+                if(videoPlayer.isPlaying) {
+                    videoPlayer.pause();
+                } else {
+                    videoPlayer.play();
+                }
+                event.accepted = true;
+                break;
+            }
+        }
+    }
+
     onIsPortraitChanged: {
         if (!isPortrait) {
             root.showToolBar = false

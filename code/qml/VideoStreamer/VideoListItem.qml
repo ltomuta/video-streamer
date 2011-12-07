@@ -16,10 +16,27 @@ ListItem {
         }
     }
 
+    // The ListItem's default implementation doesn't handle the Right Key
+    // separately, so bind it also to opening the item.
+    Keys.onPressed: {
+        if (!event.isAutoRepeat) {
+            switch (event.key) {
+            case Qt.Key_Right:
+                if (symbian.listInteractionMode != Symbian.KeyNavigation) {
+                    symbian.listInteractionMode = Symbian.KeyNavigation;
+                } else {
+                    container.clicked();
+                    event.accepted = true;
+                }
+                break;
+            }
+        }
+    }
+
     // Thumbnail Item, with added overlay icon + duration underneath.
     Item {
         id: thumb
-        // Reserve 30% of width for the thumb in portrait, and 17% in ls.
+        // Reserve 27% of width for the thumb in portrait, and 17% in ls.
         width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
         height: visual.videoImageWidth
         anchors.top: visual.isE6 ? undefined : parent.top
@@ -68,10 +85,12 @@ ListItem {
         // CURRENTLY DISABLED! RE-ENABLE, IF NEEDED!
         Loader {
             id: loader
+
 //            visible: !visual.inPortrait
 //            sourceComponent: visual.inPortrait ? undefined : authorAndDate
             visible: false
             sourceComponent: undefined
+
             width: parent.width
             anchors.top: videoTitle.bottom
 
