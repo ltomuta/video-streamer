@@ -40,15 +40,15 @@ Page {
 
     function __enterFullScreen() {
         if (!isPortrait) {
-            root.showToolBar = false
-            root.showStatusBar = false
+            showToolBar = false
+            showStatusBar = false
         }
     }
 
     function __exitFullScreen() {
         if (!isPortrait) {
-            root.showToolBar = true
-            root.showStatusBar = true
+            showToolBar = true
+            showStatusBar = true
         }
     }
 
@@ -72,7 +72,7 @@ Page {
         // To prevent this give Video-element enough time to handle it's
         // state and delay destroy by 1 minute.
         videoPlayView.destroy(60000)
-        root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+        pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
     }
 
     Keys.onPressed: {
@@ -102,11 +102,11 @@ Page {
 
     onIsPortraitChanged: {
         if (!isPortrait) {
-            root.showToolBar = false
-            root.showStatusBar = false
+            showToolBar = false
+            showStatusBar = false
         } else {
-            root.showToolBar = true
-            root.showStatusBar = true
+            showToolBar = true
+            showStatusBar = true
         }
     }
 
