@@ -19,7 +19,7 @@ Page {
         anchors.fill: parent
         snapMode: ListView.SnapToItem
 
-        model: VideoListModel{}
+        model: xmlDataModel
         focus: true
         spacing: visual.spacing
         cacheBuffer: visual.videoListItemHeight*10
