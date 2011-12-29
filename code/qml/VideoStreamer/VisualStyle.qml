@@ -25,9 +25,10 @@ Item {
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: isE6 ? 110 : 90
-    property int videoImageWidth: 70
-    property int videoImageHeight: 70
+    property int videoListItemHeight: isE6 ? 90
+                                           : (inPortrait ? 80 : 65)
+    property int videoImageWidth: inPortrait ? 70 : 60
+    property int videoImageHeight: inPortrait ? 70 : 60
 
     // For the TitleBar
     property int titleBarHeight: 30
