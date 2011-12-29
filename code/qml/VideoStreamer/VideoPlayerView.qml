@@ -45,14 +45,25 @@ Item {
         }
     }
 
-    function __showBusyIndicator() {
-        bufferingIndicator.visible = true
-    }
+    function __handleStatusChange(status, playing, position, paused) {
+        var isPlaying = playing && position !== 0
+        var isVisibleState = status === Video.Buffered || status === Video.EndOfMedia
+        var isStalled = status === Video.Stalled && position !== 0
 
-    function __hideBusyIndicator() {
-        bufferingIndicator.visible = false
-    }
+        // Background
+        if (!isVisibleState && !isStalled) {
+            blackBackground.opacity = 1
+        } else {
+            blackBackground.opacity = 0
+        }
 
+        // Busy indicator
+        if (!isVisibleState && !isPlaying && !paused) {
+            busyIndicator.opacity = 1
+        } else {
+            busyIndicator.opacity = 0
+        }
+    }
 
     Rectangle {
         id: videoBackground
@@ -78,39 +89,43 @@ Item {
             }
         }
 
-        onPlayingChanged: videoPlayerContainer.isPlaying = playing
-        onPausedChanged: videoPlayerContainer.isPlaying = !paused
+        onPlayingChanged: {
+            videoPlayerContainer.isPlaying = playing
+            __handleStatusChange(status, isPlaying, position, paused)
+        }
+        onPausedChanged: {
+            videoPlayerContainer.isPlaying = !paused
+            __handleStatusChange(status, isPlaying, position, paused)
+        }
 
         onStatusChanged: {
-            if (status === Video.Buffered) {
-                __hideBusyIndicator()
-            } else if (status === Video.EndOfMedia) {
-                __hideBusyIndicator()
-                stop()
-                position = 0
-            } else {
-                if (!videoPlayerContainer.isPlaying) {
-                    __showBusyIndicator();
-                }
+            __handleStatusChange(status, isPlaying, position, paused)
+            if (status === Video.EndOfMedia) {
+                videoPlayerImpl.stop()
+                videoPlayerImpl.position = 0
             }
         }
     }
 
     Rectangle {
-        id: bufferingIndicator
+        id: blackBackground
 
         anchors.fill: parent
         color: "black"
         z: videoPlayerImpl.z + 1
         opacity: 1
-
-        BusyIndicator {
-            anchors.centerIn: parent
-            height: visual.busyIndicatorHeight
-            width: visual.busyIndicatorWidth
-            running: true
-        }
     }
+
+    BusyIndicator {
+        id: busyIndicator
+
+        anchors.centerIn: blackBackground
+        height: visual.busyIndicatorHeight
+        width: visual.busyIndicatorWidth
+        z: blackBackground.z + 1
+        running: true
+    }
+
 
     Connections {
         target: volumeKeys
