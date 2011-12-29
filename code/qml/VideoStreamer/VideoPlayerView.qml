@@ -76,7 +76,7 @@ Item {
     Video {
         id: videoPlayerImpl
 
-        volume: 0.1
+        volume: 0.5
         autoLoad: true
         anchors.fill: parent
         fillMode: Video.PreserveAspectFit

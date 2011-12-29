@@ -21,7 +21,6 @@ Page {
 
         model: xmlDataModel
         focus: true
-        spacing: visual.spacing
         cacheBuffer: visual.videoListItemHeight*10
 
         // List item delegate Component.

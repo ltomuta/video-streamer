@@ -38,9 +38,8 @@ ListItem {
         id: thumb
         // Reserve 27% of width for the thumb in portrait, and 17% in ls.
         width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
-        height: visual.videoImageWidth
-        anchors.top: visual.isE6 ? undefined : parent.top
-        anchors.verticalCenter: visual.isE6 ? parent.verticalCenter : undefined
+        height: visual.videoImageHeight
+        anchors.verticalCenter: parent.verticalCenter
 
         // Thumbnail image
         Image {
@@ -48,17 +47,50 @@ ListItem {
 
             width: visual.videoImageWidth
             height: visual.videoImageHeight
-            anchors.left: parent.left
+            anchors.centerIn: parent
             clip: true
             source: m_thumbnailUrl
             fillMode: Image.PreserveAspectCrop
         }
         // Mask image on top of the thumbnail
         Image {
-            width: thumbImg.width
+            id: thumbMask
+            sourceSize.width: thumbImg.width
+            sourceSize.height: thumbImg.height
             anchors.centerIn: thumbImg
 
             source: visual.images.thumbMask
+        }
+        // Mask image on top of the thumbnail when the item is selected
+        Image {
+            id: thumbHilightMask
+            source: visual.images.thumbHilightMask
+            sourceSize.width: thumbImg.width
+            sourceSize.height: thumbImg.height
+            anchors.centerIn: thumbImg
+            // This hilight mask image is hidden by default.
+            opacity: 0
+
+            // The QQC's ListItem has fade-out animation for the selection,
+            // so define a similar kind for the thumbnail highlight mask.
+            states: [
+                State {
+                    name: "shown"
+                    when: container.mode === "pressed"
+                    PropertyChanges {
+                        target: thumbHilightMask
+                        opacity: 1
+                    }
+                }
+            ]
+            transitions: Transition {
+                from: "shown"; to: ""
+                PropertyAnimation {
+                    properties: "opacity"
+                    easing.type: Easing.Linear
+                    duration: 150
+                }
+            }
         }
     }
 

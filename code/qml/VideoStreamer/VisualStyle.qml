@@ -26,8 +26,8 @@ Item {
 
     // Properties for the ListView
     property int videoListItemHeight: isE6 ? 110 : 90
-    property int videoImageWidth: 90
-    property int videoImageHeight: 90
+    property int videoImageWidth: 70
+    property int videoImageHeight: 70
 
     // For the TitleBar
     property int titleBarHeight: 30
@@ -66,6 +66,7 @@ Item {
 
         property string thumbMask: isE6 ? path+"e6_squircle_thumb_mask.png"
                                         : path+"squircle_thumb_mask.png"
+        property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"
