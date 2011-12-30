@@ -46,22 +46,27 @@ Item {
     }
 
     function __handleStatusChange(status, playing, position, paused) {
-        var isPlaying = playing && position !== 0
         var isVisibleState = status === Video.Buffered || status === Video.EndOfMedia
-        var isStalled = status === Video.Stalled && position !== 0
+        var isStalled = status === Video.Stalled
+
 
         // Background
-        if (!isVisibleState && !isStalled) {
-            blackBackground.opacity = 1
-        } else {
+        if ( (isVisibleState || isStalled) && !(paused && position === 0) ) {
             blackBackground.opacity = 0
+        } else {
+            blackBackground.opacity = 1
         }
 
         // Busy indicator
-        if (!isVisibleState && !isPlaying && !paused) {
+        if (!isVisibleState && playing) {
             busyIndicator.opacity = 1
         } else {
             busyIndicator.opacity = 0
+        }
+
+        if (status === Video.EndOfMedia) {
+            videoPlayerImpl.stop()
+            videoPlayerImpl.position = 0
         }
     }
 
@@ -100,10 +105,6 @@ Item {
 
         onStatusChanged: {
             __handleStatusChange(status, isPlaying, position, paused)
-            if (status === Video.EndOfMedia) {
-                videoPlayerImpl.stop()
-                videoPlayerImpl.position = 0
-            }
         }
     }
 
