@@ -7,7 +7,7 @@ Item {
 
     property bool isPlaying: true
     property int timePlayed: 0
-    property int timeRemaining: 0
+    property int timeDuration: 0
     property bool showBackground: true
     property bool showBackButton: true
 
@@ -80,9 +80,9 @@ Item {
         }
 
         InfoTextLabel {
-            id: timeRemainingLabel
+            id: timeDurationLabel
 
-            text: Util.milliSecondsToString(timeRemaining)
+            text: Util.milliSecondsToString(timeDuration)
             anchors.bottom: playButton.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: visual.controlMargins
@@ -93,10 +93,10 @@ Item {
 
             anchors.top: playButton.verticalCenter
             anchors.left: playButton.right
-            anchors.right: timeRemainingLabel.right
+            anchors.right: timeDurationLabel.right
             anchors.leftMargin: visual.controlMargins
 
-            value: videoPlayerControls.timePlayed / (videoPlayerControls.timePlayed + videoPlayerControls.timeRemaining)
+            value: videoPlayerControls.timePlayed / videoPlayerControls.timeDuration
         }
     }
 }

@@ -173,7 +173,7 @@ Page {
             id: videoPlayerControls
 
             timePlayed: videoPlayer.timePlayed
-            timeRemaining: videoPlayer.duration
+            timeDuration: videoPlayer.duration
             isPlaying: videoPlayer.isPlaying
 
 
@@ -217,7 +217,7 @@ Page {
                 height: visual.controlAreaHeight
 
                 timePlayed: videoPlayer.timePlayed
-                timeRemaining: videoPlayer.duration
+                timeDuration: videoPlayer.duration
                 isPlaying: videoPlayer.isPlaying
 
                 showBackground: false
