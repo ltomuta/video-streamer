@@ -112,6 +112,7 @@ ListItem {
             maximumLineCount: inPortrait ? 2 : 1
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
+            font.bold: true
         }
 
         // Author and date published information are only shown in landscape.

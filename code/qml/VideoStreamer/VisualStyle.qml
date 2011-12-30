@@ -51,8 +51,8 @@ Item {
     property int informationViewMargins: 5
 
     // VideoPlayView definitions
-    property double topAreaProportion: 0.05
-    property double bottomAreaProportion: 0.55
+    property double topAreaProportion: 0.25
+    property double bottomAreaProportion: 0.35
 
     // Visual style's images & graphics
     Item {
