@@ -29,14 +29,6 @@ Window {
     // Attribute definitions
     initialPage: VideoListView {tools: toolBarLayout}
 
-    // Background, shown everywhere
-    Image {
-        id: backgroundImg
-        anchors.fill: parent
-        source: visual.inPortrait ? visual.images.portraitBackground
-                                  : visual.images.landscapeBackground
-    }
-
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
         id: visual

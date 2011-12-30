@@ -165,7 +165,7 @@ ListItem {
 
             InfoTextLabel {
                 id: duration
-                width: parent.width/3
+                width: visual.inPortrait ? parent.width/4 : parent.width/3
                 text: Util.secondsToString(model.m_duration)
                 anchors.left: parent.left
             }
@@ -174,21 +174,13 @@ ListItem {
             Item {
                 id: viewAmount
                 height: viewsText.height
-                width: visual.inPortrait ? parent.width/4.2 : undefined
-                anchors.left: visual.inPortrait ? duration.right : undefined
-                anchors.right: visual.inPortrait ? undefined : likes.left
+                anchors.left: duration.right
+                //anchors.right: visual.inPortrait ? undefined : likes.left
 
                 InfoTextLabel {
                     id: viewsText
-                    text: model.m_viewCount
-                    anchors.right: viewsIcon.left
-                    anchors.rightMargin: visual.margins
-                }
-                Image {
-                    id: viewsIcon
-                    source: visual.images.viewsIcon
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    text: model.m_viewCount + qsTr(" views")
+                    horizontalAlignment: Text.AlignLeft
                 }
             }
 
