@@ -7,6 +7,14 @@ Page {
 
     property variant pageStack
 
+    // Background, shown behind the lists.
+    Image {
+        id: backgroundImg
+        anchors.fill: parent
+        source: visual.inPortrait ? visual.images.portraitBackground
+                                  : visual.images.landscapeBackground
+    }
+
     SearchBox {
         id: searchbox
 

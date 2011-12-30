@@ -173,7 +173,7 @@ Page {
             id: videoPlayerControls
 
             timePlayed: videoPlayer.timePlayed
-            timeRemaining: videoPlayer.duration
+            timeDuration: videoPlayer.duration
             isPlaying: videoPlayer.isPlaying
 
 
@@ -217,7 +217,7 @@ Page {
                 height: visual.controlAreaHeight
 
                 timePlayed: videoPlayer.timePlayed
-                timeRemaining: videoPlayer.duration
+                timeDuration: videoPlayer.duration
                 isPlaying: videoPlayer.isPlaying
 
                 showBackground: false
@@ -229,62 +229,6 @@ Page {
 
                 onPlayPressed: {
                     videoPlayer.play()
-                }
-            }
-
-            Flickable {
-                id: descriptionText
-
-                anchors {
-                    top: videoPlayerControls.bottom
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                }
-
-                contentWidth: descriptionText.width
-                contentHeight: titleLabel.height + videoDescriptionText.height + 2*visual.margins
-                clip: true
-
-                InfoTextLabel {
-                    id: titleLabel
-
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        margins: visual.margins
-                    }
-                    width: parent.width
-                    maximumLineCount: 2
-                    wrapMode: Text.WordWrap
-                    elide: Text.ElideRight
-                    text: videoPlayView.videoTitle
-                    font.bold: true
-                }
-
-                InfoTextLabel {
-                    id: videoDescriptionText
-                    width: parent.width
-                    anchors {
-                        top: titleLabel.bottom
-                        left: parent.left
-                        right: parent.right
-                        margins: visual.margins
-                    }
-
-                    text: videoPlayView.videoDescription
-                    elide: "ElideNone"
-                    wrapMode: Text.WordWrap
-                }
-
-                ScrollDecorator {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                    }
-                    // flickableItem binds the scroll decorator to the ListView.
-                    flickableItem: descriptionText
                 }
             }
         }

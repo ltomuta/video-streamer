@@ -2,19 +2,10 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "util.js" as Util
 
-ListItem {
+Item {
     id: container
 
     height: visual.videoListItemHeight
-
-    onClicked: {
-        var component = Qt.createComponent("VideoPlayView.qml");
-        if (component.status == Component.Ready) {
-            var player = component.createObject(container);
-            pageStack.push(player)
-            player.playVideo(model)
-        }
-    }
 
     // The ListItem's default implementation doesn't handle the Right Key
     // separately, so bind it also to opening the item.
@@ -36,11 +27,10 @@ ListItem {
     // Thumbnail Item, with added overlay icon + duration underneath.
     Item {
         id: thumb
-        // Reserve 27% of width for the thumb in portrait, and 17% in ls.
-        width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
-        height: visual.videoImageWidth
-        anchors.top: visual.isE6 ? undefined : parent.top
-        anchors.verticalCenter: visual.isE6 ? parent.verticalCenter : undefined
+        // Reserve 25% of width for the thumb in portrait, and 12% in ls.
+        width: visual.inPortrait ? parent.width * 0.25 : parent.width * 0.12
+        height: visual.videoImageHeight
+        anchors.verticalCenter: parent.verticalCenter
 
         // Thumbnail image
         Image {
@@ -48,17 +38,50 @@ ListItem {
 
             width: visual.videoImageWidth
             height: visual.videoImageHeight
-            anchors.left: parent.left
+            anchors.centerIn: parent
             clip: true
             source: m_thumbnailUrl
             fillMode: Image.PreserveAspectCrop
         }
         // Mask image on top of the thumbnail
         Image {
-            width: thumbImg.width
+            id: thumbMask
+            sourceSize.width: thumbImg.width
+            sourceSize.height: thumbImg.height
             anchors.centerIn: thumbImg
 
             source: visual.images.thumbMask
+        }
+        // Mask image on top of the thumbnail when the item is selected
+        Image {
+            id: thumbHilightMask
+            source: visual.images.thumbHilightMask
+            sourceSize.width: thumbImg.width
+            sourceSize.height: thumbImg.height
+            anchors.centerIn: thumbImg
+            // This hilight mask image is hidden by default.
+            opacity: 0
+
+            // The QQC's ListItem has fade-out animation for the selection,
+            // so define a similar kind for the thumbnail highlight mask.
+            states: [
+                State {
+                    name: "shown"
+                    when: container.mode === "pressed"
+                    PropertyChanges {
+                        target: thumbHilightMask
+                        opacity: 1
+                    }
+                }
+            ]
+            transitions: Transition {
+                from: "shown"; to: ""
+                PropertyAnimation {
+                    properties: "opacity"
+                    easing.type: Easing.Linear
+                    duration: 150
+                }
+            }
         }
     }
 
@@ -70,15 +93,17 @@ ListItem {
         anchors.left: thumb.right
         anchors.top: parent.top
         anchors.topMargin: visual.margins
+        anchors.bottom: thumb.bottom
 
         // Text element for viewing the video title information. Maximum of 2 lines.
         InfoTextLabel {
             id: videoTitle
             text: model.m_title
             width: parent.width
-            maximumLineCount: 2
+            maximumLineCount: inPortrait ? 2 : 1
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
+            font.bold: true
         }
 
         // Author and date published information are only shown in landscape.
@@ -126,12 +151,12 @@ ListItem {
             width: parent.width
             height: likesIcon.height
 //            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
-            anchors.top: videoTitle.bottom
-            anchors.topMargin: visual.margins
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: visual.isE6 ? visual.spacing : 0
 
             InfoTextLabel {
                 id: duration
-                width: parent.width/3
+                width: visual.inPortrait ? parent.width/4 : parent.width/3
                 text: Util.secondsToString(model.m_duration)
                 anchors.left: parent.left
             }
@@ -140,21 +165,13 @@ ListItem {
             Item {
                 id: viewAmount
                 height: viewsText.height
-                width: visual.inPortrait ? parent.width/4.2 : childrenRect.width
-                anchors.left: visual.inPortrait ? duration.right : undefined
-                anchors.right: visual.inPortrait ? undefined : likes.left
+                anchors.left: duration.right
+                //anchors.right: visual.inPortrait ? undefined : likes.left
 
                 InfoTextLabel {
                     id: viewsText
-                    text: model.m_viewCount
-                    anchors.right: viewsIcon.left
-                    anchors.rightMargin: visual.margins
-                }
-                Image {
-                    id: viewsIcon
-                    source: visual.images.viewsIcon
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    text: model.m_viewCount + qsTr(" views")
+                    horizontalAlignment: Text.AlignLeft
                 }
             }
 
@@ -162,7 +179,7 @@ ListItem {
                 id: likes
                 width: visual.inPortrait ? parent.width/3 : parent.width/4.2
                 anchors.right: parent.right
-                anchors.rightMargin: visual.inPortrait ? 0 : visual.margins*3
+                anchors.rightMargin: visual.inPortrait ? visual.margins : visual.margins*3
 
                 InfoTextLabel {
                     id: likesAmount
@@ -186,6 +203,18 @@ ListItem {
                     source: visual.images.thumbsDownIcon
                     anchors.right: parent.right
                 }
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            var component = Qt.createComponent("VideoPlayView.qml");
+            if (component.status == Component.Ready) {
+                var player = component.createObject(container);
+                pageStack.push(player)
+                player.playVideo(model)
             }
         }
     }

@@ -1,4 +1,4 @@
-// Visual style for Symbian
+// Visual style for MeeGo
 import QtQuick 1.1
 
 Item {
@@ -18,16 +18,16 @@ Item {
     property int spacing: 8
 
     // Font properties
-    property int smallFontSize: platformStyle.fontSizeSmall
-    property int generalFontSize: platformStyle.fontSizeMedium
-    property int largeFontSize: platformStyle.fontSizeLarge
+    property int smallFontSize: 15
+    property int generalFontSize: 20
+    property int largeFontSize: 30
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: isE6 ? 110 : 90
-    property int videoImageWidth: 90
-    property int videoImageHeight: 90
+    property int videoListItemHeight: inPortrait ? 110 : 90
+    property int videoImageWidth: inPortrait ? 90 : 80
+    property int videoImageHeight: inPortrait ? 90 : 80
 
     // For the TitleBar
     property int titleBarHeight: 30
@@ -51,8 +51,8 @@ Item {
     property int informationViewMargins: 5
 
     // VideoPlayView definitions
-    property double topAreaProportion: 0.05
-    property double bottomAreaProportion: 0.55
+    property double topAreaProportion: 0.25
+    property double bottomAreaProportion: 0.35
 
     // Visual style's images & graphics
     Item {
@@ -64,8 +64,8 @@ Item {
         property string landscapeBackground: path+"landscape_background.png"
         property string durationBackground: path+"duration_background.png"
 
-        property string thumbMask: isE6 ? path+"e6_squircle_thumb_mask.png"
-                                        : path+"squircle_thumb_mask.png"
+        property string thumbMask: path+"squircle_thumb_mask.png"
+        property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"

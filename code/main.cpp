@@ -6,7 +6,9 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeComponent>
 #include "qmlapplicationviewer.h"
+
 #include "loadhelper.h"
 
 #if defined(Q_OS_SYMBIAN)
@@ -18,12 +20,17 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
-    //viewer->setOrientation(QmlApplicationViewer::ScreenOrientationLockPortrait);
+    // Data model is created immediately to allow data fetching
+    // during splash screen is shown.
+    QScopedPointer<QDeclarativeComponent> dataModelComponent(
+                new QDeclarativeComponent(viewer->engine(), QUrl::fromLocalFile("qml/VideoStreamer/VideoListModel.qml")) );
+    QScopedPointer<QObject> dataModel(dataModelComponent->create());
+    viewer->rootContext()->setContextProperty("xmlDataModel", dataModel.data());
 
 #if defined(Q_OS_SYMBIAN)
     // Context property for listening the HW Volume key events in QML
-    VolumeKeys* volumeKeys = new VolumeKeys(0);
-    viewer->rootContext()->setContextProperty("volumeKeys", volumeKeys);
+    QScopedPointer<VolumeKeys> volumeKeys(new VolumeKeys(0));
+    viewer->rootContext()->setContextProperty("volumeKeys", volumeKeys.data());
 
     // Set this attribute in order to avoid drawing the system
     // background unnecessarily.

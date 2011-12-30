@@ -13,8 +13,10 @@ Window {
 
     Component.onCompleted: {
         contentArea.initialized = true
-        if (initialPage && stack.depth == 0)
-            stack.push(initialPage, null, true)
+        if (initialPage && stack.depth == 0) {
+            stack.push(initialPage, null, true);
+        }
+        theme.inverted = true;
     }
 
     onInitialPageChanged: {
@@ -29,14 +31,6 @@ Window {
     // Attribute definitions
     initialPage: VideoListView {tools: toolBarLayout}
 
-    // Background, shown everywhere
-    Image {
-        id: backgroundImg
-        anchors.fill: parent
-        source: visual.inPortrait ? visual.images.portraitBackground
-                                  : visual.images.landscapeBackground
-    }
-
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
         id: visual
@@ -50,19 +44,13 @@ Window {
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-        }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-search"
+
+        ToolIcon {
+            iconId: "toolbar-search"
             // Create the SearchView to the pageStack dynamically.
             onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
         }
-        ToolButton {
-            flat: true
+        ToolIcon {
             iconSource: visual.images.infoIcon
             onClicked: aboutDlg.open()
         }
@@ -90,7 +78,6 @@ Window {
 
         width: parent.width
         state: root.showStatusBar ? "Visible" : "Hidden"
-        platformInverted: root.platformInverted
 
         states: [
             State {
@@ -151,7 +138,7 @@ Window {
 
         width: parent.width
         state: root.showToolBar ? "Visible" : "Hidden"
-        platformInverted: root.platformInverted
+        anchors.bottom: parent.bottom
 
         states: [
             State {

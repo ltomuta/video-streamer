@@ -11,6 +11,7 @@ Item {
     property int numDislikes: 0
     property int viewCount: 0
 
+    // Prepends forward zeros to a text (e.g. 41 -> 0041)
     function __prependToLength(text, len, fill) {
         text = text.toString()
         fill = fill.toString()
@@ -26,15 +27,32 @@ Item {
 
     // Bundle each text label & image as a pair.
     Item {
+        id: views
         anchors.left: parent.left
         anchors.leftMargin: visual.margins
+        height: childrenRect.height
+
+        InfoTextLabel {
+            id: viewCountLabel
+            text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+                  + qsTr(" views")
+        }
+    }
+
+    Item {
+        anchors.right: parent.right
+        anchors.rightMargin: visual.margins
+        width: childrenRect.width
 
         InfoTextLabel {
             id: likesLabel
-            text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+            // The forward zeros aren't prepended at the time being.
+            //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+            text: videoInformationView.numLikes
         }
 
         Image {
+            id: likesImg
             source: visual.images.thumbsUpIcon
             anchors {
                 left: likesLabel.right
@@ -42,15 +60,13 @@ Item {
                 verticalCenter: likesLabel.verticalCenter
             }
         }
-    }
-
-    Item {
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: childrenRect.width
 
         InfoTextLabel {
             id: dislikesLabel
-            text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+            anchors.left: likesImg.right
+            // The forward zeros aren't prepended at the time being.
+            //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+            text: videoInformationView.numDislikes
         }
 
         Image {
@@ -63,23 +79,22 @@ Item {
         }
     }
 
-    Item {
-        anchors.right: parent.right
-        anchors.rightMargin: visual.margins
-        width: childrenRect.width
+    InfoTextLabel {
+        id: titleLabel
 
-        InfoTextLabel {
-            id: viewCountLabel
-            text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+        anchors {
+            top: views.bottom
+            topMargin: visual.spacing*2
+            left: parent.left
+            right: parent.right
+            margins: visual.margins
         }
-        Image {
-            source: visual.images.viewsIcon
-            anchors {
-                left: viewCountLabel.right
-                leftMargin: visual.margins
-                verticalCenter: viewCountLabel.verticalCenter
-            }
-        }
+        width: parent.width
+        maximumLineCount: 5
+        wrapMode: Text.WordWrap
+        elide: Text.ElideRight
+        text: videoPlayView.videoTitle
+        font.bold: true
     }
 }
 
