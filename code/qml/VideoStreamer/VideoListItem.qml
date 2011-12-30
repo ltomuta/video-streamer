@@ -36,8 +36,8 @@ ListItem {
     // Thumbnail Item, with added overlay icon + duration underneath.
     Item {
         id: thumb
-        // Reserve 27% of width for the thumb in portrait, and 17% in ls.
-        width: visual.inPortrait ? parent.width * 0.27 : parent.width * 0.17
+        // Reserve 25% of width for the thumb in portrait, and 12% in ls.
+        width: visual.inPortrait ? parent.width * 0.25 : parent.width * 0.12
         height: visual.videoImageHeight
         anchors.verticalCenter: parent.verticalCenter
 
@@ -102,15 +102,17 @@ ListItem {
         anchors.left: thumb.right
         anchors.top: parent.top
         anchors.topMargin: visual.margins
+        anchors.bottom: thumb.bottom
 
         // Text element for viewing the video title information. Maximum of 2 lines.
         InfoTextLabel {
             id: videoTitle
             text: model.m_title
             width: parent.width
-            maximumLineCount: 2
+            maximumLineCount: inPortrait ? 2 : 1
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
+            font.bold: true
         }
 
         // Author and date published information are only shown in landscape.
@@ -158,8 +160,8 @@ ListItem {
             width: parent.width
             height: likesIcon.height
 //            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
-            anchors.top: videoTitle.bottom
-            anchors.topMargin: visual.margins
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: visual.isE6 ? visual.spacing : 0
 
             InfoTextLabel {
                 id: duration
@@ -172,7 +174,7 @@ ListItem {
             Item {
                 id: viewAmount
                 height: viewsText.height
-                width: visual.inPortrait ? parent.width/4.2 : childrenRect.width
+                width: visual.inPortrait ? parent.width/4.2 : undefined
                 anchors.left: visual.inPortrait ? duration.right : undefined
                 anchors.right: visual.inPortrait ? undefined : likes.left
 
@@ -194,7 +196,7 @@ ListItem {
                 id: likes
                 width: visual.inPortrait ? parent.width/3 : parent.width/4.2
                 anchors.right: parent.right
-                anchors.rightMargin: visual.inPortrait ? 0 : visual.margins*3
+                anchors.rightMargin: visual.inPortrait ? visual.margins : visual.margins*3
 
                 InfoTextLabel {
                     id: likesAmount

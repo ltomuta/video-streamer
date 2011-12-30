@@ -26,8 +26,10 @@ Item {
 
     // Bundle each text label & image as a pair.
     Item {
+        id: likes
         anchors.left: parent.left
         anchors.leftMargin: visual.margins
+        height: childrenRect.height
 
         InfoTextLabel {
             id: likesLabel
@@ -80,6 +82,23 @@ Item {
                 verticalCenter: viewCountLabel.verticalCenter
             }
         }
+    }
+
+    InfoTextLabel {
+        id: titleLabel
+
+        anchors {
+            top: likes.bottom
+            left: parent.left
+            right: parent.right
+            margins: visual.margins
+        }
+        width: parent.width
+        maximumLineCount: 5
+        wrapMode: Text.WordWrap
+        elide: Text.ElideRight
+        text: videoPlayView.videoTitle
+        font.bold: true
     }
 }
 

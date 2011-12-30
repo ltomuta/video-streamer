@@ -25,9 +25,9 @@ Item {
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: isE6 ? 110 : 90
-    property int videoImageWidth: 70
-    property int videoImageHeight: 70
+    property int videoListItemHeight: inPortrait ? 80 : (isE6 ? 85 : 65)
+    property int videoImageWidth: inPortrait ? 70 : (isE6 ? 80 : 60)
+    property int videoImageHeight: inPortrait ? 70 : (isE6 ? 80 : 60)
 
     // For the TitleBar
     property int titleBarHeight: 30
@@ -51,8 +51,8 @@ Item {
     property int informationViewMargins: 5
 
     // VideoPlayView definitions
-    property double topAreaProportion: 0.05
-    property double bottomAreaProportion: 0.55
+    property double topAreaProportion: 0.25
+    property double bottomAreaProportion: 0.35
 
     // Visual style's images & graphics
     Item {
@@ -64,8 +64,7 @@ Item {
         property string landscapeBackground: path+"landscape_background.png"
         property string durationBackground: path+"duration_background.png"
 
-        property string thumbMask: isE6 ? path+"e6_squircle_thumb_mask.png"
-                                        : path+"squircle_thumb_mask.png"
+        property string thumbMask: path+"squircle_thumb_mask.png"
         property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
