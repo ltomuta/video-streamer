@@ -13,8 +13,9 @@ Window {
 
     Component.onCompleted: {
         contentArea.initialized = true
-        if (initialPage && stack.depth == 0)
-            stack.push(initialPage, null, true)
+        if (initialPage && stack.depth == 0) {
+            stack.push(initialPage, null, true);
+        }
     }
 
     onInitialPageChanged: {
@@ -143,6 +144,7 @@ Window {
 
         width: parent.width
         state: root.showToolBar ? "Visible" : "Hidden"
+        anchors.bottom: parent.bottom
         platformInverted: root.platformInverted
 
         states: [
