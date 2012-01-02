@@ -5,8 +5,10 @@ Window {
     id: root
 
     // Declared properties
-    property bool showStatusBar: true
-    property bool showToolBar: true
+    property bool isShowingSplashScreen: true
+    property bool showStatusBar: isShowingSplashScreen ? false : true
+    property bool showToolBar: isShowingSplashScreen ? false : true
+    property variant splashPage
     property variant initialPage
     property alias pageStack: stack
     property bool platformSoftwareInputPanelEnabled: false
@@ -19,12 +21,40 @@ Window {
         listHeight: parent.height-tbar.height
     }
 
+    splashPage: splashComponent
+
     Component.onCompleted: {
-        if (initialPage && stack.depth == 0) {
-            stack.push(initialPage, null, true);
+        if (splashPage && stack.depth == 0) {
+            stack.push(splashPage, null, true);
         }
     }
 
+    Component {
+        id: splashComponent
+
+        Item {
+            Splash {
+                id: splash
+                width: screen.width
+                height: screen.height
+            }
+
+            BusyIndicator {
+                anchors.centerIn: splash
+                width: visual.busyIndicatorWidth
+                height: visual.busyIndicatorHeight
+                running: true
+            }
+
+            Connections {
+                target: xmlDataModel
+                onLoadingChanged: {
+                    isShowingSplashScreen = false
+                    stack.replace(initialPage)
+                }
+            }
+        }
+    }
 
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
@@ -71,8 +101,10 @@ Window {
     PageStack {
         id: stack
         anchors {
-            top: sbar.bottom; bottom: parent.bottom
-            left: parent.left; right: parent.right
+            top: isShowingSplashScreen ? parent.top : sbar.bottom;
+            bottom: parent.bottom
+            left: parent.left;
+            right: parent.right
         }
 
         clip: true
