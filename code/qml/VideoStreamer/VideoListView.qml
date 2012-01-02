@@ -4,6 +4,8 @@ import com.nokia.meego 1.0
 Page {
     id: mainPage
 
+    property int listHeight: parent.height
+
     function forceKeyboardFocus() {
         listView.forceActiveFocus();
     }
@@ -24,7 +26,10 @@ Page {
 
     ListView {
         id: listView
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mainPage.listHeight
         snapMode: ListView.SnapToItem
 
         //model: xmlDataModel
