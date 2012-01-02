@@ -66,7 +66,7 @@ Window {
         id: tbar
 
         width: parent.width
-        visible: root.showToolBar ? true : false
+        visible: root.showToolBar
         anchors.bottom: parent.bottom
         transition: "pop"
     }
@@ -75,7 +75,6 @@ Window {
         id: sbar
 
         width: parent.width
-        state: root.showStatusBar ? "Visible" : "Hidden"
         visible: root.showStatusBar
     }
 
