@@ -1,20 +1,11 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 import "util.js" as Util
 
-ListItem {
+Item {
     id: container
 
     height: visual.videoListItemHeight
-
-    onClicked: {
-        var component = Qt.createComponent("VideoPlayView.qml");
-        if (component.status == Component.Ready) {
-            var player = component.createObject(container);
-            pageStack.push(player)
-            player.playVideo(model)
-        }
-    }
 
     // The ListItem's default implementation doesn't handle the Right Key
     // separately, so bind it also to opening the item.
@@ -212,6 +203,18 @@ ListItem {
                     source: visual.images.thumbsDownIcon
                     anchors.right: parent.right
                 }
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            var component = Qt.createComponent("VideoPlayView.qml");
+            if (component.status == Component.Ready) {
+                var player = component.createObject(container);
+                pageStack.push(player)
+                player.playVideo(model)
             }
         }
     }

@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Window {
     id: root
@@ -15,6 +15,7 @@ Window {
         if (initialPage && stack.depth == 0) {
             stack.push(initialPage, null, true);
         }
+        theme.inverted = true;
     }
 
     // Attribute definitions
@@ -38,19 +39,13 @@ Window {
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-        }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-search"
+
+        ToolIcon {
+            iconId: "toolbar-search"
             // Create the SearchView to the pageStack dynamically.
             onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
         }
-        ToolButton {
-            flat: true
+        ToolIcon {
             iconSource: visual.images.infoIcon
             onClicked: aboutDlg.open()
         }
@@ -73,7 +68,6 @@ Window {
         width: parent.width
         visible: root.showToolBar ? true : false
         anchors.bottom: parent.bottom
-        platformInverted: root.platformInverted
         transition: "pop"
     }
 
@@ -83,7 +77,7 @@ Window {
         width: parent.width
         state: root.showStatusBar ? "Visible" : "Hidden"
         visible: root.showStatusBar
-        platformInverted: root.platformInverted
+        anchors.bottom: parent.bottom
     }
 
 
