@@ -1,12 +1,14 @@
 videostreamer (0.2.0) unstable; urgency=low
-  * <Add change description here>
 
- -- First release with Harmattan/MeeGo support
+  * First release with Harmattan/MeeGo support
+
+ -- unknown <>  Fri, 30 Dec 2011 13:46:30 +0200
 
 videostreamer (0.1.1) unstable; urgency=low
-  * <Add change description here>
 
- -- First release with E6 support
+  * First release with E6 support
+
+ -- unknown <>  Fri, 16 Nov 2011 13:46:30 +0200
 
 videostreamer (0.0.1) unstable; urgency=low
 
