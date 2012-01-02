@@ -4,18 +4,12 @@ import com.nokia.symbian 1.1
 Window {
     id: root
 
+    // Declared properties
     property bool showStatusBar: true
     property bool showToolBar: true
     property variant initialPage
     property alias pageStack: stack
-
     property bool platformSoftwareInputPanelEnabled: false
-
-    Component.onCompleted: {
-        if (initialPage && stack.depth == 0) {
-            stack.push(initialPage, null, true);
-        }
-    }
 
     // Attribute definitions
     initialPage: VideoListView {
@@ -24,6 +18,13 @@ Window {
         // the ToolBar prevents the pagestack from being anchored to it.
         listHeight: parent.height-tbar.height
     }
+
+    Component.onCompleted: {
+        if (initialPage && stack.depth == 0) {
+            stack.push(initialPage, null, true);
+        }
+    }
+
 
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
@@ -52,7 +53,18 @@ Window {
         ToolButton {
             flat: true
             iconSource: visual.images.infoIcon
-            onClicked: aboutDlg.open()
+            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {tools: aboutTools})
+        }
+    }
+
+    // ToolBarLayout for AboutView
+    ToolBarLayout {
+        id: aboutTools
+
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
         }
     }
 
@@ -74,37 +86,14 @@ Window {
         visible: root.showToolBar ? true : false
         anchors.bottom: parent.bottom
         platformInverted: root.platformInverted
-        transition: "pop"
     }
 
     StatusBar {
         id: sbar
 
         width: parent.width
-        state: root.showStatusBar ? "Visible" : "Hidden"
         visible: root.showStatusBar
         platformInverted: root.platformInverted
-    }
-
-
-    // About dialog
-    QueryDialog {
-        id: aboutDlg
-
-        titleText: qsTr("YouTube Video Channel")
-        message: qsTr("<p>QML VideoStreamer application is a Nokia Developer example " +
-                      "demonstrating the QML Video playing capabilies." +
-                      "<p>Version: " + cp_versionNumber + "</p>" +
-                      "<p>Developed and published by Nokia. All rights reserved.</p>" +
-                      "<p>Learn more at " +
-                      "<a href=\"http://projects.developer.nokia.com/QMLVideoStreamer\">" +
-                      "developer.nokia.com</a>.</p>")
-        acceptButtonText: qsTr("Ok")
-        onAccepted: {
-            // When backing away from the about dialog, return the keyboard
-            // focus for the ListView.
-            initialPage.forceKeyboardFocus();
-        }
     }
 
     // event preventer when page transition is active
