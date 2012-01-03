@@ -6,10 +6,10 @@ Window {
 
     // Declared properties
     property bool isShowingSplashScreen: true
-    property bool showStatusBar: isShowingSplashScreen ? false : true
-    property bool showToolBar: isShowingSplashScreen ? false : true
-    property variant splashPage
+    property bool showStatusBar: !isShowingSplashScreen
+    property bool showToolBar: !isShowingSplashScreen
     property variant initialPage
+    property variant busySplash
     property alias pageStack: stack
     property bool platformSoftwareInputPanelEnabled: false
 
@@ -21,36 +21,32 @@ Window {
         listHeight: parent.height-tbar.height
     }
 
-    splashPage: splashComponent
-
     Component.onCompleted: {
-        if (splashPage && stack.depth == 0) {
-            stack.push(splashPage, null, true);
+        // Instantiate the Fake Splash Component. Shows a busy indicator for
+        // as long as the xml data model keeps loading.
+        var comp = busySplashComp;
+        if (comp.status === Component.Ready) {
+            busySplash = comp.createObject(root);
         }
     }
 
     Component {
-        id: splashComponent
+        id: busySplashComp
 
-        Item {
-            Splash {
-                id: splash
-                width: screen.width
-                height: screen.height
-            }
+        BusySplash {
+            id: busy
+            width: root.width
+            height: root.height
 
-            BusyIndicator {
-                anchors.centerIn: splash
-                width: visual.busyIndicatorWidth
-                height: visual.busyIndicatorHeight
-                running: true
-            }
+            // Get rid of the fake splash for good, when loading is done!
+            onDismissed: busySplash.destroy();
 
             Connections {
                 target: xmlDataModel
                 onLoadingChanged: {
-                    isShowingSplashScreen = false
-                    stack.replace(initialPage)
+                    busy.opacity = 0;
+                    root.isShowingSplashScreen = false;
+                    stack.push(initialPage);
                 }
             }
         }
@@ -101,10 +97,8 @@ Window {
     PageStack {
         id: stack
         anchors {
-            top: isShowingSplashScreen ? parent.top : sbar.bottom;
-            bottom: parent.bottom
-            left: parent.left;
-            right: parent.right
+            top: sbar.bottom; bottom: parent.bottom
+            left: parent.left; right: parent.right
         }
 
         clip: true
