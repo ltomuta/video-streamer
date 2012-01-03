@@ -32,8 +32,7 @@ Page {
         height: mainPage.listHeight
         snapMode: ListView.SnapToItem
 
-        //model: xmlDataModel
-        model: VideoListModel {}
+        model: xmlDataModel
         focus: true
         cacheBuffer: visual.videoListItemHeight*10
 
