@@ -5,9 +5,11 @@ Window {
     id: root
 
     // Declared properties
-    property bool showStatusBar: true
-    property bool showToolBar: true
+    property bool isShowingSplashScreen: true
+    property bool showStatusBar: !isShowingSplashScreen
+    property bool showToolBar: !isShowingSplashScreen
     property variant initialPage
+    property variant busySplash
     property alias pageStack: stack
     property bool platformSoftwareInputPanelEnabled: false
 
@@ -20,12 +22,36 @@ Window {
     }
 
     Component.onCompleted: {
-        if (initialPage && stack.depth == 0) {
-            stack.push(initialPage, null, true);
+        // Instantiate the Fake Splash Component. Shows a busy indicator for
+        // as long as the xml data model keeps loading.
+        var comp = busySplashComp;
+        if (comp.status === Component.Ready) {
+            busySplash = comp.createObject(root);
         }
-        theme.inverted = true;
+	theme.inverted = true;
     }
 
+    Component {
+        id: busySplashComp
+
+        BusySplash {
+            id: busy
+            width: root.width
+            height: root.height
+
+            // Get rid of the fake splash for good, when loading is done!
+            onDismissed: busySplash.destroy();
+
+            Connections {
+                target: xmlDataModel
+                onLoadingChanged: {
+                    busy.opacity = 0;
+                    root.isShowingSplashScreen = false;
+                    stack.push(initialPage);
+                }
+            }
+        }
+    }
 
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
