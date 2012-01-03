@@ -22,13 +22,14 @@ Window {
     }
 
     Component.onCompleted: {
+        // Use the black theme on MeeGo.
+        theme.inverted = true;
         // Instantiate the Fake Splash Component. Shows a busy indicator for
         // as long as the xml data model keeps loading.
         var comp = busySplashComp;
         if (comp.status === Component.Ready) {
             busySplash = comp.createObject(root);
         }
-	theme.inverted = true;
     }
 
     Component {
