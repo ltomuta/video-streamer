@@ -3,13 +3,6 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 Page {
-    // Background, shown behind.
-    Image {
-        id: backgroundImg
-        anchors.fill: parent
-        source: visual.inPortrait ? visual.images.portraitBackground
-                                  : visual.images.landscapeBackground
-    }
 
     // Label for the application.
     InfoTextLabel {

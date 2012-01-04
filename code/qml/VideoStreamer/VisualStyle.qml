@@ -13,6 +13,9 @@ Item {
     // Property handle to get the style's gfx
     property alias images: images
 
+    // Property, which defines whether or not to show the background image.
+    property bool showBackground: true
+
     // General
     property int margins: 4
     property int spacing: 8
@@ -42,7 +45,8 @@ Item {
     property int controlAreaHeight: isE6 ? 85 : 65
 
     // Busy indicator
-    property int busyIndicatorHeight: inPortrait ? screen.width / 4 : screen.height / 4
+    property int busyIndicatorHeight: inPortrait ? screen.displayWidth / 4
+                                                 : screen.displayHeight / 4
     property int busyIndicatorWidth: busyIndicatorHeight
 
     // Video information
@@ -53,6 +57,12 @@ Item {
     // VideoPlayView definitions
     property double topAreaProportion: 0.25
     property double bottomAreaProportion: 0.35
+
+    // Transition animation durations (in milliseconds)
+    property int animationDurationShort: 150
+    property int animationDurationNormal: 350
+    property int animationDurationPrettyLong: 500
+    property int animationDurationLong: 600
 
     // Visual style's images & graphics
     Item {

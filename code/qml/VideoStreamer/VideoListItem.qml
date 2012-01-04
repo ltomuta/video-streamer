@@ -88,7 +88,7 @@ ListItem {
                 PropertyAnimation {
                     properties: "opacity"
                     easing.type: Easing.Linear
-                    duration: 150
+                    duration: visual.animationDurationShort
                 }
             }
         }

@@ -20,10 +20,8 @@ Item {
 
     Behavior on opacity {
         SequentialAnimation {
-            NumberAnimation { duration: 600 }
+            NumberAnimation { duration: visual.animationDurationLong }
             ScriptAction { script: dismissed() }
         }
     }
-
-    Component.onDestruction: console.log("DESTROYED BUSYSPLASH!")
 }

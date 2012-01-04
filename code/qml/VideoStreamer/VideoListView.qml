@@ -16,14 +16,6 @@ Page {
         }
     }
 
-    // Background, shown behind the lists.
-    Image {
-        id: backgroundImg
-        anchors.fill: parent
-        source: visual.inPortrait ? visual.images.portraitBackground
-                                  : visual.images.landscapeBackground
-    }
-
     ListView {
         id: listView
         anchors.top: parent.top

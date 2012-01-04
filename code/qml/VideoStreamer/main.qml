@@ -62,6 +62,32 @@ Window {
         isE6: root.height == 480
     }
 
+    // Background, shown behind the lists. Will fade to black when hiding it.
+    Image {
+        id: backgroundImg
+        anchors.fill: parent
+        source: visual.inPortrait ? visual.images.portraitBackground
+                                  : visual.images.landscapeBackground
+
+        states: [
+            State {
+                name: "invisible"
+                when: !visual.showBackground
+                PropertyChanges { target: backgroundImg; opacity: 0 }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                to: "invisible"
+                NumberAnimation {
+                    properties: "opacity"
+                    duration: visual.animationDurationPrettyLong
+                }
+            }
+        ]
+    }
+
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
