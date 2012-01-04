@@ -24,6 +24,40 @@ Item {
         }
     }
 
+    // Custom made background highlight, as there's no ListItem in Qt Quick
+    // MeeGo components. Graphics ripped from QQC Symbian project.
+    BorderImage {
+        id: highlight
+        border {
+            left: visual.margins
+            top: visual.margins
+            right: visual.margins
+            bottom: visual.margins
+        }
+        opacity: 0
+        anchors.fill: parent
+        source: visual.images.listItemHilight
+
+        states: [
+            State {
+                name: "shown"
+                when: ma.pressed
+                PropertyChanges {
+                    target: highlight
+                    opacity: 1
+                }
+            }
+        ]
+        transitions: Transition {
+            from: "shown"; to: ""
+            PropertyAnimation {
+                properties: "opacity"
+                easing.type: Easing.Linear
+                duration: visual.animationDurationShort
+            }
+        }
+    }
+
     // Thumbnail Item, with added overlay icon + duration underneath.
     Item {
         id: thumb
@@ -67,7 +101,7 @@ Item {
             states: [
                 State {
                     name: "shown"
-                    when: container.mode === "pressed"
+                    when: ma.pressed
                     PropertyChanges {
                         target: thumbHilightMask
                         opacity: 1
@@ -208,10 +242,13 @@ Item {
     }
 
     MouseArea {
+        id: ma
+
         anchors.fill: parent
+
         onClicked: {
             var component = Qt.createComponent("VideoPlayView.qml");
-            if (component.status == Component.Ready) {
+            if (component.status === Component.Ready) {
                 var player = component.createObject(container);
                 pageStack.push(player)
                 player.playVideo(model)

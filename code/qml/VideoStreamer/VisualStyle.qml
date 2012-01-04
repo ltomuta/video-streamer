@@ -90,5 +90,8 @@ Item {
         property string vpcBack: path+"back.svg"
         property string vpcPlay: path+"play.svg"
         property string vpcPause: path+"pause.svg"
+
+        // MeeGo specific
+        property string listItemHilight: path+"qtg_fr_list_pressed.svg"
     }
 }
