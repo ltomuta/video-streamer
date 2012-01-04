@@ -5,7 +5,7 @@ Page {
     id: videoPlayView
 
     property bool isFullScreen: true
-    property bool isPortrait: screen.width < screen.height
+    property bool isPortrait: visual.inPortrait
 
     property string videoTitle: ""
     property int videoLength: 0
