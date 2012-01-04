@@ -1,14 +1,14 @@
-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 Item {
 
     // Signalled, when opacity reaches 0.
-    signal dismissed()
+    signal dismissed
 
     Splash {
         id: splash
+        portrait: visual.inPortrait
     }
 
     BusyIndicator {

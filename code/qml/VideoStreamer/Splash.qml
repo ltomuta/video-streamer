@@ -1,14 +1,14 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
 Item {
     id: splash
 
-    property bool landscape: width > height
+    property bool portrait: screen.displayHeight > screen.displayWidth
 
     anchors.fill: parent
     Image {
         id: bgImg
         anchors.fill: parent
-        source: landscape ? "gfx/FilmReel_landscape.png" : "gfx/FilmReel.png"
+        source: portrait ? "gfx/FilmReel.png" : "gfx/FilmReel_landscape.png"
     }
 }
