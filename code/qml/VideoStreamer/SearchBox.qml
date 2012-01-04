@@ -1,21 +1,22 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-// A Custom made SearchBox, as there is no SearchBox in MeeGo Qt Quick
-// Components Extras. It tries to resemble the Symbian extras SearchBox.
+// A Custom made search box element, as there is no SearchBox in MeeGo Qt Quick
+// Components Extras. Some implementation ripped from the QQC Symbian SearchBox.
 Item {
     id: root
 
-    // Styling for the SearchBox
-    property Style platformStyle: ToolBarStyle {}
+    // Declared properties
     property alias searchText: searchTextInput.text
     property alias placeHolderText: searchTextInput.placeholderText
     property alias maximumLength: searchTextInput.maximumLength
+    // Styling for the SearchBox
+    property Style platformStyle: ToolBarStyle {}
 
     // Signals & functions
-    signal backClicked()
+    signal backClicked
 
-    // Attribute declarations
+    // Attribute definitions
     width: parent ? parent.width : 0
     height: bgImage.height
 
@@ -72,6 +73,8 @@ Item {
                 margins: visual.margins
             }
 
+            // Save some empty space for the text on the left & right,
+            // for the icon graphics.
             platformStyle: TextFieldStyle {
                 paddingLeft: searchIcon.width + visual.margins * 2
                 paddingRight: clearTextIcon.width
@@ -83,7 +86,7 @@ Item {
                 }
             }
 
-            // Search icon, just for styling the SearchBox.
+            // Search icon, just for styling the SearchBox a bit.
             Image {
                 id: searchIcon
 
