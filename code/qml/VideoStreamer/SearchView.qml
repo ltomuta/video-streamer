@@ -1,6 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
-import com.nokia.extras 1.1
+import com.nokia.meego 1.0
 
 Page {
     id: searchView
@@ -12,7 +11,6 @@ Page {
 
         focus: true
         placeHolderText: qsTr("Search Text")
-        backButton: true
         onBackClicked: searchView.pageStack.depth <= 1 ? Qt.quit() : searchView.pageStack.pop()
     }
 
