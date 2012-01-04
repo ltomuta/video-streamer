@@ -1,11 +1,11 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Page {
     id: videoPlayView
 
     property bool isFullScreen: true
-    property bool isPortrait: screen.width < screen.height
+    property bool isPortrait: visual.inPortrait
 
     property string videoTitle: ""
     property int videoLength: 0
@@ -246,9 +246,8 @@ Page {
 
     tools: ToolBarLayout {
         id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        ToolIcon {
+            iconId: "toolbar-back"
             onClicked: __handleExit()
         }
     }

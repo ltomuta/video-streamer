@@ -1,4 +1,4 @@
-// Visual style for Symbian
+// Visual style for MeeGo
 import QtQuick 1.1
 
 Item {
@@ -21,16 +21,16 @@ Item {
     property int spacing: 8
 
     // Font properties
-    property int smallFontSize: platformStyle.fontSizeSmall
-    property int generalFontSize: platformStyle.fontSizeMedium
-    property int largeFontSize: platformStyle.fontSizeLarge
+    property int smallFontSize: 15
+    property int generalFontSize: 20
+    property int largeFontSize: 30
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
     property color defaultFontColor: "#FFFFFF"
 
     // Properties for the ListView
-    property int videoListItemHeight: inPortrait ? 80 : (isE6 ? 85 : 65)
-    property int videoImageWidth: inPortrait ? 70 : (isE6 ? 80 : 60)
-    property int videoImageHeight: inPortrait ? 70 : (isE6 ? 80 : 60)
+    property int videoListItemHeight: inPortrait ? 110 : 90
+    property int videoImageWidth: inPortrait ? 90 : 80
+    property int videoImageHeight: inPortrait ? 90 : 80
 
     // For the TitleBar
     property int titleBarHeight: 30

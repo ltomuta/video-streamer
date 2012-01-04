@@ -3,7 +3,7 @@ import QtQuick 1.1
 Item {
     id: splash
 
-    property bool portrait: screen.displayHeight > screen.displayWidth
+    property bool portrait: height > width
 
     anchors.fill: parent
     Image {
