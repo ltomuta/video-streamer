@@ -53,12 +53,16 @@ Page {
     }
 
     function __showVideoControls(showControls) {
-        overlayLoader.visible = showControls
+        overlayLoader.state = showControls ? "" : "Hidden"
     }
 
     function __toggleVideoControls() {
         if (!isPortrait) {
-            overlayLoader.visible = !overlayLoader.visible
+            if (overlayLoader.state == "") {
+                overlayLoader.state = "Hidden";
+            } else {
+                overlayLoader.state = "";
+            }
         }
     }
 
@@ -134,12 +138,6 @@ Page {
         }
     }
 
-    Component {
-        id: emptyStub
-
-        Item {}
-    }
-
     Loader {
         id: upperAreaLoader
         anchors {
@@ -149,7 +147,7 @@ Page {
             right: parent.right
         }
 
-        sourceComponent: isPortrait ? videoInformation : emptyStub
+        sourceComponent: isPortrait ? videoInformation : undefined
     }
 
     // Video player area
@@ -157,12 +155,11 @@ Page {
         id: videoPlayer
 
         anchors {
-            top: upperAreaLoader.bottom
-            bottom: bottomAreaLoader.top
+            top: isPortrait ? upperAreaLoader.bottom : parent.top
+            bottom: isPortrait ? bottomAreaLoader.top : parent.bottom
             left: parent.left
             right: parent.right
         }
-
 
         onToggled: __toggleVideoControls()
     }
@@ -170,11 +167,46 @@ Page {
     Loader {
         id: overlayLoader
 
-        visible: false
-        sourceComponent: !isPortrait ? overlayComponent : emptyStub
-        anchors.bottom: parent.bottom
+        state: "Hidden"
+        sourceComponent: !isPortrait ? overlayComponent : undefined
+        // Don't use anchoring here, use y-coordinate instead, so that
+        // it can be animated.
+        y: parent.height-visual.controlAreaHeight
+        // anchors.bottom: parent.bottom
         width: videoPlayView.width
         height: visual.controlAreaHeight
+
+        states: [
+            // Inactive state.
+            State {
+                name: "Hidden"
+                PropertyChanges {
+                    target: overlayLoader
+                    // Move the controls 'beneath' the screen
+                    // and make it completely transparent.
+                    y: videoPlayView.height
+                    opacity: 0.0
+                }
+            }
+        ]
+
+        transitions: [
+            // Transition between active and inactive states.
+            Transition {
+                from: "";  to: "Hidden"; reversible: true
+                ParallelAnimation {
+                    PropertyAnimation {
+                        properties: "opacity"
+                        easing.type: Easing.InOutExpo
+                        duration: visual.animationDurationShort
+                    }
+                    PropertyAnimation {
+                        properties: "y"
+                        duration: visual.animationDurationNormal
+                    }
+                }
+            }
+        ]
     }
 
     Component {
@@ -209,7 +241,7 @@ Page {
             right: parent.right
         }
 
-        sourceComponent: isPortrait ? bottomArea : emptyStub
+        sourceComponent: isPortrait ? bottomArea : undefined
     }
 
 
@@ -244,7 +276,9 @@ Page {
         }
     }
 
-    tools: ToolBarLayout {
+    tools: visual.inPortrait ? toolBarLayout : null
+
+    ToolBarLayout {
         id: toolBarLayout
         ToolButton {
             flat: true

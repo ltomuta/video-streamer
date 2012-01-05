@@ -43,6 +43,7 @@ Item {
     property int controlWidth: isE6 ? 70 : 50
     property int controlHeight: isE6 ? 70 : 50
     property int controlAreaHeight: isE6 ? 85 : 65
+    property double controlOpacity: 0.8
 
     // Busy indicator
     property int busyIndicatorHeight: inPortrait ? screen.displayWidth / 4

@@ -15,45 +15,50 @@ Item {
     signal playPressed
     signal pausePressed
 
-    Rectangle {
+    Item {
         anchors.fill: parent
-        radius: 10
-        color: videoPlayerControls.showBackground ? Qt.rgba(0.75, 0.75, 0.75, 0.75) : Qt.rgba(0,0,0,0)
+
+        // Use the same background image as the ToolBar.
+        BorderImage {
+            id: background
+            anchors.fill: parent
+            opacity: visual.controlOpacity
+            source: videoPlayerControls.showBackground
+                    ? privateStyle.imagePath("qtg_fr_toolbar", false)
+                    : ""
+            border { left: 20; top: 20; right: 20; bottom: 20 }
+        }
 
         Loader {
             id: backButtonLoader
 
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: videoPlayerControls.showBackButton ? visual.controlMargins : 0
-            sourceComponent: videoPlayerControls.showBackButton ? backButtonComponent : emptyPlaceholder
+            anchors.leftMargin: videoPlayerControls.showBackButton
+                                ? visual.controlMargins : 0
+            sourceComponent: videoPlayerControls.showBackButton
+                             ? backButtonComponent
+                             : undefined
         }
 
         Component {
             id: backButtonComponent
 
             Button {
-                iconSource: visual.images.vpcBack
+                iconSource: privateStyle.imagePath("toolbar-back", false)
                 width: visual.controlWidth
                 height: visual.controlHeight
                 onClicked: videoPlayerControls.backButtonPressed()
             }
         }
 
-        Component {
-            id: emptyPlaceholder
-
-            Rectangle {
-                width: 0
-                height: 0
-            }
-        }
-
         Button {
             id: playButton
 
-            iconSource: videoPlayerControls.isPlaying ? visual.images.vpcPause
-                                                      : visual.images.vpcPlay
+            iconSource: videoPlayerControls.isPlaying
+                        ? privateStyle.imagePath("toolbar-mediacontrol-pause", false)
+                        : privateStyle.imagePath("toolbar-mediacontrol-play", false)
+
             width: visual.controlWidth
             height: visual.controlHeight
             anchors.verticalCenter: backButtonLoader.verticalCenter
