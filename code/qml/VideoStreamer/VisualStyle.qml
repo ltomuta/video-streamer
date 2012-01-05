@@ -76,6 +76,7 @@ Item {
 
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
+        property string thumbKbHilightMask: path+"squircle_keyboard_thumb_hilight_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"

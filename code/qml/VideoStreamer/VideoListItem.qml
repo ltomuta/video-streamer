@@ -5,6 +5,7 @@ import "util.js" as Util
 ListItem {
     id: container
 
+    // Attribute definitions
     height: visual.videoListItemHeight
 
     onClicked: {
@@ -22,7 +23,7 @@ ListItem {
         if (!event.isAutoRepeat) {
             switch (event.key) {
             case Qt.Key_Right:
-                if (symbian.listInteractionMode != Symbian.KeyNavigation) {
+                if (symbian.listInteractionMode !== Symbian.KeyNavigation) {
                     symbian.listInteractionMode = Symbian.KeyNavigation;
                 } else {
                     container.clicked();
@@ -61,30 +62,45 @@ ListItem {
 
             source: visual.images.thumbMask
         }
-        // Mask image on top of the thumbnail when the item is selected
+        // Mask image on top of the thumbnail when the item is selected.
         Image {
             id: thumbHilightMask
-            source: visual.images.thumbHilightMask
+
+            // The image is being variated based on with which method
+            // it is being selected.
+            source: (container.mode === "pressed" || container.mode === "normal" ) ?
+                        visual.images.thumbHilightMask      // Selected with touch
+                      : visual.images.thumbKbHilightMask    // Selected with KB
+
             sourceSize.width: thumbImg.width
             sourceSize.height: thumbImg.height
             anchors.centerIn: thumbImg
             // This hilight mask image is hidden by default.
             opacity: 0
 
-            // The QQC's ListItem has fade-out animation for the selection,
-            // so define a similar kind for the thumbnail highlight mask.
             states: [
                 State {
-                    name: "shown"
+                    name: "pressed"
                     when: container.mode === "pressed"
+                    PropertyChanges {
+                        target: thumbHilightMask
+                        opacity: 1
+                    }
+                },
+                State {
+                    name: "highlighted"
+                    when: container.mode === "highlighted"
                     PropertyChanges {
                         target: thumbHilightMask
                         opacity: 1
                     }
                 }
             ]
+
+            // The QQC's ListItem has fade-out animation for the selection,
+            // so define a similar kind for the thumbnail highlight mask.
             transitions: Transition {
-                from: "shown"; to: ""
+                from: "pressed"; to: ""
                 PropertyAnimation {
                     properties: "opacity"
                     easing.type: Easing.Linear
