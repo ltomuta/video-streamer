@@ -43,6 +43,7 @@ Item {
     property int controlWidth: isE6 ? 70 : 50
     property int controlHeight: isE6 ? 70 : 50
     property int controlAreaHeight: isE6 ? 85 : 65
+    property double controlOpacity: 0.8
 
     // Busy indicator
     property int busyIndicatorHeight: inPortrait ? screen.displayWidth / 4
@@ -72,10 +73,10 @@ Item {
         // Background images
         property string portraitBackground: path+"portrait_background.png"
         property string landscapeBackground: path+"landscape_background.png"
-        property string durationBackground: path+"duration_background.png"
 
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
+        property string thumbKbHilightMask: path+"squircle_keyboard_thumb_hilight_mask.png"
         property string playOverlayIcon: path+"play_overlay_icon.png"
         property string viewsIcon: path+"views_icon.png"
         property string thumbsUpIcon: path+"thumbs_up.png"

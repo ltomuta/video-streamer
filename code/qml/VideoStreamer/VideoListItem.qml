@@ -5,24 +5,9 @@ import "util.js" as Util
 Item {
     id: container
 
+    // Attribute definitions
     height: visual.videoListItemHeight
 
-    // The ListItem's default implementation doesn't handle the Right Key
-    // separately, so bind it also to opening the item.
-    Keys.onPressed: {
-        if (!event.isAutoRepeat) {
-            switch (event.key) {
-            case Qt.Key_Right:
-                if (symbian.listInteractionMode != Symbian.KeyNavigation) {
-                    symbian.listInteractionMode = Symbian.KeyNavigation;
-                } else {
-                    container.clicked();
-                    event.accepted = true;
-                }
-                break;
-            }
-        }
-    }
 
     // Custom made background highlight, as there's no ListItem in Qt Quick
     // MeeGo components. Graphics ripped from QQC Symbian project.
@@ -86,7 +71,7 @@ Item {
 
             source: visual.images.thumbMask
         }
-        // Mask image on top of the thumbnail when the item is selected
+        // Mask image on top of the thumbnail when the item is selected.
         Image {
             id: thumbHilightMask
             source: visual.images.thumbHilightMask
@@ -100,7 +85,7 @@ Item {
             // so define a similar kind for the thumbnail highlight mask.
             states: [
                 State {
-                    name: "shown"
+                    name: "pressed"
                     when: ma.pressed
                     PropertyChanges {
                         target: thumbHilightMask
@@ -109,7 +94,7 @@ Item {
                 }
             ]
             transitions: Transition {
-                from: "shown"; to: ""
+                from: "pressed"; to: ""
                 PropertyAnimation {
                     properties: "opacity"
                     easing.type: Easing.Linear
@@ -217,7 +202,7 @@ Item {
 
                 InfoTextLabel {
                     id: likesAmount
-                    text: model.m_numLikes
+                    text: model.m_numLikes ? model.m_numLikes : "0"
                     anchors.right: likesIcon.left
                     anchors.verticalCenter: likesIcon.verticalCenter
                 }
@@ -229,7 +214,7 @@ Item {
                 InfoTextLabel {
                     id: dislikesAmount
                     anchors.right: dislikesIcon.left
-                    text: model.m_numDislikes
+                    text: model.m_numDislikes ? model.m_numDislikes : "0"
                     anchors.verticalCenter: dislikesIcon.verticalCenter
                 }
                 Image {
