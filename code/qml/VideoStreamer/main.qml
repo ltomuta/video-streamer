@@ -101,17 +101,7 @@ Window {
         }
         ToolIcon {
             iconSource: visual.images.infoIcon
-            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {tools: aboutTools})
-        }
-    }
-
-    // ToolBarLayout for AboutView
-    ToolBarLayout {
-        id: aboutTools
-
-        ToolIcon {
-            iconId: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {pageStack: stack})
         }
     }
 
