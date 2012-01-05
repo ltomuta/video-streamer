@@ -10,7 +10,7 @@ ListItem {
 
     onClicked: {
         var component = Qt.createComponent("VideoPlayView.qml");
-        if (component.status == Component.Ready) {
+        if (component.status === Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)
             player.playVideo(model)
@@ -208,7 +208,7 @@ ListItem {
 
                 InfoTextLabel {
                     id: likesAmount
-                    text: model.m_numLikes
+                    text: model.m_numLikes ? model.m_numLikes : "0"
                     anchors.right: likesIcon.left
                     anchors.verticalCenter: likesIcon.verticalCenter
                 }
@@ -220,7 +220,7 @@ ListItem {
                 InfoTextLabel {
                     id: dislikesAmount
                     anchors.right: dislikesIcon.left
-                    text: model.m_numDislikes
+                    text: model.m_numDislikes ? model.m_numDislikes : "0"
                     anchors.verticalCenter: dislikesIcon.verticalCenter
                 }
                 Image {
