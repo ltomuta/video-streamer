@@ -5,25 +5,40 @@ import com.nokia.extras 1.1
 Page {
     id: searchView
 
+    // Declared properties
     property variant pageStack
+
+    // If the user moves up/down, focus on the list instead of the search box.
+    Keys.onPressed: {
+        if (!event.isAutoRepeat) {
+            switch (event.key) {
+            case Qt.Key_Up:
+            case Qt.Key_Down:
+                // Don't accept the event, just set the focus to the list.
+                // The ListItems themselves will accept the kb events.
+                listView.forceActiveFocus();
+                break;
+            }
+        }
+    }
 
     SearchBox {
         id: searchbox
 
-        focus: true
         placeHolderText: qsTr("Search Text")
         backButton: true
-        onBackClicked: searchView.pageStack.depth <= 1 ? Qt.quit() : searchView.pageStack.pop()
+        onBackClicked: searchView.pageStack.depth <= 1 ? Qt.quit()
+                                                       : searchView.pageStack.pop()
     }
 
     VideoListModel {
         id: videoListModel
-
         searchTerm: searchbox.searchText
     }
 
     ListView {
         id: listView
+
         anchors {
             top: searchbox.bottom
             bottom: parent.bottom
@@ -31,19 +46,30 @@ Page {
             right: parent.right
         }
 
-        snapMode: ListView.SnapToItem
         model: searchbox.searchText ? videoListModel : null
-        delegate: listDelegate
-        focus: true
-        spacing: visual.spacing
+        snapMode: ListView.SnapToItem
+        cacheBuffer: visual.videoListItemHeight*10
         clip: true
-    }
 
-    Component {
-        id: listDelegate
-        VideoListItem {
+        // List item delegate Component.
+        delegate: VideoListItem {
             width: listView.width
         }
+    }
+
+    Text {
+        id: noResultsText
+
+        font {
+            family: visual.defaultFontFamily
+            pixelSize: visual.largeFontSize
+        }
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: searchbox.bottom
+        opacity: 0
+        color: visual.defaultFontColor
+        text: qsTr("No videos found")
     }
 
     states: State {
@@ -56,20 +82,5 @@ Page {
             target: noResultsText
             opacity: 1
         }
-    }
-
-    Text {
-        id: noResultsText
-        text: qsTr("No videos found")
-
-        font {
-            family: visual.defaultFontFamily
-            pixelSize: visual.largeFontSize
-        }
-        color: visual.defaultFontColor
-
-        opacity: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: searchbox.bottom
     }
 }
