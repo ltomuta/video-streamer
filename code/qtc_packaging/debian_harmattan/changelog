@@ -1,3 +1,8 @@
+videostreamer (0.3.0) unstable; urgency=low
+  * Lots of fixes, feature improvements & UI tweaking
+
+ -- unknown <>  Mon, 09 Jan 2012 10:03:36 +0200
+
 videostreamer (0.2.0) unstable; urgency=low
 
   * First release with Harmattan/MeeGo support

@@ -6,7 +6,7 @@ CONFIG += qt qt-components mobility
 MOBILITY += multimedia
 
 # Version number & version string definition (for using it inside the app)
-VERSION = 0.2.0
+VERSION = 0.3.0
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
@@ -51,14 +51,6 @@ symbian {
    HEADERS += volumekeys.h
 
    LIBS += -lremconcoreapi -lremconinterfacebase
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    #QT += opengl
-    DEFINES += Q_WS_HARMATTAN
-    icon_file.files = VideoStreamer.svg
-    icon_file.path = /usr/share/icons/hicolor/scalable/apps
-    INSTALLS += icon_file desktop
 }
 
 # Please do not modify the following two lines. Required for deployment.
