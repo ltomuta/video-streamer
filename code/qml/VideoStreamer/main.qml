@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Window {
     id: root
@@ -22,6 +22,8 @@ Window {
     }
 
     Component.onCompleted: {
+        // Use the black theme on MeeGo.
+        theme.inverted = true;
         // Instantiate the Fake Splash Component. Shows a busy indicator for
         // as long as the xml data model keeps loading.
         var comp = busySplashComp;
@@ -91,32 +93,15 @@ Window {
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
-        }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-search"
+
+        ToolIcon {
+            iconId: "toolbar-search"
             // Create the SearchView to the pageStack dynamically.
             onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
         }
-        ToolButton {
-            flat: true
+        ToolIcon {
             iconSource: visual.images.infoIcon
-            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {tools: aboutTools})
-        }
-    }
-
-    // ToolBarLayout for AboutView
-    ToolBarLayout {
-        id: aboutTools
-
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {pageStack: stack})
         }
     }
 
@@ -135,9 +120,8 @@ Window {
         id: tbar
 
         width: parent.width
-        visible: root.showToolBar ? true : false
+        visible: root.showToolBar
         anchors.bottom: parent.bottom
-        platformInverted: root.platformInverted
     }
 
     StatusBar {
@@ -145,7 +129,6 @@ Window {
 
         width: parent.width
         visible: root.showStatusBar
-        platformInverted: root.platformInverted
     }
 
     // event preventer when page transition is active

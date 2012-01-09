@@ -1,7 +1,10 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Page {
+    id: container
+
+    property variant pageStack
 
     // Label for the application.
     InfoTextLabel {
@@ -40,6 +43,17 @@ Page {
         onLinkActivated: {
             console.log("Launched url " + link);
             Qt.openUrlExternally(link);
+        }
+    }
+
+    // ToolBarLayout for AboutView
+    tools: ToolBarLayout {
+        id: aboutTools
+
+        ToolIcon {
+            iconId: "toolbar-back"
+            onClicked: container.pageStack.depth <= 1 ?
+                           Qt.quit() : container.pageStack.pop()
         }
     }
 }

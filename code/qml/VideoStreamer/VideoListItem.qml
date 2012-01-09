@@ -1,35 +1,44 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 import "util.js" as Util
 
-ListItem {
+Item {
     id: container
 
     // Attribute definitions
     height: visual.videoListItemHeight
 
-    onClicked: {
-        var component = Qt.createComponent("VideoPlayView.qml");
-        if (component.status === Component.Ready) {
-            var player = component.createObject(container);
-            pageStack.push(player)
-            player.playVideo(model)
-        }
-    }
 
-    // The ListItem's default implementation doesn't handle the Right Key
-    // separately, so bind it also to opening the item.
-    Keys.onPressed: {
-        if (!event.isAutoRepeat) {
-            switch (event.key) {
-            case Qt.Key_Right:
-                if (symbian.listInteractionMode !== Symbian.KeyNavigation) {
-                    symbian.listInteractionMode = Symbian.KeyNavigation;
-                } else {
-                    container.clicked();
-                    event.accepted = true;
+    // Custom made background highlight, as there's no ListItem in Qt Quick
+    // MeeGo components. Graphics ripped from QQC Symbian project.
+    BorderImage {
+        id: highlight
+        border {
+            left: visual.margins
+            top: visual.margins
+            right: visual.margins
+            bottom: visual.margins
+        }
+        opacity: 0
+        anchors.fill: parent
+        source: visual.images.listItemHilight
+
+        states: [
+            State {
+                name: "shown"
+                when: ma.pressed
+                PropertyChanges {
+                    target: highlight
+                    opacity: 1
                 }
-                break;
+            }
+        ]
+        transitions: Transition {
+            from: "shown"; to: ""
+            PropertyAnimation {
+                properties: "opacity"
+                easing.type: Easing.Linear
+                duration: visual.animationDurationShort
             }
         }
     }
@@ -65,40 +74,25 @@ ListItem {
         // Mask image on top of the thumbnail when the item is selected.
         Image {
             id: thumbHilightMask
-
-            // The image is being variated based on with which method
-            // it is being selected.
-            source: (container.mode === "pressed" || container.mode === "normal" ) ?
-                        visual.images.thumbHilightMask      // Selected with touch
-                      : visual.images.thumbKbHilightMask    // Selected with KB
-
+            source: visual.images.thumbHilightMask
             sourceSize.width: thumbImg.width
             sourceSize.height: thumbImg.height
             anchors.centerIn: thumbImg
             // This hilight mask image is hidden by default.
             opacity: 0
 
+            // The QQC's ListItem has fade-out animation for the selection,
+            // so define a similar kind for the thumbnail highlight mask.
             states: [
                 State {
                     name: "pressed"
-                    when: container.mode === "pressed"
-                    PropertyChanges {
-                        target: thumbHilightMask
-                        opacity: 1
-                    }
-                },
-                State {
-                    name: "highlighted"
-                    when: container.mode === "highlighted"
+                    when: ma.pressed
                     PropertyChanges {
                         target: thumbHilightMask
                         opacity: 1
                     }
                 }
             ]
-
-            // The QQC's ListItem has fade-out animation for the selection,
-            // so define a similar kind for the thumbnail highlight mask.
             transitions: Transition {
                 from: "pressed"; to: ""
                 PropertyAnimation {
@@ -228,6 +222,21 @@ ListItem {
                     source: visual.images.thumbsDownIcon
                     anchors.right: parent.right
                 }
+            }
+        }
+    }
+
+    MouseArea {
+        id: ma
+
+        anchors.fill: parent
+
+        onClicked: {
+            var component = Qt.createComponent("VideoPlayView.qml");
+            if (component.status === Component.Ready) {
+                var player = component.createObject(container);
+                pageStack.push(player)
+                player.playVideo(model)
             }
         }
     }

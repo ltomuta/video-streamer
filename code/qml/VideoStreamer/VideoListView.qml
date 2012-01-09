@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Page {
     id: mainPage
@@ -65,6 +65,7 @@ Page {
 
             BusyIndicator {
                 running: true
+                platformStyle: BusyIndicatorStyle { size: "large" }
             }
         }
     }
