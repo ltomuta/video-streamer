@@ -6,7 +6,7 @@ CONFIG += qt qt-components mobility
 MOBILITY += multimedia
 
 # Version number & version string definition (for using it inside the app)
-VERSION = 0.2.0
+VERSION = 0.3.0
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
@@ -38,7 +38,7 @@ OTHER_FILES += \
 symbian {
     TARGET.UID3 = 0xE0546EDD
     # Allow network access on Symbian
-    symbian:TARGET.CAPABILITY += NetworkServices
+    TARGET.CAPABILITY += NetworkServices
 
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
