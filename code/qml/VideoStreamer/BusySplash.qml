@@ -13,8 +13,7 @@ Item {
 
     BusyIndicator {
         anchors.centerIn: splash
-        width: visual.busyIndicatorWidth
-        height: visual.busyIndicatorHeight
+        platformStyle: BusyIndicatorStyle { size: "large" }
         running: true
     }
 

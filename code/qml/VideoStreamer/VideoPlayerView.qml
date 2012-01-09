@@ -121,8 +121,7 @@ Item {
         id: busyIndicator
 
         anchors.centerIn: blackBackground
-        height: visual.busyIndicatorHeight
-        width: visual.busyIndicatorWidth
+        platformStyle: BusyIndicatorStyle { size: "large" }
         z: blackBackground.z + 1
         running: true
     }

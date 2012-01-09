@@ -65,6 +65,7 @@ Page {
 
             BusyIndicator {
                 running: true
+                platformStyle: BusyIndicatorStyle { size: "large" }
             }
         }
     }
