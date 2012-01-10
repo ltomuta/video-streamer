@@ -17,6 +17,9 @@ Page {
 
     property double topAreaProportion: visual.topAreaProportion
     property double bottomAreaProportion: visual.bottomAreaProportion
+    property double leftAreaProportion: visual.leftAreaProportion
+    property double rightAreaProportion: visual.rightAreaProportion
+
 
     function playVideo(model) {
 
@@ -33,15 +36,18 @@ Page {
 
         videoPlayer.stop()
         __enterFullScreen()
-        __showVideoControls(false)
-        videoPlayer.source = model.m_contentUrl
+        __showVideoControls(true)
+        //videoPlayer.source = model.m_contentUrl
+        videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4"
         videoPlayer.play()
     }
 
     function __enterFullScreen() {
+        // TODO! Perhaps some fullscreenMode -property should be used?
+        // (i.e. Might be needed for real full screen video playback)
         if (!isPortrait) {
             showToolBar = false
-            showStatusBar = false
+//            showStatusBar = false
         }
     }
 
@@ -107,7 +113,7 @@ Page {
     onIsPortraitChanged: {
         if (!isPortrait) {
             showToolBar = false
-            showStatusBar = false
+//            showStatusBar = false
         } else {
             showToolBar = true
             showStatusBar = true
@@ -126,12 +132,57 @@ Page {
 
     anchors.fill: parent
 
+
+    // The Video can be played either in portrait or landscape mode. The
+    // VideoInformationView is selected to be on the top when in portrait,
+    // and when in landscape, only the video title is being shown.
     Component {
         id: videoInformation
 
         VideoInformationView {
             width: videoPlayView.width
-            height: videoPlayView.height * topAreaProportion
+            videoTitle: videoPlayView.videoTitle
+            numLikes: videoPlayView.numLikes
+            numDislikes: videoPlayView.numDislikes
+            viewCount: videoPlayView.viewCount
+        }
+    }
+
+    Component {
+        id: landscapeTitle
+
+        InfoTextLabel {
+            maximumLineCount: 1
+            wrapMode: Text.WordWrap
+            elide: Text.ElideRight
+            text: videoPlayView.videoTitle
+            font.bold: true
+        }
+    }
+
+    // Loader, which selects what to show on the upper part of the screen.
+    Loader {
+        id: upperAreaLoader
+        height: videoPlayView.height * topAreaProportion
+        anchors {
+            top: parent.top
+            topMargin: visual.margins
+            left: parent.left
+            leftMargin: isPortrait ? 0 : visual.margins
+            right: parent.right
+        }
+
+        sourceComponent: isPortrait ? videoInformation : landscapeTitle
+    }
+
+
+    // In landscape there's an extra loader for the right side of the screen,
+    // which will load basically the same information (views, likes & dislikes)
+    // as in the upperAreaLoader in portrait mode.
+    Component {
+        id: videoInformationLS
+
+        VideoInformationViewLS {
             numLikes: videoPlayView.numLikes
             numDislikes: videoPlayView.numDislikes
             viewCount: videoPlayView.viewCount
@@ -139,31 +190,65 @@ Page {
     }
 
     Loader {
-        id: upperAreaLoader
+        id: rightAreaLoader
         anchors {
-            top: parent.top
+            top: upperAreaLoader.bottom
             topMargin: visual.margins
-            left: parent.left
             right: parent.right
+            bottom: bottomAreaLoader.top
         }
 
-        sourceComponent: isPortrait ? videoInformation : undefined
+        sourceComponent: isPortrait ? undefined : videoInformationLS
     }
 
-    // Video player area
+
+    // The video playback area itself. Size for it is being determined by the
+    // orientation and calculated proportionally based on the parent dimensions.
     VideoPlayerView {
         id: videoPlayer
 
         anchors {
-            top: isPortrait ? upperAreaLoader.bottom : parent.top
-            bottom: isPortrait ? bottomAreaLoader.top : parent.bottom
+            top: upperAreaLoader.bottom
+            bottom: isPortrait ? bottomAreaLoader.top : overlayLoader.top
             left: parent.left
             right: parent.right
+            leftMargin: isPortrait ? 0 : videoPlayView.width * visual.leftAreaProportion
+            rightMargin: isPortrait ? 0 : videoPlayView.width * visual.rightAreaProportion
         }
 
-        onToggled: __toggleVideoControls()
+        // TODO: Disabled for now, because there's no need to toggle the video
+        // controls in detailed views. Needed only in full screen playback mode.
+//        onToggled: __toggleVideoControls()
     }
 
+
+    // Overlay controls on top of the video. Also always shown, when in
+    // landscape and not in full screen video playback mode.
+    Component {
+        id: overlayComponent
+        VideoPlayerControls {
+            id: videoPlayerControls
+
+            timePlayed: videoPlayer.timePlayed
+            timeDuration: videoPlayer.duration
+            isPlaying: videoPlayer.isPlaying
+
+
+            onBackButtonPressed: {
+                __handleExit()
+            }
+
+            onPausePressed: {
+                videoPlayer.pause()
+            }
+
+            onPlayPressed: {
+                videoPlayer.play()
+            }
+        }
+    }
+
+    // Loader for the overlay components.
     Loader {
         id: overlayLoader
 
@@ -209,42 +294,9 @@ Page {
         ]
     }
 
-    Component {
-        id: overlayComponent
-        VideoPlayerControls {
-            id: videoPlayerControls
 
-            timePlayed: videoPlayer.timePlayed
-            timeDuration: videoPlayer.duration
-            isPlaying: videoPlayer.isPlaying
-
-
-            onBackButtonPressed: {
-                __handleExit()
-            }
-
-            onPausePressed: {
-                videoPlayer.pause()
-            }
-
-            onPlayPressed: {
-                videoPlayer.play()
-            }
-        }
-    }
-
-    Loader {
-        id: bottomAreaLoader
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-
-        sourceComponent: isPortrait ? bottomArea : undefined
-    }
-
-
+    // Finally, the bottom area stuff, i.e. the player controls in
+    // portrait mode (as the 'overlay controls' are being shown in landscape).
     Component {
         id: bottomArea
 
@@ -276,10 +328,20 @@ Page {
         }
     }
 
-    tools: visual.inPortrait ? toolBarLayout : null
+    Loader {
+        id: bottomAreaLoader
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
 
-    ToolBarLayout {
-        id: toolBarLayout
+        sourceComponent: isPortrait ? bottomArea : undefined
+    }
+
+    // Tools (= back button). Shown in portrait mode, hidden whan in
+    // landscape(/fullscreen).
+    tools: ToolBarLayout {
         ToolButton {
             flat: true
             iconSource: "toolbar-back"

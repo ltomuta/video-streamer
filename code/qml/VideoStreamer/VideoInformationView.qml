@@ -7,6 +7,7 @@ import "util.js" as Util
 Item {
     id: videoInformationView
 
+    property string videoTitle: ""
     property int numLikes: 0
     property int numDislikes: 0
     property int viewCount: 0
@@ -93,7 +94,7 @@ Item {
         maximumLineCount: 5
         wrapMode: Text.WordWrap
         elide: Text.ElideRight
-        text: videoPlayView.videoTitle
+        text: videoInformationView.videoTitle
         font.bold: true
     }
 }
