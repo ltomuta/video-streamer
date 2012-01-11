@@ -3,14 +3,38 @@ import com.nokia.symbian 1.1
 
 Page {
 
+    // Background gradient
+    Rectangle {
+        id: logo
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        height: visual.titleBarHeight
+        color: "white"
+
+        Image {
+            id: logoImg
+
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            source: visual.images.developerLogo
+        }
+    }
+
     // Label for the application.
     InfoTextLabel {
         id: titleText
 
-        anchors.top: parent.top
-        anchors.topMargin: visual.margins
+        anchors {
+            top: logo.bottom
+            left: parent.left
+            margins: visual.margins
+        }
         width: parent.width
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignLeft
         font.pixelSize: visual.largeFontSize
         font.bold: true
         text: qsTr("YouTube Video Channel")
@@ -21,7 +45,7 @@ Page {
         id: aboutText
 
         anchors {
-            margins: visual.margins
+            margins: visual.margins*2
             left: parent.left
             right: parent.right
             top: titleText.bottom
