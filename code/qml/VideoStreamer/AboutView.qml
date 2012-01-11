@@ -30,8 +30,9 @@ Page {
 
         anchors {
             top: logo.bottom
+            topMargin: visual.margins*3
             left: parent.left
-            margins: visual.margins
+            leftMargin: visual.margins
         }
         width: parent.width
         horizontalAlignment: Text.AlignLeft
