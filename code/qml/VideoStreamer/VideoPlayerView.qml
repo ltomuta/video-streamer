@@ -8,6 +8,7 @@ Item {
     property alias source: videoPlayerImpl.source
     property alias duration: videoPlayerImpl.duration
     property alias timePlayed: videoPlayerImpl.position
+    property alias volume: videoPlayerImpl.volume
     property int timeRemaining: videoPlayerImpl.duration - timePlayed
     property bool isPlaying: false
 
