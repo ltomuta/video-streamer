@@ -30,15 +30,27 @@ Page {
             right: parent.right
         }
 
-        model: searchbox.searchText ? videoListModel : null
+        model: xmlDataModel.status === XmlListModel.Error ? 1 : (searchbox.searchText ? videoListModel : null)
         snapMode: ListView.SnapToItem
         cacheBuffer: visual.videoListItemHeight*10
         clip: true
 
         // List item delegate Component.
-        delegate: VideoListItem {
-            width: listView.width
+        Component {
+            id: videoListItem
+            VideoListItem {
+                width: listView.width
+            }
         }
+
+        Component {
+            id: networkErrorItem
+            NetworkErrorItem {
+                width: listView.width
+            }
+        }
+
+        delegate: xmlDataModel.status === XmlListModel.Error ? networkErrorItem : videoListItem
     }
 
     Text {

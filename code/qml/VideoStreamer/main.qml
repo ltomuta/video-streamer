@@ -40,15 +40,28 @@ Window {
             width: root.width
             height: root.height
 
+            function __hideSplash() {
+               busy.opacity = 0;
+               root.isShowingSplashScreen = false;
+               stack.push(initialPage);
+           }
+
             // Get rid of the fake splash for good, when loading is done!
             onDismissed: busySplash.destroy();
 
+            Component.onCompleted: {
+                if (xmlDataModel.status === XmlListModel.Error) {
+                    __hideSplash()
+                }
+            }
+
             Connections {
                 target: xmlDataModel
-                onLoadingChanged: {
-                    busy.opacity = 0;
-                    root.isShowingSplashScreen = false;
-                    stack.push(initialPage);
+                onStatusChanged: {
+                    if (xmlDataModel.status === XmlListModel.Ready ||
+                        xmlDataModel.status === XmlListModel.Error) {
+                        __hideSplash()
+                    }
                 }
             }
         }
