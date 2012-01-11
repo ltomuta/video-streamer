@@ -24,14 +24,26 @@ Page {
         height: mainPage.listHeight
         snapMode: ListView.SnapToItem
 
-        model: xmlDataModel
+        model: xmlDataModel.status === XmlListModel.Error ? 1 : xmlDataModel
+
         focus: true
         cacheBuffer: visual.videoListItemHeight*10
 
-        // List item delegate Component.
-        delegate: VideoListItem {
-            width: listView.width
+        Component {
+            id: videoListItemDelegate
+            VideoListItem {
+                width: listView.width
+            }
         }
+
+        Component {
+            id: networkErrorItem
+            NetworkErrorItem {
+                width: listView.width
+            }
+        }
+
+        delegate: xmlDataModel.status === XmlListModel.Error ?  networkErrorItem : videoListItemDelegate
 
         // Single header delegate Component.
         header: TitleBar {
