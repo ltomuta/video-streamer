@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Page {
     id: videoPlayView
@@ -200,6 +200,7 @@ Page {
         sourceComponent: isPortrait ? undefined : videoInformationLS
     }
 
+
     // The video playback area itself. Size for it is being determined by the
     // orientation and calculated proportionally based on the parent dimensions.
     VideoPlayerView {
@@ -219,17 +220,6 @@ Page {
 //        onToggled: __toggleVideoControls()
     }
 
-    // Slider type of indicator that shows the current volume level.
-    VolumeIndicator {
-        anchors {
-            left: parent.left
-            leftMargin: visual.margins
-            top: videoPlayer.top
-            bottom: videoPlayer.bottom
-        }
-
-        value: videoPlayer.volume
-    }
 
     // Overlay controls on top of the video. Also always shown, when in
     // landscape and not in full screen video playback mode.
@@ -351,9 +341,8 @@ Page {
     // Tools (= back button). Shown in portrait mode, hidden whan in
     // landscape(/fullscreen).
     tools: ToolBarLayout {
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        ToolIcon {
+            iconId: "toolbar-back"
             onClicked: __handleExit()
         }
     }
