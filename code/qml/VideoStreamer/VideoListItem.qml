@@ -174,7 +174,7 @@ ListItem {
         // Item bundling the duration, eye, 'likes & dislikes' icons & amounts together.
         Item {
             width: parent.width
-            height: likesIcon.height
+            height: duration.height
 //            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
             anchors.bottom: parent.bottom
             anchors.bottomMargin: visual.isE6 ? visual.spacing : 0
@@ -191,44 +191,48 @@ ListItem {
                 id: viewAmount
                 height: viewsText.height
                 anchors.left: duration.right
-                //anchors.right: visual.inPortrait ? undefined : likes.left
+                anchors.right: parent.right
 
                 InfoTextLabel {
                     id: viewsText
                     text: model.m_viewCount + qsTr(" views")
-                    horizontalAlignment: Text.AlignLeft
-                }
-            }
-
-            Item {
-                id: likes
-                width: visual.inPortrait ? parent.width/3 : parent.width/4.2
-                anchors.right: parent.right
-                anchors.rightMargin: visual.inPortrait ? visual.margins : visual.margins*3
-
-                InfoTextLabel {
-                    id: likesAmount
-                    text: model.m_numLikes ? model.m_numLikes : "0"
-                    anchors.right: likesIcon.left
-                    anchors.verticalCenter: likesIcon.verticalCenter
-                }
-                Image {
-                    id: likesIcon
-                    source: visual.images.thumbsUpIcon
-                    anchors.right: dislikesAmount.left
-                }
-                InfoTextLabel {
-                    id: dislikesAmount
-                    anchors.right: dislikesIcon.left
-                    text: model.m_numDislikes ? model.m_numDislikes : "0"
-                    anchors.verticalCenter: dislikesIcon.verticalCenter
-                }
-                Image {
-                    id: dislikesIcon
-                    source: visual.images.thumbsDownIcon
+                    horizontalAlignment: Text.AlignRight
                     anchors.right: parent.right
+                    anchors.rightMargin: visual.inPortrait ? visual.margins*2 : visual.margins*3
                 }
             }
+
+            // Likes & dislikes are currently being disabled. Re-enable by
+            // uncommenting the following lines, re-anchoring the viewAmount.
+//            Item {
+//                id: likes
+//                width: visual.inPortrait ? parent.width/3 : parent.width/4.2
+//                anchors.right: parent.right
+//                anchors.rightMargin: visual.inPortrait ? visual.margins : visual.margins*3
+//
+//                InfoTextLabel {
+//                    id: likesAmount
+//                    text: model.m_numLikes ? model.m_numLikes : "0"
+//                    anchors.right: likesIcon.left
+//                    anchors.verticalCenter: likesIcon.verticalCenter
+//                }
+//                Image {
+//                    id: likesIcon
+//                    source: visual.images.thumbsUpIcon
+//                    anchors.right: dislikesAmount.left
+//                }
+//                InfoTextLabel {
+//                    id: dislikesAmount
+//                    anchors.right: dislikesIcon.left
+//                    text: model.m_numDislikes ? model.m_numDislikes : "0"
+//                    anchors.verticalCenter: dislikesIcon.verticalCenter
+//                }
+//                Image {
+//                    id: dislikesIcon
+//                    source: visual.images.thumbsDownIcon
+//                    anchors.right: parent.right
+//                }
+//            }
         }
     }
 }

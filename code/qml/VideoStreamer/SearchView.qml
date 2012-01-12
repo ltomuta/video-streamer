@@ -69,6 +69,16 @@ Page {
         delegate: xmlDataModel.status === XmlListModel.Error ? networkErrorItem : videoListItem
     }
 
+    ScrollDecorator {
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+        // flickableItem binds the scroll decorator to the ListView.
+        flickableItem: listView
+    }
+
     Text {
         id: noResultsText
 

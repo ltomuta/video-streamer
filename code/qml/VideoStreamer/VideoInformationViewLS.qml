@@ -45,63 +45,91 @@ Item {
             text: videoInformationViewLS.__prependToLength(videoInformationViewLS.viewCount, 4, 0)
                   + qsTr(" views")
             anchors.right: parent.right
-            anchors.rightMargin: visual.margins
         }
     }
 
-    Item {
+    InfoTextLabel {
+        id: likesLabel
 
         anchors {
-            right: parent.right
-            rightMargin: visual.margins
             top: views.bottom
             topMargin: visual.margins*2
-        }
-//        width: childrenRect.width
-
-        InfoTextLabel {
-            id: likesLabel
-
-            anchors.right: dislikesImg.left
-            // The forward zeros aren't prepended at the time being.
-            //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numLikes, 4, 0)
-            text: videoInformationViewLS.numLikes
+            right: parent.right
+            rightMargin: visual.margins
         }
 
-        Image {
-            id: likesImg
-
-            source: visual.images.thumbsUpIcon
-            anchors {
-                verticalCenter: likesLabel.verticalCenter
-
-                right: parent.right
-                rightMargin: visual.margins
-            }
-        }
-
-        InfoTextLabel {
-            id: dislikesLabel
-            anchors {
-                top: likesLabel.bottom
-                topMargin: visual.margins*2
-                right: dislikesImg.left
-            }
-
-            // The forward zeros aren't prepended at the time being.
-            //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numDislikes, 4, 0)
-            text: videoInformationViewLS.numDislikes
-        }
-
-        Image {
-            id: dislikesImg
-
-            source: visual.images.thumbsDownIcon
-            anchors {
-                right: parent.right
-                rightMargin: visual.margins
-                verticalCenter: dislikesLabel.verticalCenter
-            }
-        }
+        // The forward zeros aren't prepended at the time being.
+        //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numLikes, 4, 0)
+        text: videoInformationViewLS.numLikes + qsTr(" likes")
     }
+
+    InfoTextLabel {
+        id: dislikesLabel
+        anchors {
+            top: likesLabel.bottom
+            topMargin: visual.margins*2
+            right: parent.right
+            rightMargin: visual.margins
+        }
+
+        // The forward zeros aren't prepended at the time being.
+        //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numDislikes, 4, 0)
+        text: videoInformationViewLS.numDislikes + qsTr(" dislikes")
+    }
+
+    // Likes & dislikes images (thumbs up & thumbs down) currently disabled.
+    // Textual information is being used instead.
+//    Item {
+//
+//        anchors {
+//            right: parent.right
+//            rightMargin: visual.margins
+//            top: views.bottom
+//            topMargin: visual.margins*2
+//        }
+//
+//        InfoTextLabel {
+//            id: likesLabel
+//
+//            anchors.right: dislikesImg.left
+//            // The forward zeros aren't prepended at the time being.
+//            //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numLikes, 4, 0)
+//            text: videoInformationViewLS.numLikes
+//        }
+//
+//        Image {
+//            id: likesImg
+//
+//            source: visual.images.thumbsUpIcon
+//            anchors {
+//                verticalCenter: likesLabel.verticalCenter
+//                right: parent.right
+//                rightMargin: visual.margins
+//            }
+//        }
+//
+//        InfoTextLabel {
+//            id: dislikesLabel
+//            anchors {
+//                top: likesLabel.bottom
+//                topMargin: visual.margins*2
+//                right: dislikesImg.left
+//            }
+//
+//            // The forward zeros aren't prepended at the time being.
+//            //text: videoInformationViewLS.__prependToLength(videoInformationViewLS.numDislikes, 4, 0)
+//            text: videoInformationViewLS.numDislikes
+//        }
+//
+//        Image {
+//            id: dislikesImg
+//
+//            source: visual.images.thumbsDownIcon
+//            anchors {
+//                right: parent.right
+//                rightMargin: visual.margins
+//                verticalCenter: dislikesLabel.verticalCenter
+//            }
+//        }
+//    }
 }
