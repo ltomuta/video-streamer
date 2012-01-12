@@ -44,17 +44,17 @@ Page {
     function __enterFullScreen() {
         // TODO! Perhaps some fullscreenMode -property should be used?
         // (i.e. Might be needed for real full screen video playback)
-        if (!isPortrait) {
-            showToolBar = false
+//        if (!isPortrait) {
+//            showToolBar = false
 //            showStatusBar = false
-        }
+//        }
     }
 
     function __exitFullScreen() {
-        if (!isPortrait) {
-            showToolBar = true
-            showStatusBar = true
-        }
+//        if (!isPortrait) {
+//            showToolBar = true
+//            showStatusBar = true
+//        }
     }
 
     function __showVideoControls(showControls) {
@@ -109,15 +109,15 @@ Page {
         }
     }
 
-    onIsPortraitChanged: {
-        if (!isPortrait) {
-            showToolBar = false
+//    onIsPortraitChanged: {
+//        if (!isPortrait) {
+//            showToolBar = false
 //            showStatusBar = false
-        } else {
-            showToolBar = true
-            showStatusBar = true
-        }
-    }
+//        } else {
+//            showToolBar = true
+//            showStatusBar = true
+//        }
+//    }
 
     onStatusChanged: {
         if (status === PageStatus.Activating) {
@@ -315,7 +315,8 @@ Page {
             VideoPlayerControls {
                 id: videoPlayerControls
 
-                anchors.top: parent.top
+                //anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 width: videoPlayView.width
                 height: visual.controlAreaHeight
 
@@ -323,8 +324,12 @@ Page {
                 timeDuration: videoPlayer.duration
                 isPlaying: videoPlayer.isPlaying
 
-                showBackground: false
-                showBackButton: false
+//                showBackground: false
+//                showBackButton: false
+
+                onBackButtonPressed: {
+                    __handleExit()
+                }
 
                 onPausePressed: {
                     videoPlayer.pause()
@@ -348,13 +353,16 @@ Page {
         sourceComponent: isPortrait ? bottomArea : undefined
     }
 
+    // TODO!: Both of the view modes (portrait/landscape) currently use the
+    // customized VideoControls, so don't show the toolbar.
+    //
     // Tools (= back button). Shown in portrait mode, hidden whan in
     // landscape(/fullscreen).
-    tools: ToolBarLayout {
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
-            onClicked: __handleExit()
-        }
-    }
+//    tools: ToolBarLayout {
+//        ToolButton {
+//            flat: true
+//            iconSource: "toolbar-back"
+//            onClicked: __handleExit()
+//        }
+//    }
 }
