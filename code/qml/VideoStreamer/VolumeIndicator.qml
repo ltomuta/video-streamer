@@ -24,7 +24,6 @@ Slider {
         interval: 1000
         running: true
         onTriggered: {
-            console.log("hideTimer triggered!");
             volumeIndicator.state = "hide";
         }
     }
