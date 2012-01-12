@@ -2,7 +2,10 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 Page {
+    id: container
 
+    property variant pageStack
+    
     // Background gradient
     Rectangle {
         id: logo
@@ -65,6 +68,18 @@ Page {
         onLinkActivated: {
             console.log("Launched url " + link);
             Qt.openUrlExternally(link);
+        }
+    }
+
+    // ToolBarLayout for AboutView
+    tools: ToolBarLayout {
+        id: aboutTools
+
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: container.pageStack.depth <= 1 ?
+                           Qt.quit() : container.pageStack.pop()
         }
     }
 }
