@@ -35,8 +35,9 @@ Item {
 
         InfoTextLabel {
             id: viewCountLabel
-            text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
-                  + qsTr(" views")
+            // The forward zeros aren't prepended at the time being.
+            //text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
+            text: videoInformationView.viewCount + qsTr(" views")
         }
     }
 
