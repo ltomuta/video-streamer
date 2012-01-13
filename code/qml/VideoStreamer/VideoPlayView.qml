@@ -7,55 +7,21 @@ Page {
     property bool isFullScreen: true
     property bool isPortrait: visual.inPortrait
 
-    property string videoTitle: ""
-    property int videoLength: 0
-    property string videoAuthor: ""
-    property int numLikes: 0
-    property int numDislikes: 0
-    property int viewCount: 0
-    property string videoDescription: ""
+    property string videoTitle: model.m_title
+    property int videoLength: model.m_duration
+    property string videoAuthor: model.m_author
+    property int numLikes: model.m_numLikes
+    property int numDislikes: model.m_numDislikes
+    property int viewCount: model.m_viewCount
+    property string videoDescription: model.m_description
 
     property double topAreaProportion: visual.topAreaProportion
     property double bottomAreaProportion: visual.bottomAreaProportion
     property double leftAreaProportion: visual.leftAreaProportion
     property double rightAreaProportion: visual.rightAreaProportion
 
-
-    function playVideo(model) {
-
-        videoPlayView.videoTitle = model.m_title
-        videoPlayView.videoLength = model.m_duration
-        videoPlayView.videoAuthor = model.m_author
-
-        videoPlayView.numLikes = model.m_numLikes
-        videoPlayView.numDislikes = model.m_numDislikes
-        videoPlayView.viewCount = model.m_viewCount
-
-        videoPlayView.videoDescription = model.m_description
-
-
-        videoPlayer.stop()
-        __enterFullScreen()
-        __showVideoControls(true)
-        videoPlayer.source = model.m_contentUrl
-        videoPlayer.play()
-    }
-
-    function __enterFullScreen() {
-        // TODO! Perhaps some fullscreenMode -property should be used?
-        // (i.e. Might be needed for real full screen video playback)
-//        if (!isPortrait) {
-//            showToolBar = false
-//            showStatusBar = false
-//        }
-    }
-
-    function __exitFullScreen() {
-//        if (!isPortrait) {
-//            showToolBar = true
-//            showStatusBar = true
-//        }
-    }
+    // Ease of access handle for the VideoPlayerView Item.
+    property alias videoPlayer: videoPlayerLoader.item
 
     function __showVideoControls(showControls) {
         overlayLoader.state = showControls ? "" : "Hidden"
@@ -73,7 +39,6 @@ Page {
 
     function __handleExit() {
         videoPlayer.stop()
-        __exitFullScreen()
 
         // VideoPlayView was dynamically created in VideoListItem and must
         // be destroyed. However just calling destroy without any delay will
@@ -109,16 +74,6 @@ Page {
         }
     }
 
-//    onIsPortraitChanged: {
-//        if (!isPortrait) {
-//            showToolBar = false
-//            showStatusBar = false
-//        } else {
-//            showToolBar = true
-//            showStatusBar = true
-//        }
-//    }
-
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             // Don't show the bg image behind the video play view.
@@ -131,6 +86,33 @@ Page {
 
     anchors.fill: parent
 
+
+    // A timer, which will give a small amount of time for the (page changing)
+    // transitions to complete before the video loading is started. This is
+    // done this way because otherwise the immediate loading of the video would
+    // cause lagging & un-smooth animations.
+    Timer {
+        id: timer
+
+        running: true
+        interval: visual.animationDurationPrettyLong
+        onTriggered: {
+            stop();
+            // The video playback area itself. Size for it is being determined by the
+            // orientation and calculated proportionally based on the parent dimensions.
+            videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
+
+            if (videoPlayerLoader.status === Loader.Ready) {
+                videoPlayer.stop();
+                __showVideoControls(true);
+                videoPlayer.source = model.m_contentUrl;
+                videoPlayer.play();
+            } else {
+                console.log("Player loader NOT READY! Status: "
+                            + videoPlayerLoader.status);
+            }
+        }
+    }
 
     // The Video can be played either in portrait or landscape mode. The
     // VideoInformationView is selected to be on the top when in portrait,
@@ -194,29 +176,26 @@ Page {
             top: upperAreaLoader.bottom
             topMargin: visual.margins
             right: parent.right
-            bottom: bottomAreaLoader.top
+            bottom: parent.bottom
         }
 
         sourceComponent: isPortrait ? undefined : videoInformationLS
     }
 
-    // The video playback area itself. Size for it is being determined by the
-    // orientation and calculated proportionally based on the parent dimensions.
-    VideoPlayerView {
-        id: videoPlayer
 
+    // Loader for the VideoPlayerComponent. NOTE: The sourceComponent will be
+    // set a bit later, after the timer has triggered.
+    Loader {
+        id: videoPlayerLoader
+
+        height: videoPlayView.height - videoPlayView.height * (visual.topAreaProportion + visual.bottomAreaProportion)
         anchors {
             top: upperAreaLoader.bottom
-            bottom: isPortrait ? bottomAreaLoader.top : overlayLoader.top
             left: parent.left
             right: parent.right
             leftMargin: isPortrait ? 0 : videoPlayView.width * visual.leftAreaProportion
             rightMargin: isPortrait ? 0 : videoPlayView.width * visual.rightAreaProportion
         }
-
-        // TODO: Disabled for now, because there's no need to toggle the video
-        // controls in detailed views. Needed only in full screen playback mode.
-//        onToggled: __toggleVideoControls()
     }
 
     // Slider type of indicator that shows the current volume level.
@@ -224,8 +203,8 @@ Page {
         anchors {
             left: parent.left
             leftMargin: visual.margins
-            top: videoPlayer.top
-            bottom: videoPlayer.bottom
+            top: videoPlayerLoader.top
+            bottom: videoPlayerLoader.bottom
         }
 
         value: videoPlayer.volume
@@ -257,12 +236,12 @@ Page {
         }
     }
 
-    // Loader for the overlay components.
+    // Loader for the overlay components, i.e. the VideoPlayerControls.
     Loader {
         id: overlayLoader
 
         state: "Hidden"
-        sourceComponent: !isPortrait ? overlayComponent : undefined
+        sourceComponent: overlayComponent
         // Don't use anchoring here, use y-coordinate instead, so that
         // it can be animated.
         y: parent.height-visual.controlAreaHeight
@@ -301,56 +280,6 @@ Page {
                 }
             }
         ]
-    }
-
-
-    // Finally, the bottom area stuff, i.e. the player controls in
-    // portrait mode (as the 'overlay controls' are being shown in landscape).
-    Component {
-        id: bottomArea
-
-        Item {
-            height: videoPlayView.height * bottomAreaProportion
-
-            VideoPlayerControls {
-                id: videoPlayerControls
-
-                //anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: videoPlayView.width
-                height: visual.controlAreaHeight
-
-                timePlayed: videoPlayer.timePlayed
-                timeDuration: videoPlayer.duration
-                isPlaying: videoPlayer.isPlaying
-
-//                showBackground: false
-//                showBackButton: false
-
-                onBackButtonPressed: {
-                    __handleExit()
-                }
-
-                onPausePressed: {
-                    videoPlayer.pause()
-                }
-
-                onPlayPressed: {
-                    videoPlayer.play()
-                }
-            }
-        }
-    }
-
-    Loader {
-        id: bottomAreaLoader
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-
-        sourceComponent: isPortrait ? bottomArea : undefined
     }
 
     // TODO!: Both of the view modes (portrait/landscape) currently use the

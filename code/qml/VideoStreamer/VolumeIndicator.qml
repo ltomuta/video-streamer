@@ -10,6 +10,7 @@ Slider {
     stepSize: 0.1
     rotation: 180
     opacity: 1
+    state: "hide"
 
     // When the value has changed the indicator is shown, and the hide
     // Timer will be restarted.
@@ -41,9 +42,10 @@ Slider {
         Transition {
             from: ""
             to: "hide"
+            reversible: true
             NumberAnimation {
                 property: "opacity"
-                duration: 500
+                duration: visual.animationDurationLong
                 easing.type: Easing.InOutQuad
             }
         }
