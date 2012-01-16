@@ -207,7 +207,7 @@ Page {
             bottom: videoPlayerLoader.bottom
         }
 
-        value: videoPlayer.volume
+        value: videoPlayer ? videoPlayer.volume : 0
     }
 
     // Overlay controls on top of the video. Also always shown, when in
@@ -217,9 +217,9 @@ Page {
         VideoPlayerControls {
             id: videoPlayerControls
 
-            timePlayed: videoPlayer.timePlayed
-            timeDuration: videoPlayer.duration
-            isPlaying: videoPlayer.isPlaying
+            timePlayed: videoPlayer ? videoPlayer.timePlayed : 0
+            timeDuration: videoPlayer ? videoPlayer.duration : 0
+            isPlaying: videoPlayer ? videoPlayer.isPlaying : false
 
 
             onBackButtonPressed: {
