@@ -79,26 +79,30 @@ Window {
     Image {
         id: backgroundImg
         anchors.fill: parent
-        source: visual.inPortrait ? visual.images.portraitBackground
-                                  : visual.images.landscapeBackground
+        source: visual.inPortrait ? (visual.showBackground
+                                     ? visual.images.portraitListBackground
+                                     : visual.images.portraitVideoBackground)
+                                  : (visual.showBackground
+                                    ? visual.images.landscapeListBackground
+                                    : visual.images.landscapeVideoBackground)
 
-        states: [
-            State {
-                name: "invisible"
-                when: !visual.showBackground
-                PropertyChanges { target: backgroundImg; opacity: 0 }
-            }
-        ]
+//        states: [
+//            State {
+//                name: "invisible"
+//                when: !visual.showBackground
+//                PropertyChanges { target: backgroundImg; opacity: 0 }
+//            }
+//        ]
 
-        transitions: [
-            Transition {
-                to: "invisible"
-                NumberAnimation {
-                    properties: "opacity"
-                    duration: visual.animationDurationPrettyLong
-                }
-            }
-        ]
+//        transitions: [
+//            Transition {
+//                to: "invisible"
+//                NumberAnimation {
+//                    properties: "opacity"
+//                    duration: visual.animationDurationPrettyLong
+//                }
+//            }
+//        ]
     }
 
     // Default ToolBarLayout

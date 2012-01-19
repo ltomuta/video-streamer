@@ -73,8 +73,10 @@ Item {
         property string path: "gfx/"
 
         // Background images
-        property string portraitBackground: path+"portrait_background.png"
-        property string landscapeBackground: path+"landscape_background.png"
+        property string portraitListBackground: path+"portrait_list_background.png"
+        property string landscapeListBackground: path+"landscape_list_background.png"
+        property string portraitVideoBackground: path+"portrait_video_background.png"
+        property string landscapeVideoBackground: path+"landscape_video_background.png"
 
         property string thumbMask: path+"squircle_thumb_mask.png"
         property string thumbHilightMask: path+"squircle_thumb_hilight_mask.png"
