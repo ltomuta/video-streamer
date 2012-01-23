@@ -179,13 +179,12 @@ Page {
         height: videoPlayerLoader.height
         anchors {
             right: parent.right
-            rightMargin: visual.margins * 6
+            rightMargin: visual.isE6 ? visual.margins * 9 : visual.margins * 6
             verticalCenter: videoPlayView.verticalCenter
         }
 
         sourceComponent: isPortrait ? undefined : videoInformation
     }
-
 
     // Loader for the VideoPlayerComponent. NOTE: The sourceComponent will be
     // set a bit later, after the timer has triggered.

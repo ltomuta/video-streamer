@@ -61,8 +61,8 @@ Item {
     // VideoPlayView definitions
     property double topAreaProportion: inPortrait ? 0.31 : 0.155
     property double bottomAreaProportion: inPortrait ? 0.41 : 0.28
-    property double leftAreaProportion: inPortrait ? 0.09 : (isE6 ? 0.05 : 0.21)
-    property double rightAreaProportion: inPortrait ? 0.09 : (isE6 ? 0.25 : 0.31)
+    property double leftAreaProportion: inPortrait ? 0.09 : 0.21
+    property double rightAreaProportion: inPortrait ? 0.09 : 0.31
 
     // Transition animation durations (in milliseconds)
     property int animationDurationShort: 150
