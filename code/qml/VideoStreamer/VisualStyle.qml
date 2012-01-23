@@ -24,6 +24,9 @@ Item {
     property int smallFontSize: platformStyle.fontSizeSmall
     property int generalFontSize: platformStyle.fontSizeMedium
     property int largeFontSize: platformStyle.fontSizeLarge
+    property int extraLargeFontSize: platformStyle.fontSizeSmall * 1.5
+    property int ultraLargeFontSize: platformStyle.fontSizeLarge
+                                     + platformStyle.fontSizeMedium
     property string defaultFontFamily: "Helvetica"  // Defaults to correct ones in device
     property color defaultFontColor: "#FFFFFF"
 
@@ -56,10 +59,10 @@ Item {
     property int informationViewMargins: 5
 
     // VideoPlayView definitions
-    property double topAreaProportion: inPortrait ? 0.25 : 0.08
-    property double bottomAreaProportion: inPortrait ? 0.35 : 0.20
-    property double leftAreaProportion: inPortrait ? 0 : (isE6 ? 0.05 : 0.10)
-    property double rightAreaProportion: inPortrait ? 0 : (isE6 ? 0.25 : 0.20)
+    property double topAreaProportion: inPortrait ? 0.31 : 0.155
+    property double bottomAreaProportion: inPortrait ? 0.41 : 0.28
+    property double leftAreaProportion: inPortrait ? 0.09 : (isE6 ? 0.05 : 0.21)
+    property double rightAreaProportion: inPortrait ? 0.09 : (isE6 ? 0.25 : 0.31)
 
     // Transition animation durations (in milliseconds)
     property int animationDurationShort: 150

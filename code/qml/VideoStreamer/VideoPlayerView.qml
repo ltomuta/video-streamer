@@ -74,7 +74,7 @@ Item {
     Rectangle {
         id: videoBackground
 
-        color: "black"
+        color: "#0D0D0D"
         z: videoPlayerImpl.z - 1
         anchors.fill: parent
     }
@@ -113,7 +113,7 @@ Item {
         id: blackBackground
 
         anchors.fill: parent
-        color: "black"
+        color: "#0D0D0D"
         z: videoPlayerImpl.z + 1
         opacity: 1
     }

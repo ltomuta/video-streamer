@@ -114,26 +114,11 @@ Page {
         }
     }
 
-    // The Video can be played either in portrait or landscape mode. The
-    // VideoInformationView is selected to be on the top when in portrait,
-    // and when in landscape, only the video title is being shown.
     Component {
-        id: videoInformation
-
-        VideoInformationView {
-            width: videoPlayView.width
-            videoTitle: videoPlayView.videoTitle
-            numLikes: videoPlayView.numLikes
-            numDislikes: videoPlayView.numDislikes
-            viewCount: videoPlayView.viewCount
-        }
-    }
-
-    Component {
-        id: landscapeTitle
+        id: videoTitleComp
 
         InfoTextLabel {
-            maximumLineCount: 1
+            maximumLineCount: isPortrait ? 2 : 1
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
             text: videoPlayView.videoTitle
@@ -153,33 +138,52 @@ Page {
             right: parent.right
         }
 
-        sourceComponent: isPortrait ? videoInformation : landscapeTitle
+        sourceComponent: videoTitleComp
     }
 
-
-    // In landscape there's an extra loader for the right side of the screen,
-    // which will load basically the same information (views, likes & dislikes)
-    // as in the upperAreaLoader in portrait mode.
+    // The Video can be played either in portrait or landscape mode. The
+    // VideoInformationView is selected to be on the bottom when in portrait,
+    // and when in landscape, the information is shown on the right side.
     Component {
-        id: videoInformationLS
+        id: videoInformation
 
-        VideoInformationViewLS {
+        VideoInformationView {
+            videoTitle: videoPlayView.videoTitle
             numLikes: videoPlayView.numLikes
             numDislikes: videoPlayView.numDislikes
             viewCount: videoPlayView.viewCount
         }
     }
 
+    // Loader, which selects what to show on the bottom part of the screen.
     Loader {
-        id: rightAreaLoader
+        id: bottomAreaLoader
+        height: videoPlayView.height * bottomAreaProportion
+        width: videoPlayView.width / 3
         anchors {
-            top: upperAreaLoader.bottom
-            topMargin: visual.margins
-            right: parent.right
             bottom: parent.bottom
+            bottomMargin: visual.margins
+            horizontalCenter: parent.horizontalCenter
         }
 
-        sourceComponent: isPortrait ? undefined : videoInformationLS
+        sourceComponent: isPortrait ? videoInformation : undefined
+    }
+
+    // In landscape there's an extra loader for the right side of the screen,
+    // which will load basically the same information (views, likes & dislikes)
+    // as in the upperAreaLoader in portrait mode.
+    Loader {
+        id: rightAreaLoader
+
+        width: videoPlayView.width / 5
+        height: videoPlayerLoader.height
+        anchors {
+            right: parent.right
+            rightMargin: visual.margins * 6
+            verticalCenter: videoPlayView.verticalCenter
+        }
+
+        sourceComponent: isPortrait ? undefined : videoInformation
     }
 
 
@@ -188,13 +192,14 @@ Page {
     Loader {
         id: videoPlayerLoader
 
-        height: videoPlayView.height - videoPlayView.height * (visual.topAreaProportion + visual.bottomAreaProportion)
+        height: videoPlayView.height
+                * (1 - visual.topAreaProportion - visual.bottomAreaProportion)
         anchors {
             top: upperAreaLoader.bottom
             left: parent.left
             right: parent.right
-            leftMargin: isPortrait ? 0 : videoPlayView.width * visual.leftAreaProportion
-            rightMargin: isPortrait ? 0 : videoPlayView.width * visual.rightAreaProportion
+            leftMargin: videoPlayView.width * visual.leftAreaProportion
+            rightMargin: videoPlayView.width * visual.rightAreaProportion
         }
     }
 
@@ -220,7 +225,6 @@ Page {
             timePlayed: videoPlayer ? videoPlayer.timePlayed : 0
             timeDuration: videoPlayer ? videoPlayer.duration : 0
             isPlaying: videoPlayer ? videoPlayer.isPlaying : false
-
 
             onBackButtonPressed: {
                 __handleExit()

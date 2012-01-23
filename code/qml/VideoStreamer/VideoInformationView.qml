@@ -29,15 +29,77 @@ Item {
     // Bundle each text label & image as a pair.
     Item {
         id: views
-        anchors.left: parent.left
-        anchors.leftMargin: visual.margins
+
         height: childrenRect.height
+        width: childrenRect.width
+        anchors {
+            top: parent.top
+            topMargin: visual.inPortrait ? visual.margins * 10 : 0
+            horizontalCenter: parent.horizontalCenter
+        }
 
         InfoTextLabel {
-            id: viewCountLabel
+            id: viewCount
             // The forward zeros aren't prepended at the time being.
             //text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
-            text: videoInformationView.viewCount + qsTr(" views")
+            text: videoInformationView.viewCount
+            font.pixelSize: visual.ultraLargeFontSize
+        }
+
+        InfoTextLabel {
+            anchors {
+                top: viewCount.bottom
+                horizontalCenter: viewCount.horizontalCenter
+            }
+            text: qsTr("views")
+        }
+    }
+
+    // Item bundling the likes & dislikes amounts + strings together.
+    Item {
+        id: likesAndDislikes
+
+        width: parent.width
+        anchors {
+            top: views.bottom
+            topMargin: visual.margins * 2
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        // Two Text elements on top of each other, amount of likes + "likes" string.
+        InfoTextLabel {
+            id: likesCount
+
+            anchors.left: parent.left
+            font.pixelSize: visual.extraLargeFontSize
+            // The forward zeros aren't prepended at the time being.
+            //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+            text: videoInformationView.numLikes
+        }
+        InfoTextLabel {
+            id: likesLabel
+
+            anchors.top: likesCount.bottom
+            anchors.horizontalCenter: likesCount.horizontalCenter
+            text: qsTr("likes")
+        }
+
+        // Two Text elements on top of each other, amount of dislikes + "dislikes" string.
+        InfoTextLabel {
+            id: dislikesCount
+
+            anchors.right: parent.right
+            font.pixelSize: visual.extraLargeFontSize
+            // The forward zeros aren't prepended at the time being.
+            //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+            text: videoInformationView.numDislikes
+        }
+        InfoTextLabel {
+            id: dislikesLabel
+
+            anchors.horizontalCenter: dislikesCount.horizontalCenter
+            anchors.top: dislikesCount.bottom
+            text: qsTr("dislikes")
         }
     }
 
@@ -82,39 +144,5 @@ Item {
 //            }
 //        }
 //    }
-
-    InfoTextLabel {
-        id: likesLabel
-        anchors.horizontalCenter: parent.horizontalCenter
-        // The forward zeros aren't prepended at the time being.
-        //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
-        text: videoInformationView.numLikes + qsTr(" likes")
-    }
-
-    InfoTextLabel {
-        id: dislikesLabel
-        anchors.right: parent.right
-        // The forward zeros aren't prepended at the time being.
-        //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
-        text: videoInformationView.numDislikes + qsTr(" dislikes")
-    }
-
-    InfoTextLabel {
-        id: titleLabel
-
-        anchors {
-            top: views.bottom
-            topMargin: visual.spacing*2
-            left: parent.left
-            right: parent.right
-            margins: visual.margins
-        }
-        width: parent.width
-        maximumLineCount: 5
-        wrapMode: Text.WordWrap
-        elide: Text.ElideRight
-        text: videoInformationView.videoTitle
-        font.bold: true
-    }
 }
 
