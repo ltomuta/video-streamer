@@ -43,14 +43,14 @@ Page {
             }
         }
 
-        delegate: xmlDataModel.status === XmlListModel.Error ?  networkErrorItem : videoListItemDelegate
+        delegate: xmlDataModel.status === XmlListModel.Ready
+                  ? videoListItemDelegate : networkErrorItem
 
         // Single header delegate Component.
         header: TitleBar {
             id: titleBar
 
             height: visual.titleBarHeight
-            anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
         }

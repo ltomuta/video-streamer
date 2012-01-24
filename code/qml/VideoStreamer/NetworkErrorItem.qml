@@ -3,8 +3,7 @@ import QtQuick 1.1
 Item {
     id: errorItem
 
-    height: visual.videoListItemHeight
-    width: listView.width
+    anchors.fill: parent
 
     InfoTextLabel {
         anchors.fill: parent
