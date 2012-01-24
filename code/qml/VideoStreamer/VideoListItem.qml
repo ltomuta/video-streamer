@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "util.js" as Util
+import "./VideoPlayer/util.js" as Util
 import "./VideoPlayer"
 
 ListItem {
