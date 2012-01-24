@@ -9,7 +9,7 @@ ListItem {
     height: visual.videoListItemHeight
 
     onClicked: {
-        var component = Qt.createComponent("VideoPlayView.qml");
+        var component = Qt.createComponent("VideoPlayer/VideoPlayView.qml");
         if (component.status === Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)
