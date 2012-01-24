@@ -73,7 +73,7 @@ Item {
             }
         }
 
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: timeElapsedLabel
 
             text: Util.milliSecondsToString(timePlayed)
@@ -84,7 +84,7 @@ Item {
             anchors.rightMargin: visual.controlMargins
         }
 
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: timeDurationLabel
 
             text: Util.milliSecondsToString(timeDuration)

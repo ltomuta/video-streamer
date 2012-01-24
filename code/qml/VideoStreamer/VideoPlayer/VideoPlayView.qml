@@ -3,7 +3,6 @@ import com.nokia.symbian 1.1
 
 Page {
     id: videoPlayView
-
     property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
 
@@ -86,6 +85,14 @@ Page {
 
     anchors.fill: parent
 
+    // TODO: JL: remove
+    Component {
+        id: testVideoAnother
+        VideoPlayerView {
+
+        }
+    }
+
     // A timer, which will give a small amount of time for the (page changing)
     // transitions to complete before the video loading is started. This is
     // done this way because otherwise the immediate loading of the video would
@@ -96,12 +103,13 @@ Page {
         running: true
         interval: visual.animationDurationPrettyLong
 
-
         onTriggered: {
             stop();
             // The video playback area itself. Size for it is being determined by the
             // orientation and calculated proportionally based on the parent dimensions.
-            videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
+            // TODO: JL: replace
+            //videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
+            videoPlayerLoader.sourceComponent = testVideoAnother
 
             if (videoPlayerLoader.status === Loader.Ready) {
                 if (videoPlayView.isFullScreen) {
@@ -121,7 +129,7 @@ Page {
     Component {
         id: videoTitleComp
 
-        InfoTextLabel {
+        VideoInfoTextLabel {
             maximumLineCount: isPortrait ? 2 : 1
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
