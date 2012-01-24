@@ -4,7 +4,7 @@ import com.nokia.symbian 1.1
 Page {
     id: videoPlayView
 
-    property bool isFullScreen: true
+    property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
 
     property string videoTitle: model.m_title
@@ -86,7 +86,6 @@ Page {
 
     anchors.fill: parent
 
-
     // A timer, which will give a small amount of time for the (page changing)
     // transitions to complete before the video loading is started. This is
     // done this way because otherwise the immediate loading of the video would
@@ -96,6 +95,8 @@ Page {
 
         running: true
         interval: visual.animationDurationPrettyLong
+
+
         onTriggered: {
             stop();
             // The video playback area itself. Size for it is being determined by the
@@ -103,6 +104,9 @@ Page {
             videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
 
             if (videoPlayerLoader.status === Loader.Ready) {
+                if (videoPlayView.isFullScreen) {
+                    videoPlayer.toggled.connect(__toggleVideoControls)
+                }
                 videoPlayer.stop();
                 __showVideoControls(true);
                 videoPlayer.source = model.m_contentUrl;
@@ -129,16 +133,16 @@ Page {
     // Loader, which selects what to show on the upper part of the screen.
     Loader {
         id: upperAreaLoader
-        height: videoPlayView.height * topAreaProportion
+        height: videoPlayView.isFullScreen ? 0 : (videoPlayView.height * topAreaProportion)
         anchors {
             top: parent.top
-            topMargin: visual.margins
+            topMargin: videoPlayView.isFullScreen ? 0 : visual.margins
             left: parent.left
-            leftMargin: isPortrait ? 0 : visual.margins
+            leftMargin: videoPlayView.isFullScreen ? 0 : (isPortrait ? 0 : visual.margins)
             right: parent.right
         }
 
-        sourceComponent: videoTitleComp
+        sourceComponent: videoPlayView.isFullScreen ? undefined : videoTitleComp
     }
 
     // The Video can be played either in portrait or landscape mode. The
@@ -158,15 +162,15 @@ Page {
     // Loader, which selects what to show on the bottom part of the screen.
     Loader {
         id: bottomAreaLoader
-        height: videoPlayView.height * bottomAreaProportion
-        width: videoPlayView.width / 3
+        height: videoPlayView.isFullScreen ? 0 : (videoPlayView.height * bottomAreaProportion)
+        width: videoPlayView.isFullScreen ? 0 : (videoPlayView.width / 3)
         anchors {
             bottom: parent.bottom
-            bottomMargin: visual.margins
+            bottomMargin: videoPlayView.isFullScreen ? 0 : visual.margins
             horizontalCenter: parent.horizontalCenter
         }
 
-        sourceComponent: isPortrait ? videoInformation : undefined
+        sourceComponent: videoPlayView.isFullScreen ? undefined : (isPortrait ? videoInformation : undefined)
     }
 
     // In landscape there's an extra loader for the right side of the screen,
@@ -175,15 +179,15 @@ Page {
     Loader {
         id: rightAreaLoader
 
-        width: videoPlayView.width / 5
-        height: videoPlayerLoader.height
+        width: videoPlayView.isFullScreen ? 0 : (videoPlayView.width / 5)
+        height: videoPlayView.isFullScreen ? 0 : videoPlayerLoader.height
         anchors {
             right: parent.right
-            rightMargin: visual.margins * 6
+            rightMargin: videoPlayView.isFullScreen ? 0 : visual.margins * 6
             verticalCenter: videoPlayView.verticalCenter
         }
 
-        sourceComponent: isPortrait ? undefined : videoInformation
+        sourceComponent: videoPlayView.isFullScreen ? undefined : (isPortrait ? undefined : videoInformation)
     }
 
 
@@ -192,14 +196,14 @@ Page {
     Loader {
         id: videoPlayerLoader
 
-        height: videoPlayView.height
-                * (1 - visual.topAreaProportion - visual.bottomAreaProportion)
+        height: videoPlayView.isFullScreen ? screen.height : (videoPlayView.height
+                * (1 - visual.topAreaProportion - visual.bottomAreaProportion))
         anchors {
             top: upperAreaLoader.bottom
             left: parent.left
             right: parent.right
-            leftMargin: videoPlayView.width * visual.leftAreaProportion
-            rightMargin: videoPlayView.width * visual.rightAreaProportion
+            leftMargin: videoPlayView.isFullScreen ? 0 : (videoPlayView.width * visual.leftAreaProportion)
+            rightMargin: videoPlayView.isFullScreen ? 0 : videoPlayView.width * visual.rightAreaProportion
         }
     }
 
