@@ -9,6 +9,6 @@ Item {
     Image {
         id: bgImg
         anchors.fill: parent
-        source: "gfx/FilmReel_N9.png"
+        source: portrait ? "gfx/FilmReel_N9.png" : "gfx/FilmReel_landscape.png"
     }
 }

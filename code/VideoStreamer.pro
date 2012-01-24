@@ -58,7 +58,11 @@ contains(MEEGO_EDITION,harmattan) {
     DEFINES += Q_WS_HARMATTAN
     icon_file.files = VideoStreamer.svg
     icon_file.path = /usr/share/icons/hicolor/scalable/apps
-    INSTALLS += icon_file desktop
+    splash.files += qml/VideoStreamer/gfx/FilmReel_landscape.png
+    splash.files += qml/VideoStreamer/gfx/FilmReel_N9.png
+    splash.path = /opt/VideoStreamer
+
+    INSTALLS += icon_file splash
 }
 
 # Please do not modify the following two lines. Required for deployment.
