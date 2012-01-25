@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "./VideoPlayer/util.js" as Util
-import "./VideoPlayer"
+import "VideoPlayer/util.js" as Util
+import "VideoPlayer"
 
 ListItem {
     id: container
