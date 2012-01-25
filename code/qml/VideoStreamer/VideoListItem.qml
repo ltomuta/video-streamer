@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "util.js" as Util
+import "./VideoPlayer/util.js" as Util
+import "./VideoPlayer"
 
 ListItem {
     id: container
@@ -9,7 +10,7 @@ ListItem {
     height: visual.videoListItemHeight
 
     onClicked: {
-        var component = Qt.createComponent("VideoPlayView.qml");
+        var component = Qt.createComponent("VideoPlayer/VideoPlayView.qml");
         if (component.status === Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)

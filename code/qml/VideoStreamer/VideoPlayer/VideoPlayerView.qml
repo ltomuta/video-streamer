@@ -4,7 +4,6 @@ import com.nokia.symbian 1.1
 
 Item {
     id: videoPlayerContainer
-
     property alias source: videoPlayerImpl.source
     property alias duration: videoPlayerImpl.duration
     property alias timePlayed: videoPlayerImpl.position

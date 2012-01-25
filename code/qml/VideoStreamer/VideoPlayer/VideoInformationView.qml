@@ -38,7 +38,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: viewCount
             // The forward zeros aren't prepended at the time being.
             //text: videoInformationView.__prependToLength(videoInformationView.viewCount, 4, 0)
@@ -46,7 +46,7 @@ Item {
             font.pixelSize: visual.ultraLargeFontSize
         }
 
-        InfoTextLabel {
+        VideoInfoTextLabel {
             anchors {
                 top: viewCount.bottom
                 horizontalCenter: viewCount.horizontalCenter
@@ -67,7 +67,7 @@ Item {
         }
 
         // Two Text elements on top of each other, amount of likes + "likes" string.
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: likesCount
 
             anchors.left: parent.left
@@ -76,7 +76,7 @@ Item {
             //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
             text: videoInformationView.numLikes
         }
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: likesLabel
 
             anchors.top: likesCount.bottom
@@ -85,7 +85,7 @@ Item {
         }
 
         // Two Text elements on top of each other, amount of dislikes + "dislikes" string.
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: dislikesCount
 
             anchors.right: parent.right
@@ -94,7 +94,7 @@ Item {
             //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
             text: videoInformationView.numDislikes
         }
-        InfoTextLabel {
+        VideoInfoTextLabel {
             id: dislikesLabel
 
             anchors.horizontalCenter: dislikesCount.horizontalCenter
