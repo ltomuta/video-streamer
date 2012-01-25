@@ -6,21 +6,11 @@ import "./VideoPlayer"
 ListItem {
     id: container
 
-    // TODO: JL: remove
-    Component {
-        id: testVideoComponent
-
-        VideoPlayView {
-        }
-    }
-
     // Attribute definitions
     height: visual.videoListItemHeight
 
     onClicked: {
-        // TODO: JL: replace
-        //var component = Qt.createComponent("VideoPlayer/VideoPlayView.qml");
-        var component = testVideoComponent
+        var component = Qt.createComponent("VideoPlayer/VideoPlayView.qml");
         if (component.status === Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)

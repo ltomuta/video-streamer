@@ -85,14 +85,6 @@ Page {
 
     anchors.fill: parent
 
-    // TODO: JL: remove
-    Component {
-        id: testVideoAnother
-        VideoPlayerView {
-
-        }
-    }
-
     // A timer, which will give a small amount of time for the (page changing)
     // transitions to complete before the video loading is started. This is
     // done this way because otherwise the immediate loading of the video would
@@ -107,9 +99,7 @@ Page {
             stop();
             // The video playback area itself. Size for it is being determined by the
             // orientation and calculated proportionally based on the parent dimensions.
-            // TODO: JL: replace
-            //videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
-            videoPlayerLoader.sourceComponent = testVideoAnother
+            videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
 
             if (videoPlayerLoader.status === Loader.Ready) {
                 if (videoPlayView.isFullScreen) {
