@@ -14,6 +14,11 @@ ListItem {
         if (component.status === Component.Ready) {
             var player = component.createObject(container);
             pageStack.push(player)
+
+            // setVideoData expects parameter to contain video data
+            // information properties. Expected properties are identical to
+            // used XmlListModel.
+            player.setVideoData(model)
         }
     }
 

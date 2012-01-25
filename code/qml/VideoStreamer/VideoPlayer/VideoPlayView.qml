@@ -6,13 +6,14 @@ Page {
     property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
 
-    property string videoTitle: model.m_title
-    property int videoLength: model.m_duration
-    property string videoAuthor: model.m_author
-    property int numLikes: model.m_numLikes
-    property int numDislikes: model.m_numDislikes
-    property int viewCount: model.m_viewCount
-    property string videoDescription: model.m_description
+    property string videoTitle: ""
+    property int videoLength: 0
+    property string videoAuthor: ""
+    property int numLikes: 0
+    property int numDislikes: 0
+    property int viewCount: 0
+    property string videoDescription: ""
+    property string videoSource: ""
 
     property double topAreaProportion: visual.topAreaProportion
     property double bottomAreaProportion: visual.bottomAreaProportion
@@ -21,6 +22,20 @@ Page {
 
     // Ease of access handle for the VideoPlayerView Item.
     property alias videoPlayer: videoPlayerLoader.item
+
+    function setVideoData(videoData) {
+        videoPlayView.videoTitle = videoData.m_title;
+        videoPlayView.videoLength = videoData.m_duration;
+        videoPlayView.videoAuthor = videoData.m_author;
+
+        videoPlayView.numLikes = videoData.m_numLikes;
+        videoPlayView.numDislikes = videoData.m_numDislikes;
+        videoPlayView.viewCount = videoData.m_viewCount;
+
+        videoPlayView.videoDescription = videoData.m_description;
+
+        videoPlayView.videoSource = videoData.m_contentUrl;
+    }
 
     function __showVideoControls(showControls) {
         overlayLoader.state = showControls ? "" : "Hidden"
@@ -107,7 +122,7 @@ Page {
                 }
                 videoPlayer.stop();
                 __showVideoControls(true);
-                videoPlayer.source = model.m_contentUrl;
+                videoPlayer.source = videoPlayView.videoSource;
                 videoPlayer.play();
             } else {
                 console.log("Player loader NOT READY! Status: "
