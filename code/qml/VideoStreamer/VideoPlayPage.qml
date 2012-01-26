@@ -6,6 +6,17 @@ Page {
 
     VideoPlayView {
         id: videoPlayView
+
+        onVideoExit: {
+            // VideoPlayView was dynamically created in VideoListItem and must
+            // be destroyed. However just calling destroy without any delay will
+            // block whole application if Video-element status is Video.Loading.
+            // To prevent this give Video-element enough time to handle it's
+            // state and delay destroy by 1 minute.
+            videoPlayView.destroy(60000)
+            pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+        }
+
     }
 
     function setVideoData(videoData) {
