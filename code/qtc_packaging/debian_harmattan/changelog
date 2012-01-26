@@ -1,3 +1,8 @@
+videostreamer (0.4.0) unstable; urgency=low
+  * Video playback modulized, new UI look & gfx tuning
+
+ -- unknown <>  Thu, 26 Jan 2012 15:59:00 +0200
+
 videostreamer (0.3.0) unstable; urgency=low
   * Lots of fixes, feature improvements & UI tweaking
 
