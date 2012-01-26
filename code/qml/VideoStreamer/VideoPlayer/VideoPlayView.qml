@@ -1,8 +1,9 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Item {
     id: videoPlayView
+
     property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
 
@@ -108,7 +109,8 @@ Item {
                 }
                 videoPlayer.stop();
                 __showVideoControls(true);
-                videoPlayer.source = videoPlayView.videoSource;
+                //videoPlayer.source = videoPlayView.videoSource;
+                videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4";
                 videoPlayer.play();
             } else {
                 console.log("Player loader NOT READY! Status: "
@@ -205,17 +207,6 @@ Item {
         }
     }
 
-    // Slider type of indicator that shows the current volume level.
-    VolumeIndicator {
-        anchors {
-            left: parent.left
-            leftMargin: visual.margins
-            top: videoPlayerLoader.top
-            bottom: videoPlayView.isFullScreen ? overlayLoader.top : videoPlayerLoader.bottom
-        }
-
-        value: videoPlayer ? videoPlayer.volume : 0
-    }
 
     // Overlay controls on top of the video. Also always shown, when in
     // landscape and not in full screen video playback mode.
@@ -294,9 +285,8 @@ Item {
     // Tools (= back button). Shown in portrait mode, hidden whan in
     // landscape(/fullscreen).
 //    tools: ToolBarLayout {
-//        ToolButton {
-//            flat: true
-//            iconSource: "toolbar-back"
+//        ToolIcon {
+//            iconId: "toolbar-back"
 //            onClicked: __handleExit()
 //        }
 //    }
