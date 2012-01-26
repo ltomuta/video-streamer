@@ -108,7 +108,6 @@ Item {
                 videoPlayer.stop();
                 __showVideoControls(true);
                 videoPlayer.source = videoPlayView.videoSource;
-                //videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4";
                 videoPlayer.play();
             } else {
                 console.log("Player loader NOT READY! Status: "
