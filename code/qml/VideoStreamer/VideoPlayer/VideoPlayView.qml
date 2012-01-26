@@ -211,7 +211,7 @@ Item {
             left: parent.left
             leftMargin: visual.margins
             top: videoPlayerLoader.top
-            bottom: videoPlayerLoader.bottom
+            bottom: videoPlayView.isFullScreen ? overlayLoader.top : videoPlayerLoader.bottom
         }
 
         value: videoPlayer ? videoPlayer.volume : 0
