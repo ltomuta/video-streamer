@@ -45,12 +45,10 @@ Item {
     }
 
     function __toggleVideoControls() {
-        if (!isPortrait) {
-            if (overlayLoader.state == "") {
-                overlayLoader.state = "Hidden";
-            } else {
-                overlayLoader.state = "";
-            }
+        if (overlayLoader.state == "") {
+            overlayLoader.state = "Hidden";
+        } else {
+            overlayLoader.state = "";
         }
     }
 
@@ -109,8 +107,8 @@ Item {
                 }
                 videoPlayer.stop();
                 __showVideoControls(true);
-                //videoPlayer.source = videoPlayView.videoSource;
-                videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4";
+                videoPlayer.source = videoPlayView.videoSource;
+                //videoPlayer.source = "http://bitgravity.com/video/nasa1_22.mp4";
                 videoPlayer.play();
             } else {
                 console.log("Player loader NOT READY! Status: "

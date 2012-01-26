@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import QtMultimediaKit 1.1
 import com.nokia.meego 1.0
+import QtMobility.systeminfo 1.1
 
 Item {
     id: videoPlayerContainer
@@ -78,10 +79,23 @@ Item {
         anchors.fill: parent
     }
 
+    DeviceInfo {
+        id: deviceInfo
+
+        monitorCurrentProfileChanges: true
+
+        onCurrentProfileChanged: {
+            // Update volume dynamically when profile is changed.
+            // Binding Video element volume directly to voiceRingtoneVolume
+            // sets only initial volume but value is not updated correctly.
+            videoPlayerImpl.volume = deviceInfo.voiceRingtoneVolume / 100;
+        }
+    }
+
     Video {
         id: videoPlayerImpl
 
-        volume: 0.4
+        volume: deviceInfo.voiceRingtoneVolume / 100
         autoLoad: true
         anchors.fill: parent
         fillMode: Video.PreserveAspectFit
