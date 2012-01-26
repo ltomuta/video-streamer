@@ -44,12 +44,10 @@ Item {
     }
 
     function __toggleVideoControls() {
-        if (!isPortrait) {
-            if (overlayLoader.state == "") {
-                overlayLoader.state = "Hidden";
-            } else {
-                overlayLoader.state = "";
-            }
+        if (overlayLoader.state == "") {
+            overlayLoader.state = "Hidden";
+        } else {
+            overlayLoader.state = "";
         }
     }
 
