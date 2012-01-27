@@ -70,6 +70,9 @@ Item {
     property int animationDurationPrettyLong: 500
     property int animationDurationLong: 600
 
+    // Video information for fullscreen
+    property int videoControlsHideTimeout: 5000
+
     // Visual style's images & graphics
     Item {
         id: images
