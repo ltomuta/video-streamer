@@ -13,6 +13,7 @@ Item {
     property bool isPlaying: false
 
     signal toggled
+    signal playbackStarted
 
     function play() {
         videoPlayerImpl.play()
@@ -101,6 +102,8 @@ Item {
         fillMode: Video.PreserveAspectFit
         focus: true
 
+        property bool playbackStarted: false
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
@@ -118,6 +121,11 @@ Item {
         }
 
         onStatusChanged: {
+            if (status === Video.Buffered && !videoPlayerImpl.playbackStarted) {
+                videoPlayerImpl.playbackStarted = true;
+                videoPlayerContainer.playbackStarted();
+            }
+
             __handleStatusChange(status, isPlaying, position, paused)
         }
     }

@@ -45,6 +45,10 @@ Item {
     }
 
     function __toggleVideoControls() {
+        // Disable automatic control hiding
+        controlHideTimer.shouldRun = false
+        controlHideTimer.stop()
+
         if (overlayLoader.state == "") {
             overlayLoader.state = "Hidden";
         } else {
@@ -56,6 +60,10 @@ Item {
         videoPlayer.stop()
 
         videoPlayView.videoExit();
+    }
+
+    function __playbackStarted() {
+        controlHideTimer.startHideTimer()
     }
 
     Keys.onPressed: {
@@ -104,6 +112,7 @@ Item {
             if (videoPlayerLoader.status === Loader.Ready) {
                 if (videoPlayView.isFullScreen) {
                     videoPlayer.toggled.connect(__toggleVideoControls)
+                    videoPlayer.playbackStarted.connect(__playbackStarted)
                 }
                 videoPlayer.stop();
                 __showVideoControls(true);
@@ -112,6 +121,30 @@ Item {
             } else {
                 console.log("Player loader NOT READY! Status: "
                             + videoPlayerLoader.status);
+            }
+        }
+    }
+
+    // Timer responsible for hiding controls after entering
+    // full screen player.
+    Timer {
+        id: controlHideTimer
+
+        property bool shouldRun: videoPlayView.isFullScreen ? true : false
+
+        function startHideTimer() {
+            if (controlHideTimer.shouldRun) {
+                start()
+            }
+        }
+
+        running: false
+        interval: visual.videoControlsHideTimeout
+
+        onTriggered: {
+            controlHideTimer.shouldRun = false;
+            if (videoPlayer.isPlaying) {
+                __showVideoControls(false);
             }
         }
     }
