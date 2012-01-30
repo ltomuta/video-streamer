@@ -56,8 +56,10 @@ Item {
             id: playButton
 
             iconSource: videoPlayerControls.isPlaying
-                        ? privateStyle.imagePath("toolbar-mediacontrol-pause", false)
-                        : privateStyle.imagePath("toolbar-mediacontrol-play", false)
+                        ? privateStyle.imagePath("toolbar-mediacontrol-pause",
+                                                 false)
+                        : privateStyle.imagePath("toolbar-mediacontrol-play",
+                                                 false)
 
             width: visual.controlWidth
             height: visual.controlHeight
@@ -101,7 +103,8 @@ Item {
             anchors.right: timeDurationLabel.right
             anchors.leftMargin: visual.controlMargins
 
-            value: videoPlayerControls.timePlayed / videoPlayerControls.timeDuration
+            value: videoPlayerControls.timePlayed /
+                   videoPlayerControls.timeDuration
         }
     }
 }

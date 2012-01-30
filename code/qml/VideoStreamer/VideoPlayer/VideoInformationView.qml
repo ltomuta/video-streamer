@@ -2,8 +2,6 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "util.js" as Util
 
-
-
 Item {
     id: videoInformationView
 
@@ -66,7 +64,8 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        // Two Text elements on top of each other, amount of likes + "likes" string.
+        // Two Text elements on top of each other,
+        // amount of likes + "likes" string.
         VideoInfoTextLabel {
             id: likesCount
 
@@ -84,7 +83,8 @@ Item {
             text: qsTr("likes")
         }
 
-        // Two Text elements on top of each other, amount of dislikes + "dislikes" string.
+        // Two Text elements on top of each other,
+        // amount of dislikes + "dislikes" string.
         VideoInfoTextLabel {
             id: dislikesCount
 
@@ -102,47 +102,4 @@ Item {
             text: qsTr("dislikes")
         }
     }
-
-    // Likes & dislikes images (thumbs up & thumbs down) currently disabled.
-    // Textual information is being used instead.
-//    Item {
-//        anchors.right: parent.right
-//        anchors.rightMargin: visual.margins
-//        width: childrenRect.width
-//
-//        InfoTextLabel {
-//            id: likesLabel
-//            // The forward zeros aren't prepended at the time being.
-//            //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
-//            text: videoInformationView.numLikes
-//        }
-//
-//        Image {
-//            id: likesImg
-//            source: visual.images.thumbsUpIcon
-//            anchors {
-//                left: likesLabel.right
-//                leftMargin: visual.margins
-//                verticalCenter: likesLabel.verticalCenter
-//            }
-//        }
-//
-//        InfoTextLabel {
-//            id: dislikesLabel
-//            anchors.left: likesImg.right
-//            // The forward zeros aren't prepended at the time being.
-//            //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
-//            text: videoInformationView.numDislikes
-//        }
-//
-//        Image {
-//            source: visual.images.thumbsDownIcon
-//            anchors {
-//                left: dislikesLabel.right
-//                leftMargin: visual.margins
-//                verticalCenter: dislikesLabel.verticalCenter
-//            }
-//        }
-//    }
 }
-

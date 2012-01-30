@@ -124,7 +124,8 @@ ListItem {
         anchors.topMargin: visual.margins
         anchors.bottom: thumb.bottom
 
-        // Text element for viewing the video title information. Maximum of 2 lines.
+        // Text element for viewing the video title information.
+        // Maximum of 2 lines.
         InfoTextLabel {
             id: videoTitle
             text: model.m_title
@@ -135,11 +136,11 @@ ListItem {
             font.bold: true
         }
 
-        // Item bundling the duration, eye, 'likes & dislikes' icons & amounts together.
+        // Item bundling the duration, eye, 'likes & dislikes' icons
+        // and amounts together.
         Item {
             width: parent.width
             height: duration.height
-//            anchors.top: visual.inPortrait ? videoTitle.bottom : loader.bottom
             anchors.bottom: parent.bottom
             anchors.bottomMargin: visual.isE6 ? visual.spacing : 0
 
@@ -162,7 +163,8 @@ ListItem {
                     text: model.m_viewCount + qsTr(" views")
                     horizontalAlignment: Text.AlignRight
                     anchors.right: parent.right
-                    anchors.rightMargin: visual.inPortrait ? visual.margins*2 : visual.margins*3
+                    anchors.rightMargin: visual.inPortrait
+                                         ? visual.margins*2 : visual.margins*3
                 }
             }
 

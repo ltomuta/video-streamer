@@ -27,8 +27,8 @@ Page {
 
         placeHolderText: qsTr("Search Text")
         backButton: true
-        onBackClicked: searchView.pageStack.depth <= 1 ? Qt.quit()
-                                                       : searchView.pageStack.pop()
+        onBackClicked: searchView.pageStack.depth <= 1 ?
+                           Qt.quit() : searchView.pageStack.pop()
     }
 
     VideoListModel {
@@ -46,7 +46,8 @@ Page {
             right: parent.right
         }
 
-        model: xmlDataModel.status === XmlListModel.Error ? 1 : (searchbox.searchText ? videoListModel : null)
+        model: xmlDataModel.status === XmlListModel.Error ?
+                   1 : (searchbox.searchText ? videoListModel : null)
         snapMode: ListView.SnapToItem
         cacheBuffer: visual.videoListItemHeight*10
         clip: true
@@ -66,7 +67,8 @@ Page {
             }
         }
 
-        delegate: xmlDataModel.status === XmlListModel.Error ? networkErrorItem : videoListItem
+        delegate: xmlDataModel.status === XmlListModel.Error ?
+                      networkErrorItem : videoListItem
     }
 
     ScrollDecorator {

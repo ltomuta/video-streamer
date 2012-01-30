@@ -104,9 +104,11 @@ Item {
 
         onTriggered: {
             stop();
-            // The video playback area itself. Size for it is being determined by the
-            // orientation and calculated proportionally based on the parent dimensions.
-            videoPlayerLoader.sourceComponent = Qt.createComponent("VideoPlayerView.qml");
+            // The video playback area itself. Size for it is being determined
+            // by the orientation and calculated proportionally based
+            // on the parent dimensions.
+            videoPlayerLoader.sourceComponent =
+                    Qt.createComponent("VideoPlayerView.qml");
 
             if (videoPlayerLoader.status === Loader.Ready) {
                 if (videoPlayView.isFullScreen) {
@@ -163,12 +165,14 @@ Item {
     // Loader, which selects what to show on the upper part of the screen.
     Loader {
         id: upperAreaLoader
-        height: videoPlayView.isFullScreen ? 0 : (videoPlayView.height * topAreaProportion)
+        height: videoPlayView.isFullScreen ?
+                    0 : (videoPlayView.height * topAreaProportion)
         anchors {
             top: parent.top
             topMargin: videoPlayView.isFullScreen ? 0 : visual.margins
             left: parent.left
-            leftMargin: videoPlayView.isFullScreen ? 0 : (isPortrait ? 0 : visual.margins)
+            leftMargin: videoPlayView.isFullScreen ?
+                            0 : (isPortrait ? 0 : visual.margins)
             right: parent.right
         }
 
@@ -192,7 +196,8 @@ Item {
     // Loader, which selects what to show on the bottom part of the screen.
     Loader {
         id: bottomAreaLoader
-        height: videoPlayView.isFullScreen ? 0 : (videoPlayView.height * bottomAreaProportion)
+        height: videoPlayView.isFullScreen ?
+                    0 : (videoPlayView.height * bottomAreaProportion)
         width: videoPlayView.isFullScreen ? 0 : (videoPlayView.width / 3)
         anchors {
             bottom: parent.bottom
@@ -200,7 +205,9 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
 
-        sourceComponent: videoPlayView.isFullScreen ? undefined : (isPortrait ? videoInformation : undefined)
+        sourceComponent: videoPlayView.isFullScreen ?
+                             undefined : (isPortrait ?
+                                              videoInformation : undefined)
     }
 
     // In landscape there's an extra loader for the right side of the screen,
@@ -213,11 +220,14 @@ Item {
         height: videoPlayView.isFullScreen ? 0 : videoPlayerLoader.height
         anchors {
             right: parent.right
-            rightMargin: videoPlayView.isFullScreen ? 0 : (visual.isE6 ? visual.margins * 9 : visual.margins * 6)
+            rightMargin: videoPlayView.isFullScreen ?
+                             0 : (visual.isE6 ?
+                                      visual.margins * 9 : visual.margins * 6)
             verticalCenter: videoPlayView.verticalCenter
         }
 
-        sourceComponent: videoPlayView.isFullScreen ? undefined : (isPortrait ? undefined : videoInformation)
+        sourceComponent: videoPlayView.isFullScreen ?
+                             undefined : (isPortrait ? undefined : videoInformation)
     }
 
     // Loader for the VideoPlayerComponent. NOTE: The sourceComponent will be
@@ -231,8 +241,10 @@ Item {
             top: upperAreaLoader.bottom
             left: parent.left
             right: parent.right
-            leftMargin: videoPlayView.isFullScreen ? 0 : (videoPlayView.width * visual.leftAreaProportion)
-            rightMargin: videoPlayView.isFullScreen ? 0 : videoPlayView.width * visual.rightAreaProportion
+            leftMargin: videoPlayView.isFullScreen ?
+                            0 : (videoPlayView.width * visual.leftAreaProportion)
+            rightMargin: videoPlayView.isFullScreen ?
+                             0 : (videoPlayView.width * visual.rightAreaProportion)
         }
     }
 
@@ -242,7 +254,8 @@ Item {
             left: parent.left
             leftMargin: visual.margins
             top: videoPlayerLoader.top
-            bottom: videoPlayView.isFullScreen ? overlayLoader.top : videoPlayerLoader.bottom
+            bottom: videoPlayView.isFullScreen ?
+                        overlayLoader.top : videoPlayerLoader.bottom
         }
 
         value: videoPlayer ? videoPlayer.volume : 0
@@ -318,17 +331,4 @@ Item {
             }
         ]
     }
-
-    // TODO!: Both of the view modes (portrait/landscape) currently use the
-    // customized VideoControls, so don't show the toolbar.
-    //
-    // Tools (= back button). Shown in portrait mode, hidden whan in
-    // landscape(/fullscreen).
-//    tools: ToolBarLayout {
-//        ToolButton {
-//            flat: true
-//            iconSource: "toolbar-back"
-//            onClicked: __handleExit()
-//        }
-//    }
 }

@@ -48,9 +48,9 @@ Item {
     }
 
     function __handleStatusChange(status, playing, position, paused) {
-        var isVisibleState = status === Video.Buffered || status === Video.EndOfMedia
+        var isVisibleState = status === Video.Buffered ||
+                status === Video.EndOfMedia
         var isStalled = status === Video.Stalled
-
 
         // Background
         if ( (isVisibleState || isStalled) && !(paused && position === 0) ) {
@@ -148,7 +148,6 @@ Item {
         z: blackBackground.z + 1
         running: true
     }
-
 
     Connections {
         target: volumeKeys

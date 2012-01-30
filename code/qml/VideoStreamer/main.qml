@@ -80,30 +80,13 @@ Window {
     Image {
         id: backgroundImg
         anchors.fill: parent
-        source: visual.inPortrait ? (visual.showBackground
-                                     ? visual.images.portraitListBackground
-                                     : visual.images.portraitVideoBackground)
-                                  : (visual.showBackground
-                                    ? visual.images.landscapeListBackground
-                                    : visual.images.landscapeVideoBackground)
-
-//        states: [
-//            State {
-//                name: "invisible"
-//                when: !visual.showBackground
-//                PropertyChanges { target: backgroundImg; opacity: 0 }
-//            }
-//        ]
-
-//        transitions: [
-//            Transition {
-//                to: "invisible"
-//                NumberAnimation {
-//                    properties: "opacity"
-//                    duration: visual.animationDurationPrettyLong
-//                }
-//            }
-//        ]
+        source: visual.inPortrait ?
+                    (visual.showBackground ?
+                         visual.images.portraitListBackground
+                       : visual.images.portraitVideoBackground)
+                  : (visual.showBackground ?
+                         visual.images.landscapeListBackground
+                       : visual.images.landscapeVideoBackground)
     }
 
     // Default ToolBarLayout
@@ -112,18 +95,21 @@ Window {
         ToolButton {
             flat: true
             iconSource: "toolbar-back"
-            onClicked: root.pageStack.depth <= 1 ? Qt.quit() : root.pageStack.pop()
+            onClicked: root.pageStack.depth <= 1 ?
+                           Qt.quit() : root.pageStack.pop()
         }
         ToolButton {
             flat: true
             iconSource: "toolbar-search"
             // Create the SearchView to the pageStack dynamically.
-            onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"), {pageStack: stack})
+            onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"),
+                                      {pageStack: stack})
         }
         ToolButton {
             flat: true
             iconSource: visual.images.infoIcon
-            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"), {pageStack: stack})
+            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"),
+                                      {pageStack: stack})
         }
     }
 
