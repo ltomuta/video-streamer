@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 
 Item {
     id: videoPlayView
@@ -248,18 +248,6 @@ Item {
         }
     }
 
-    // Slider type of indicator that shows the current volume level.
-    VolumeIndicator {
-        anchors {
-            left: parent.left
-            leftMargin: visual.margins
-            top: videoPlayerLoader.top
-            bottom: videoPlayView.isFullScreen ?
-                        overlayLoader.top : videoPlayerLoader.bottom
-        }
-
-        value: videoPlayer ? videoPlayer.volume : 0
-    }
 
     // Overlay controls on top of the video. Also always shown, when in
     // landscape and not in full screen video playback mode.

@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import QtMultimediaKit 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 import QtMobility.systeminfo 1.1
 
 Item {
@@ -143,8 +143,7 @@ Item {
         id: busyIndicator
 
         anchors.centerIn: blackBackground
-        height: visual.busyIndicatorHeight
-        width: visual.busyIndicatorWidth
+        platformStyle: BusyIndicatorStyle { size: "large" }
         z: blackBackground.z + 1
         running: true
     }
