@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Nokia Corporation.
+ * Copyright (c) 2012 Nokia Corporation.
  */
 
 #ifndef LOADHELPER_H

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 // Visual style for Symbian
 import QtQuick 1.1
 

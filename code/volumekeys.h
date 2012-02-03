@@ -1,8 +1,8 @@
 /**
- * Copyright (c) 2011 Nokia Corporation.
+ * Copyright (c) 2012 Nokia Corporation.
  * All rights reserved.
  *
- * Part of the QtDrumkit
+ * Part of the QMLVideoStreamer.
  * Based on volumekeys.h from Qt GameEnabler.
  *
  * For the applicable distribution terms see the license text file included in

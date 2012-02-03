@@ -1,7 +1,11 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
-import QtMultimediaKit 1.1
 import com.nokia.symbian 1.1
 import QtMobility.systeminfo 1.1
+import QtMultimediaKit 1.1
 
 Item {
     id: videoPlayerContainer
