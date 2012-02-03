@@ -18,14 +18,12 @@
 #include <remconcoreapitarget.h>
 #include <remconinterfaceselector.h>
 
-/*!
-  \class VolumeKeys
-  \brief Symbian specific utility for reacting to hardware volume buttons.
-*/
+// Symbian specific utility for reacting to hardware volume buttons.
 class VolumeKeys : public QObject, 
                    public MRemConCoreApiTargetObserver
 {
     Q_OBJECT
+
 public:
     explicit VolumeKeys(QObject *parent);
     ~VolumeKeys();

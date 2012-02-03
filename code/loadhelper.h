@@ -25,5 +25,4 @@ private: // Data
     QmlApplicationViewer *m_viewer;     // Not owned
 };
 
-
 #endif // LOADHELPER_H

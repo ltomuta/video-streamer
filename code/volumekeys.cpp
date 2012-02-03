@@ -16,6 +16,10 @@
   \class VolumeKeys
   \brief Symbian specific utility for reacting to hardware volume buttons.
 */
+
+/*!
+  Constructor.
+*/
 VolumeKeys::VolumeKeys(QObject *parent)
     : QObject(parent),
       m_interfaceSelector(0),
@@ -28,6 +32,9 @@ VolumeKeys::VolumeKeys(QObject *parent)
     );
 }
 
+/*!
+  Destructor.
+*/
 VolumeKeys::~VolumeKeys()
 {
     delete m_interfaceSelector;
@@ -35,6 +42,9 @@ VolumeKeys::~VolumeKeys()
     m_coreTarget = 0; // owned by interfaceselector
 }
 
+/*!
+  Receives events from the "Volume Up" & "Volume Down" buttons.
+*/
 void VolumeKeys::MrccatoCommand(TRemConCoreApiOperationId operationId,
                                 TRemConCoreApiButtonAction buttonAct)
 {
