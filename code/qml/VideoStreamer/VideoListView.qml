@@ -22,31 +22,18 @@ Page {
 
     ListView {
         id: listView
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         height: mainPage.listHeight
         snapMode: ListView.SnapToItem
-
-        model: xmlDataModel.status === XmlListModel.Error ? 1 : xmlDataModel
-
         focus: true
         cacheBuffer: visual.videoListItemHeight*10
 
-        Component {
-            id: videoListItemDelegate
-            VideoListItem {
-                width: listView.width
-            }
-        }
-
-        Component {
-            id: networkErrorItem
-            NetworkErrorItem {
-                width: listView.width
-            }
-        }
-
+        model: xmlDataModel.status === XmlListModel.Error ? 1 : xmlDataModel
         delegate: xmlDataModel.status === XmlListModel.Ready
                   ? videoListItemDelegate : networkErrorItem
 
@@ -55,17 +42,30 @@ Page {
             id: titleBar
 
             height: visual.titleBarHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+        }
+
+        Component {
+            id: videoListItemDelegate
+
+            VideoListItem {
+                width: listView.width
+            }
+        }
+
+        Component {
+            id: networkErrorItem
+
+            NetworkErrorItem {
+                width: listView.width
+            }
         }
     }
 
     ScrollDecorator {
-        anchors {
-            right: parent.right
-            top: parent.top
-            bottom: parent.bottom
-        }
         // flickableItem binds the scroll decorator to the ListView.
         flickableItem: listView
     }

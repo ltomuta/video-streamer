@@ -1,13 +1,13 @@
 .pragma library
 
 function milliSecondsToString(milliseconds) {
-    milliseconds = milliseconds > 0 ? milliseconds : 0
-    var timeInSeconds = Math.floor(milliseconds / 1000)
-    var minutes = Math.floor(timeInSeconds / 60)
-    var minutesString = minutes < 10 ? "0" + minutes : minutes
-    var seconds = Math.floor(timeInSeconds % 60)
-    var secondsString = seconds < 10 ? "0" + seconds : seconds
-    return minutesString + ":" + secondsString
+    milliseconds = milliseconds > 0 ? milliseconds : 0;
+    var timeInSeconds = Math.floor(milliseconds / 1000);
+    var minutes = Math.floor(timeInSeconds / 60);
+    var minutesString = minutes < 10 ? "0" + minutes : minutes;
+    var seconds = Math.floor(timeInSeconds % 60);
+    var secondsString = seconds < 10 ? "0" + seconds : seconds;
+    return minutesString + ":" + secondsString;
 }
 
 function secondsToString(seconds) {
@@ -15,8 +15,6 @@ function secondsToString(seconds) {
 }
 
 function formatDate(dateString) {
-//    console.log("dateString: " + dateString);
-
     // Split the given dateString.
     // It's formatted in ISO 8601 (such as 2000-01-01T12:00:00.000Z).
     var dateStr = dateString.substring(0, 10);
@@ -46,7 +44,5 @@ function convertToDate(date, time) {
         newDate.setMilliseconds(parseInt(time.substr(9,2), RADIX));
     }
 
-//    console.log("New Date created: " + newDate.toDateString()
-//                + " with time: " + newDate.toTimeString());
     return newDate;
 }

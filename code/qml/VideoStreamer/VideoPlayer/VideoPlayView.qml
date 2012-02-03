@@ -7,6 +7,7 @@ import com.nokia.symbian 1.1
 
 Item {
     id: videoPlayView
+
     property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
 
@@ -23,11 +24,10 @@ Item {
     property double bottomAreaProportion: visual.bottomAreaProportion
     property double leftAreaProportion: visual.leftAreaProportion
     property double rightAreaProportion: visual.rightAreaProportion
-
-    signal videoExit
-
     // Ease of access handle for the VideoPlayerView Item.
     property alias videoPlayer: videoPlayerLoader.item
+
+    signal videoExit
 
     function setVideoData(videoData) {
         videoPlayView.videoTitle = videoData.m_title;
@@ -39,18 +39,17 @@ Item {
         videoPlayView.viewCount = videoData.m_viewCount;
 
         videoPlayView.videoDescription = videoData.m_description;
-
         videoPlayView.videoSource = videoData.m_contentUrl;
     }
 
     function __showVideoControls(showControls) {
-        overlayLoader.state = showControls ? "" : "Hidden"
+        overlayLoader.state = showControls ? "" : "Hidden";
     }
 
     function __toggleVideoControls() {
         // Disable automatic control hiding
-        controlHideTimer.shouldRun = false
-        controlHideTimer.stop()
+        controlHideTimer.shouldRun = false;
+        controlHideTimer.stop();
 
         if (overlayLoader.state == "") {
             overlayLoader.state = "Hidden";
@@ -60,13 +59,12 @@ Item {
     }
 
     function __handleExit() {
-        videoPlayer.stop()
-
+        videoPlayer.stop();
         videoPlayView.videoExit();
     }
 
     function __playbackStarted() {
-        controlHideTimer.startHideTimer()
+        controlHideTimer.startHideTimer();
     }
 
     Keys.onPressed: {
@@ -116,8 +114,8 @@ Item {
 
             if (videoPlayerLoader.status === Loader.Ready) {
                 if (videoPlayView.isFullScreen) {
-                    videoPlayer.toggled.connect(__toggleVideoControls)
-                    videoPlayer.playbackStarted.connect(__playbackStarted)
+                    videoPlayer.toggled.connect(__toggleVideoControls);
+                    videoPlayer.playbackStarted.connect(__playbackStarted);
                 }
                 videoPlayer.stop();
                 __showVideoControls(true);
@@ -139,7 +137,7 @@ Item {
 
         function startHideTimer() {
             if (controlHideTimer.shouldRun) {
-                start()
+                start();
             }
         }
 
@@ -169,8 +167,7 @@ Item {
     // Loader, which selects what to show on the upper part of the screen.
     Loader {
         id: upperAreaLoader
-        height: videoPlayView.isFullScreen ?
-                    0 : (videoPlayView.height * topAreaProportion)
+
         anchors {
             top: parent.top
             topMargin: videoPlayView.isFullScreen ? 0 : visual.margins
@@ -179,6 +176,8 @@ Item {
                             0 : (isPortrait ? 0 : visual.margins)
             right: parent.right
         }
+        height: videoPlayView.isFullScreen ?
+                    0 : (videoPlayView.height * topAreaProportion)
 
         sourceComponent: videoPlayView.isFullScreen ? undefined : videoTitleComp
     }
@@ -200,6 +199,7 @@ Item {
     // Loader, which selects what to show on the bottom part of the screen.
     Loader {
         id: bottomAreaLoader
+
         height: videoPlayView.isFullScreen ?
                     0 : (videoPlayView.height * bottomAreaProportion)
         width: videoPlayView.isFullScreen ? 0 : (videoPlayView.width / 3)
@@ -269,6 +269,7 @@ Item {
     // landscape and not in full screen video playback mode.
     Component {
         id: overlayComponent
+
         VideoPlayerControls {
             id: videoPlayerControls
 
@@ -277,15 +278,15 @@ Item {
             isPlaying: videoPlayer ? videoPlayer.isPlaying : false
 
             onBackButtonPressed: {
-                __handleExit()
+                __handleExit();
             }
 
             onPausePressed: {
-                videoPlayer.pause()
+                videoPlayer.pause();
             }
 
             onPlayPressed: {
-                videoPlayer.play()
+                videoPlayer.play();
             }
         }
     }
@@ -298,8 +299,7 @@ Item {
         sourceComponent: overlayComponent
         // Don't use anchoring here, use y-coordinate instead, so that
         // it can be animated.
-        y: parent.height-visual.controlAreaHeight
-        // anchors.bottom: parent.bottom
+        y: parent.height - visual.controlAreaHeight
         width: videoPlayView.width
         height: visual.controlAreaHeight
 

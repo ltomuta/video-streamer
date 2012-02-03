@@ -25,8 +25,10 @@ Page {
         Image {
             id: logoImg
 
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+            }
             source: visual.images.developerLogo
         }
     }

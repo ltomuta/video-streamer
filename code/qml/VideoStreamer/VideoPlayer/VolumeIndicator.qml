@@ -33,6 +33,11 @@ Slider {
         }
     }
 
+    // Mouse area to grap all the events, as the indicator is not interactive.
+    MouseArea {
+        anchors.fill: parent
+    }
+
     states: [
         State {
             name: "hide"
@@ -54,9 +59,4 @@ Slider {
             }
         }
     ]
-
-    // Mouse area to grap all the events, as the indicator is not interactive.
-    MouseArea {
-        anchors.fill: parent
-    }
 }

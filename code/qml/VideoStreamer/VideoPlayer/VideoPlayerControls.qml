@@ -36,10 +36,12 @@ Item {
         Loader {
             id: backButtonLoader
 
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: videoPlayerControls.showBackButton
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: videoPlayerControls.showBackButton
                                 ? visual.controlMargins : 0
+            }
             sourceComponent: videoPlayerControls.showBackButton
                              ? backButtonComponent
                              : undefined
@@ -67,9 +69,12 @@ Item {
 
             width: visual.controlWidth
             height: visual.controlHeight
-            anchors.verticalCenter: backButtonLoader.verticalCenter
-            anchors.left: backButtonLoader.right
-            anchors.leftMargin: visual.controlMargins
+            anchors {
+                verticalCenter: backButtonLoader.verticalCenter
+                left: backButtonLoader.right
+                leftMargin: visual.controlMargins
+            }
+
             onClicked: {
                 if (videoPlayerControls.isPlaying) {
                     videoPlayerControls.pausePressed()
@@ -83,29 +88,35 @@ Item {
             id: timeElapsedLabel
 
             text: Util.milliSecondsToString(timePlayed)
-            anchors.bottom: playButton.verticalCenter
-            anchors.left: playButton.right
-            anchors.right: parent.right
-            anchors.leftMargin: visual.controlMargins
-            anchors.rightMargin: visual.controlMargins
+            anchors {
+                bottom: playButton.verticalCenter
+                left: playButton.right
+                right: parent.right
+                leftMargin: visual.controlMargins
+                rightMargin: visual.controlMargins
+            }
         }
 
         VideoInfoTextLabel {
             id: timeDurationLabel
 
             text: Util.milliSecondsToString(timeDuration)
-            anchors.bottom: playButton.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: visual.controlMargins
+            anchors {
+                bottom: playButton.verticalCenter
+                right: parent.right
+                rightMargin: visual.controlMargins
+            }
         }
 
         ProgressBar {
             id: progressBar
 
-            anchors.top: playButton.verticalCenter
-            anchors.left: playButton.right
-            anchors.right: timeDurationLabel.right
-            anchors.leftMargin: visual.controlMargins
+            anchors {
+                top: playButton.verticalCenter
+                left: playButton.right
+                right: timeDurationLabel.right
+                leftMargin: visual.controlMargins
+            }
 
             value: videoPlayerControls.timePlayed /
                    videoPlayerControls.timeDuration

@@ -23,7 +23,7 @@ Window {
         tools: toolBarLayout
         // Set the height for the VideoListView's list, as hiding / showing
         // the ToolBar prevents the pagestack from being anchored to it.
-        listHeight: parent.height-tbar.height
+        listHeight: parent.height - toolbar.height
     }
 
     Component.onCompleted: {
@@ -40,21 +40,21 @@ Window {
 
         BusySplash {
             id: busy
-            width: root.width
-            height: root.height
 
             function __hideSplash() {
-               busy.opacity = 0;
-               root.isShowingSplashScreen = false;
-               stack.push(initialPage);
-           }
+                busy.opacity = 0;
+                root.isShowingSplashScreen = false;
+                stack.push(initialPage);
+            }
 
+            width: root.width
+            height: root.height
             // Get rid of the fake splash for good, when loading is done!
             onDismissed: busySplash.destroy();
 
             Component.onCompleted: {
                 if (xmlDataModel.status === XmlListModel.Error) {
-                    __hideSplash()
+                    __hideSplash();
                 }
             }
 
@@ -62,8 +62,8 @@ Window {
                 target: xmlDataModel
                 onStatusChanged: {
                     if (xmlDataModel.status === XmlListModel.Ready ||
-                        xmlDataModel.status === XmlListModel.Error) {
-                        __hideSplash()
+                            xmlDataModel.status === XmlListModel.Error) {
+                        __hideSplash();
                     }
                 }
             }
@@ -83,6 +83,7 @@ Window {
     // Background, shown behind the lists. Will fade to black when hiding it.
     Image {
         id: backgroundImg
+
         anchors.fill: parent
         source: visual.inPortrait ?
                     (visual.showBackground ?
@@ -96,6 +97,7 @@ Window {
     // Default ToolBarLayout
     ToolBarLayout {
         id: toolBarLayout
+
         ToolButton {
             flat: true
             iconSource: "toolbar-back"
@@ -117,20 +119,22 @@ Window {
         }
     }
 
-
     PageStack {
         id: stack
+
         anchors {
-            top: sbar.bottom; bottom: parent.bottom
-            left: parent.left; right: parent.right
+            top: statusbar.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
         }
 
         clip: true
-        toolBar: tbar
+        toolBar: toolbar
     }
 
     ToolBar {
-        id: tbar
+        id: toolbar
 
         width: parent.width
         visible: root.showToolBar ? true : false
@@ -139,7 +143,7 @@ Window {
     }
 
     StatusBar {
-        id: sbar
+        id: statusbar
 
         width: parent.width
         visible: root.showStatusBar

@@ -37,6 +37,7 @@ Page {
 
     VideoListModel {
         id: videoListModel
+
         searchTerm: searchbox.searchText
     }
 
@@ -50,37 +51,35 @@ Page {
             right: parent.right
         }
 
-        model: xmlDataModel.status === XmlListModel.Error ?
-                   1 : (searchbox.searchText ? videoListModel : null)
         snapMode: ListView.SnapToItem
         cacheBuffer: visual.videoListItemHeight*10
         clip: true
 
+        model: xmlDataModel.status === XmlListModel.Error ?
+                   1 : (searchbox.searchText ? videoListModel : null)
+        delegate: xmlDataModel.status === XmlListModel.Error ?
+                      networkErrorItem : videoListItem
+
         // List item delegate Component.
         Component {
             id: videoListItem
+
             VideoListItem {
                 width: listView.width
             }
         }
 
+        // Delegate, that's shown when there's been an error in network communication.
         Component {
             id: networkErrorItem
+
             NetworkErrorItem {
                 width: listView.width
             }
         }
-
-        delegate: xmlDataModel.status === XmlListModel.Error ?
-                      networkErrorItem : videoListItem
     }
 
     ScrollDecorator {
-        anchors {
-            right: parent.right
-            top: parent.top
-            bottom: parent.bottom
-        }
         // flickableItem binds the scroll decorator to the ListView.
         flickableItem: listView
     }
@@ -88,13 +87,16 @@ Page {
     Text {
         id: noResultsText
 
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: searchbox.bottom
+        }
+
         font {
             family: visual.defaultFontFamily
             pixelSize: visual.largeFontSize
         }
 
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: searchbox.bottom
         opacity: 0
         color: visual.defaultFontColor
         text: qsTr("No videos found")

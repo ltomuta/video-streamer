@@ -14,7 +14,6 @@ XmlListModel {
     property int startIndex: 1
     property int maxResults: 10
 
-
     source: "http://gdata.youtube.com/feeds/mobile/videos?" +
             "q=" + model.searchTerm +
             "&author=" + model.channelName +
@@ -73,7 +72,7 @@ XmlListModel {
 
     onStatusChanged: {
         if (status === XmlListModel.Error) {
-            console.log("Error in XmlListModel: " + errorString())
+            console.log("Error in XmlListModel: " + errorString());
         }
     }
 }
