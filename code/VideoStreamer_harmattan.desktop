@@ -4,7 +4,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=VideoStreamer
-Exec=/usr/bin/single-instance /opt/VideoStreamer/bin/VideoStreamer
+Exec=/usr/bin/invoker --single-instance --type=e --splash-landscape=/opt/VideoStreamer/FilmReel_landscape.png --splash=/opt/VideoStreamer/FilmReel_N9.png /opt/VideoStreamer/bin/VideoStreamer
 Icon=/usr/share/icons/hicolor/scalable/apps/VideoStreamer.svg
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true

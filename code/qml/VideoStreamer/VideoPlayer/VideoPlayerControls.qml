@@ -3,7 +3,7 @@
  */
 
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.0
 import "util.js" as Util
 
 Item {
@@ -24,13 +24,16 @@ Item {
 
         // Use the same background image as the ToolBar.
         BorderImage {
+            // Styling for the ToolBar
+            property Style tbStyle: ToolBarStyle {}
+
             id: background
             anchors.fill: parent
             opacity: visual.controlOpacity
             source: videoPlayerControls.showBackground
-                    ? privateStyle.imagePath("qtg_fr_toolbar", false)
+                    ? tbStyle.background
                     : ""
-            border { left: 20; top: 20; right: 20; bottom: 20 }
+            border { left: 10; top: 10; right: 10; bottom: 10 }
         }
 
         Loader {
@@ -51,7 +54,7 @@ Item {
             id: backButtonComponent
 
             Button {
-                iconSource: privateStyle.imagePath("toolbar-back", false)
+                iconSource: visual.images.vpcBack
                 width: visual.controlWidth
                 height: visual.controlHeight
                 onClicked: videoPlayerControls.backButtonPressed()
@@ -61,11 +64,8 @@ Item {
         Button {
             id: playButton
 
-            iconSource: videoPlayerControls.isPlaying
-                        ? privateStyle.imagePath("toolbar-mediacontrol-pause",
-                                                 false)
-                        : privateStyle.imagePath("toolbar-mediacontrol-play",
-                                                 false)
+            iconSource: videoPlayerControls.isPlaying ? visual.images.vpcPause
+                        : visual.images.vpcPlay
 
             width: visual.controlWidth
             height: visual.controlHeight

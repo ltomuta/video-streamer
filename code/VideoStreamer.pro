@@ -39,7 +39,11 @@ symbian {
 } else:harmattan {
     icon_file.files = VideoStreamer.svg
     icon_file.path = /usr/share/icons/hicolor/scalable/apps
-    INSTALLS += icon_file
+    splash.files += qml/VideoStreamer/gfx/FilmReel_landscape.png
+    splash.files += qml/VideoStreamer/gfx/FilmReel_N9.png
+    splash.path = /opt/VideoStreamer
+
+    INSTALLS += icon_file splash
     DEFINES += Q_WS_HARMATTAN
 }
 

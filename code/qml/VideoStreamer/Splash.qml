@@ -13,6 +13,6 @@ Item {
     Image {
         id: bgImg
         anchors.fill: parent
-        source: portrait ? "gfx/FilmReel.png" : "gfx/FilmReel_landscape.png"
+        source: portrait ? "gfx/FilmReel_N9.png" : "gfx/FilmReel_landscape.png"
     }
 }

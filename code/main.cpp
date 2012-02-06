@@ -9,6 +9,8 @@
 #include <QtDeclarative/QDeclarativeComponent>
 #include "qmlapplicationviewer.h"
 
+#include <QDir>
+#include <QDeclarativeEngine>
 #include "loadhelper.h"
 
 #if defined(Q_OS_SYMBIAN)
@@ -21,11 +23,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
     // Data model is created immediately to allow data fetching
     // during splash screen is shown.
+    QDir qmlPath(QCoreApplication::applicationDirPath());
+    qmlPath.cdUp();
+    QString listModelFilePath = qmlPath.filePath("qml/VideoStreamer/VideoListModel.qml");
+
     QScopedPointer<QDeclarativeComponent> dataModelComponent(
-                new QDeclarativeComponent(
-                    viewer->engine(),
-                    QUrl::fromLocalFile("qml/VideoStreamer/VideoListModel.qml")) );
+                new QDeclarativeComponent(viewer->engine(), listModelFilePath));
     QScopedPointer<QObject> dataModel(dataModelComponent->create());
+
     viewer->rootContext()->setContextProperty("xmlDataModel", dataModel.data());
 
 #if defined(Q_OS_SYMBIAN)
