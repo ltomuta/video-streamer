@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "util.js" as Util
@@ -12,14 +16,15 @@ Item {
 
     // Prepends forward zeros to a text (e.g. 41 -> 0041)
     function __prependToLength(text, len, fill) {
-        text = text.toString()
-        fill = fill.toString()
-        var diff = len - text.length
+        text = text.toString();
+        fill = fill.toString();
+        var diff = len - text.length;
+
         for (var index = 0; index < diff; index++) {
-            text = fill.concat(text)
+            text = fill.concat(text);
         }
 
-        return text
+        return text;
     }
 
     anchors.margins: visual.informationViewMargins
@@ -78,8 +83,10 @@ Item {
         VideoInfoTextLabel {
             id: likesLabel
 
-            anchors.top: likesCount.bottom
-            anchors.horizontalCenter: likesCount.horizontalCenter
+            anchors {
+                top: likesCount.bottom
+                horizontalCenter: likesCount.horizontalCenter
+            }
             text: qsTr("likes")
         }
 
@@ -97,8 +104,10 @@ Item {
         VideoInfoTextLabel {
             id: dislikesLabel
 
-            anchors.horizontalCenter: dislikesCount.horizontalCenter
-            anchors.top: dislikesCount.bottom
+            anchors {
+                horizontalCenter: dislikesCount.horizontalCenter
+                top: dislikesCount.bottom
+            }
             text: qsTr("dislikes")
         }
     }

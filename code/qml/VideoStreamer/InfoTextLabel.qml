@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
 
 // Just a conveniece element that defines the default font family,

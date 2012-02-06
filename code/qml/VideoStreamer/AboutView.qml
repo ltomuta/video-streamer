@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
@@ -21,8 +25,10 @@ Page {
         Image {
             id: logoImg
 
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+            }
             source: visual.images.developerLogo
         }
     }

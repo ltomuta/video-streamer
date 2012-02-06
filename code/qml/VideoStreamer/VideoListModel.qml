@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
 
 XmlListModel {
@@ -9,7 +13,6 @@ XmlListModel {
     property string searchTerm: ""
     property int startIndex: 1
     property int maxResults: 10
-
 
     source: "http://gdata.youtube.com/feeds/mobile/videos?" +
             "q=" + model.searchTerm +
@@ -69,7 +72,7 @@ XmlListModel {
 
     onStatusChanged: {
         if (status === XmlListModel.Error) {
-            console.log("Error in XmlListModel: " + errorString())
+            console.log("Error in XmlListModel: " + errorString());
         }
     }
 }

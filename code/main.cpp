@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Nokia Corporation.
+ * Copyright (c) 2012 Nokia Corporation.
  */
 
 #include <QtCore/QString>
@@ -21,7 +21,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-
     // Data model is created immediately to allow data fetching
     // during splash screen is shown.
     QDir qmlPath(QCoreApplication::applicationDirPath());
@@ -49,16 +48,18 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     static const QString VERSION_NUMBER(QString("%1").arg(VER)); // X.Y.Z by itself
 #endif
 
+    // Set the application version number as a context property (for the AboutView
+    // to show) and set the quick loading Splash QML file.
     app->setApplicationVersion(VERSION_NUMBER);
     viewer->rootContext()->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
-
     viewer->setMainQmlFile(QLatin1String("qml/VideoStreamer/Splash.qml"));
+
     // Then trigger loading the *real* main.qml file, which can take longer to load.
     QScopedPointer<LoadHelper> loadHelper(
                 LoadHelper::create(static_cast<QmlApplicationViewer*>(viewer.data())));
     QTimer::singleShot(1, loadHelper.data(), SLOT(loadMainQML()));
 
+    // Show the QML app & execute the main loop.
     viewer->showExpanded();
-
     return app->exec();
 }

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 // Visual style for MeeGo
 import QtQuick 1.1
 

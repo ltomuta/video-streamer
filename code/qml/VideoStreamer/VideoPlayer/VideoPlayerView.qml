@@ -1,10 +1,15 @@
+/**
+ * Copyright (c) 2012 Nokia Corporation.
+ */
+
 import QtQuick 1.1
-import QtMultimediaKit 1.1
 import com.nokia.meego 1.0
 import QtMobility.systeminfo 1.1
+import QtMultimediaKit 1.1
 
 Item {
     id: videoPlayerContainer
+
     property alias source: videoPlayerImpl.source
     property alias duration: videoPlayerImpl.duration
     property alias timePlayed: videoPlayerImpl.position
@@ -16,59 +21,59 @@ Item {
     signal playbackStarted
 
     function play() {
-        videoPlayerImpl.play()
+        videoPlayerImpl.play();
     }
 
     function stop() {
-        videoPlayerImpl.stop()
+        videoPlayerImpl.stop();
     }
 
     function pause() {
-        videoPlayerImpl.pause()
+        videoPlayerImpl.pause();
     }
 
     function __volumeUp() {
-        var maxVol = 1.0
-        var volThreshold = 0.1
+        var maxVol = 1.0;
+        var volThreshold = 0.1;
         if (videoPlayerImpl.volume < maxVol - volThreshold) {
-            videoPlayerImpl.volume += volThreshold
+            videoPlayerImpl.volume += volThreshold;
         } else {
-            videoPlayerImpl.volume = maxVol
+            videoPlayerImpl.volume = maxVol;
         }
     }
 
     function __volumeDown() {
-        var minVol = 0.0
-        var volThreshold = 0.1
+        var minVol = 0.0;
+        var volThreshold = 0.1;
         if (videoPlayerImpl.volume > minVol + volThreshold) {
-            videoPlayerImpl.volume -= volThreshold
+            videoPlayerImpl.volume -= volThreshold;
         } else {
-            videoPlayerImpl.volume = minVol
+            videoPlayerImpl.volume = minVol;
         }
     }
 
     function __handleStatusChange(status, playing, position, paused) {
         var isVisibleState = status === Video.Buffered ||
-                status === Video.EndOfMedia
-        var isStalled = status === Video.Stalled
+                status === Video.EndOfMedia;
+        var isStalled = status === Video.Stalled;
 
         // Background
         if ( (isVisibleState || isStalled) && !(paused && position === 0) ) {
-            blackBackground.opacity = 0
+            blackBackground.opacity = 0;
         } else {
-            blackBackground.opacity = 1
+            blackBackground.opacity = 1;
         }
 
         // Busy indicator
         if (!isVisibleState && playing) {
-            busyIndicator.opacity = 1
+            busyIndicator.opacity = 1;
         } else {
-            busyIndicator.opacity = 0
+            busyIndicator.opacity = 0;
         }
 
         if (status === Video.EndOfMedia) {
-            videoPlayerImpl.stop()
-            videoPlayerImpl.position = 0
+            videoPlayerImpl.stop();
+            videoPlayerImpl.position = 0;
         }
     }
 
@@ -96,13 +101,13 @@ Item {
     Video {
         id: videoPlayerImpl
 
+        property bool playbackStarted: false
+
         volume: deviceInfo.voiceRingtoneVolume / 100
         autoLoad: true
         anchors.fill: parent
         fillMode: Video.PreserveAspectFit
         focus: true
-
-        property bool playbackStarted: false
 
         MouseArea {
             anchors.fill: parent

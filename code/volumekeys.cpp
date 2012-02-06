@@ -1,8 +1,8 @@
 /**
- * Copyright (c) 2011 Nokia Corporation.
+ * Copyright (c) 2012 Nokia Corporation.
  * All rights reserved.
  *
- * Part of the QtDrumkit
+ * Part of the QMLVideoStreamer.
  * Based on volumekeys.h from Qt GameEnabler.
  *
  * For the applicable distribution terms see the license text file included in
@@ -16,6 +16,10 @@
   \class VolumeKeys
   \brief Symbian specific utility for reacting to hardware volume buttons.
 */
+
+/*!
+  Constructor.
+*/
 VolumeKeys::VolumeKeys(QObject *parent)
     : QObject(parent),
       m_interfaceSelector(0),
@@ -28,6 +32,9 @@ VolumeKeys::VolumeKeys(QObject *parent)
     );
 }
 
+/*!
+  Destructor.
+*/
 VolumeKeys::~VolumeKeys()
 {
     delete m_interfaceSelector;
@@ -35,6 +42,9 @@ VolumeKeys::~VolumeKeys()
     m_coreTarget = 0; // owned by interfaceselector
 }
 
+/*!
+  Receives events from the "Volume Up" & "Volume Down" buttons.
+*/
 void VolumeKeys::MrccatoCommand(TRemConCoreApiOperationId operationId,
                                 TRemConCoreApiButtonAction buttonAct)
 {

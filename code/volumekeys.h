@@ -1,8 +1,8 @@
 /**
- * Copyright (c) 2011 Nokia Corporation.
+ * Copyright (c) 2012 Nokia Corporation.
  * All rights reserved.
  *
- * Part of the QtDrumkit
+ * Part of the QMLVideoStreamer.
  * Based on volumekeys.h from Qt GameEnabler.
  *
  * For the applicable distribution terms see the license text file included in
@@ -18,14 +18,12 @@
 #include <remconcoreapitarget.h>
 #include <remconinterfaceselector.h>
 
-/*!
-  \class VolumeKeys
-  \brief Symbian specific utility for reacting to hardware volume buttons.
-*/
+// Symbian specific utility for reacting to hardware volume buttons.
 class VolumeKeys : public QObject, 
                    public MRemConCoreApiTargetObserver
 {
     Q_OBJECT
+
 public:
     explicit VolumeKeys(QObject *parent);
     ~VolumeKeys();
