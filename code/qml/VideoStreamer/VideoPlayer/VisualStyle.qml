@@ -63,10 +63,10 @@ Item {
     property int informationViewMargins: 5
 
     // VideoPlayView definitions
-    property double topAreaProportion: inPortrait ? 0.31 : 0.155
-    property double bottomAreaProportion: inPortrait ? 0.41 : 0.28
-    property double leftAreaProportion: inPortrait ? 0.09 : 0.21
-    property double rightAreaProportion: inPortrait ? 0.09 : 0.31
+    property double topAreaProportion: inPortrait ? 0.27 : 0.09
+    property double bottomAreaProportion: inPortrait ? 0.37 : 0.24
+    property double leftAreaProportion: inPortrait ? 0.00 : 0.05
+    property double rightAreaProportion: inPortrait ? 0.00 : 0.31
 
     // Transition animation durations (in milliseconds)
     property int animationDurationShort: 150
