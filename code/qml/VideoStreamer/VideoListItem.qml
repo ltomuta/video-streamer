@@ -15,6 +15,8 @@ ListItem {
     onClicked: {
         var component = Qt.createComponent("VideoPlayPage.qml");
         if (component.status === Component.Ready) {
+            // Instanciate the VideoPlayPage Element here. It will take care
+            // of destructing it itself.
             var player = component.createObject(container);
             pageStack.push(player);
 

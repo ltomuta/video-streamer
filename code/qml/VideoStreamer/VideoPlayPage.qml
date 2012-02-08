@@ -7,6 +7,7 @@ import com.nokia.symbian 1.1
 import "VideoPlayer"
 
 Page {
+    id: videoPlayPage
 
     function setVideoData(videoData) {
         videoPlayView.setVideoData(videoData);
@@ -33,7 +34,7 @@ Page {
             // block whole application if Video-element status is Video.Loading.
             // To prevent this give Video-element enough time to handle it's
             // state and delay destroy by 1 minute.
-            videoPlayView.destroy(60000);
+            videoPlayPage.destroy(60000);
             pageStack.depth <= 1 ? Qt.quit() : pageStack.pop();
         }
     }

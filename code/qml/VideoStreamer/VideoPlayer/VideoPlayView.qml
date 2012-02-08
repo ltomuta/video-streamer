@@ -60,6 +60,7 @@ Item {
 
     function __handleExit() {
         videoPlayer.stop();
+        videoPlayer.disconnect();
         videoPlayView.videoExit();
     }
 

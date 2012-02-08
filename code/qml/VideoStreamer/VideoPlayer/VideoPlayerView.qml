@@ -32,23 +32,29 @@ Item {
         videoPlayerImpl.pause();
     }
 
+    function disconnect() {
+        volumeConnections.target = null;
+    }
+
     function __volumeUp() {
+        console.log("__volumeUp");
         var maxVol = 1.0;
         var volThreshold = 0.1;
-        if (videoPlayerImpl.volume < maxVol - volThreshold) {
-            videoPlayerImpl.volume += volThreshold;
+        if (visual.currentVolume < maxVol - volThreshold) {
+            visual.currentVolume += volThreshold;
         } else {
-            videoPlayerImpl.volume = maxVol;
+            visual.currentVolume = maxVol;
         }
     }
 
     function __volumeDown() {
+        console.log("__volumeDown");
         var minVol = 0.0;
         var volThreshold = 0.1;
-        if (videoPlayerImpl.volume > minVol + volThreshold) {
-            videoPlayerImpl.volume -= volThreshold;
+        if (visual.currentVolume > minVol + volThreshold) {
+            visual.currentVolume -= volThreshold;
         } else {
-            videoPlayerImpl.volume = minVol;
+            visual.currentVolume = minVol;
         }
     }
 
@@ -94,7 +100,7 @@ Item {
             // Update volume dynamically when profile is changed.
             // Binding Video element volume directly to voiceRingtoneVolume
             // sets only initial volume but value is not updated correctly.
-            videoPlayerImpl.volume = deviceInfo.voiceRingtoneVolume / 100;
+            visual.currentVolume = deviceInfo.voiceRingtoneVolume / 100;
         }
     }
 
@@ -103,7 +109,7 @@ Item {
 
         property bool playbackStarted: false
 
-        volume: deviceInfo.voiceRingtoneVolume / 100
+        volume: visual.currentVolume
         autoLoad: true
         anchors.fill: parent
         fillMode: Video.PreserveAspectFit
@@ -155,6 +161,8 @@ Item {
     }
 
     Connections {
+        id: volumeConnections
+
         target: volumeKeys
         onVolumeKeyUp: __volumeUp()
         onVolumeKeyDown: __volumeDown()

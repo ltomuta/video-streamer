@@ -20,6 +20,9 @@ Item {
     // Property, which defines whether or not to show the background image.
     property bool showBackground: true
 
+    // Property, that holds the currently set volume level.
+    property double currentVolume: 0
+
     // General
     property int margins: 4
     property int spacing: 8

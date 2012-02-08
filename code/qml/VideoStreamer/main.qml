@@ -4,6 +4,7 @@
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
+import QtMobility.systeminfo 1.1
 import "VideoPlayer"
 
 Window {
@@ -78,6 +79,11 @@ Window {
         inPortrait: root.inPortrait
         // Check, whether or not the device is E6
         isE6: root.height == 480
+
+        // Set the initial volume level (from the device's profile)
+        DeviceInfo {id: devInfo}
+        currentVolume: devInfo.voiceRingtoneVolume / 100
+        onCurrentVolumeChanged: console.log("CurrentVolume changed to: " + currentVolume)
     }
 
     // Background, shown behind the lists. Will fade to black when hiding it.
