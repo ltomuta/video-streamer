@@ -48,6 +48,14 @@ Page {
             }
         }
 
+        onDelegateChanged: {
+            // Since the delegate is being binded to XmlListModel's status
+            // (XmlListModel.Ready), the header will not be shown correctly
+            // during startup. Thus positioning the list correctly, once the
+            // correct delegate has been finally loaded.
+            listView.positionViewAtBeginning();
+        }
+
         Component {
             id: videoListItemDelegate
 

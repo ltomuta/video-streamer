@@ -65,6 +65,8 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("<p>QML VideoStreamer application is a Nokia Developer example " +
                    "demonstrating the QML Video playing capabilies." +
+                   "Videos are streamed from Nokia Developer's YouTube channel " +
+                   "<a href=\"http://www.youtube.com/nokiadevforum\">NokiaDevForum</a></p>" +
                    "<p>Version: " + cp_versionNumber + "</p>" +
                    "<p>Developed and published by Nokia. All rights reserved.</p>" +
                    "<p>Learn more at " +

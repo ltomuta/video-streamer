@@ -83,7 +83,6 @@ Window {
         // Set the initial volume level (from the device's profile)
         DeviceInfo {id: devInfo}
         currentVolume: devInfo.voiceRingtoneVolume / 100
-        onCurrentVolumeChanged: console.log("CurrentVolume changed to: " + currentVolume)
     }
 
     // Background, shown behind the lists. Will fade to black when hiding it.
