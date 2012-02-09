@@ -54,6 +54,8 @@ Item {
     property int controlHeight: isE6 ? 70 : 50
     property int controlAreaHeight: isE6 ? 85 : 65
     property double controlOpacity: 0.8
+    property int separatorWidth: 1
+    property color separatorColor: "#303030"
 
     // Busy indicator
     property int busyIndicatorHeight: inPortrait ? screen.displayWidth / 4

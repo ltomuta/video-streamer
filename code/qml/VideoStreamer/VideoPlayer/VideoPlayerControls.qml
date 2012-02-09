@@ -50,11 +50,31 @@ Item {
         Component {
             id: backButtonComponent
 
-            Button {
-                iconSource: privateStyle.imagePath("toolbar-back", false)
-                width: visual.controlWidth
-                height: visual.controlHeight
-                onClicked: videoPlayerControls.backButtonPressed()
+            Item {
+                width: backButton.width + separatorLine.width
+                height: videoPlayerControls.height
+
+                Button {
+                    id: backButton
+
+                    iconSource: privateStyle.imagePath("toolbar-back", false)
+                    width: visual.controlWidth
+                    height: visual.controlHeight
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: videoPlayerControls.backButtonPressed()
+                }
+                Rectangle {
+                    id: separatorLine
+
+                    y: 1
+                    width: visual.separatorWidth
+                    height: videoPlayerControls.height
+                    color: visual.separatorColor
+                    anchors {
+                        left: backButton.right
+                        leftMargin: visual.controlMargins / 2
+                    }
+                }
             }
         }
 

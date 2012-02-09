@@ -95,7 +95,10 @@ Item {
         VideoInfoTextLabel {
             id: dislikesCount
 
-            anchors.right: parent.right
+            anchors {
+                right: parent.right
+                rightMargin: visual.margins
+            }
             font.pixelSize: visual.extraLargeFontSize
             // The forward zeros aren't prepended at the time being.
             //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)

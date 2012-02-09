@@ -21,8 +21,10 @@ XmlListModel {
             "q=" + model.searchTerm +
             "&author=" + model.channelName +
             "&start-index=" + model.startIndex +
-            "&max-results=" + model.maxResults +
             "&v=2"
+    // Max result count currently omitted. Uncomment to re-enable.
+//            "&max-results=" + model.maxResults +
+
 
     namespaceDeclarations: "declare default element namespace 'http://www.w3.org/2005/Atom';
                             declare namespace media = 'http://search.yahoo.com/mrss/';
