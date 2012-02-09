@@ -173,8 +173,7 @@ Item {
             top: parent.top
             topMargin: videoPlayView.isFullScreen ? 0 : visual.margins
             left: parent.left
-            leftMargin: videoPlayView.isFullScreen ?
-                            0 : (isPortrait ? 0 : visual.margins)
+            leftMargin: videoPlayView.isFullScreen ? 0 : visual.margins
             right: parent.right
         }
         height: videoPlayView.isFullScreen ?
