@@ -37,7 +37,6 @@ Item {
     }
 
     function __volumeUp() {
-        console.log("__volumeUp");
         var maxVol = 1.0;
         var volThreshold = 0.1;
         if (visual.currentVolume < maxVol - volThreshold) {
@@ -48,7 +47,6 @@ Item {
     }
 
     function __volumeDown() {
-        console.log("__volumeDown");
         var minVol = 0.0;
         var volThreshold = 0.1;
         if (visual.currentVolume > minVol + volThreshold) {

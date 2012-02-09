@@ -31,29 +31,38 @@ Page {
         height: mainPage.listHeight
         snapMode: ListView.SnapToItem
         focus: true
-        cacheBuffer: visual.videoListItemHeight*10
 
-        model: xmlDataModel.status === XmlListModel.Error ? 1 : xmlDataModel
-        delegate: xmlDataModel.status === XmlListModel.Ready
-                  ? videoListItemDelegate : networkErrorItem
-
-        // Single header delegate Component.
-        header: TitleBar {
-            id: titleBar
-
-            height: visual.titleBarHeight
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-        }
-
-        onDelegateChanged: {
+        onHeaderChanged: {
             // Since the delegate is being binded to XmlListModel's status
             // (XmlListModel.Ready), the header will not be shown correctly
             // during startup. Thus positioning the list correctly, once the
             // correct delegate has been finally loaded.
             listView.positionViewAtBeginning();
+        }
+
+        // Set the header, delegate & model attributes after the model
+        // has either loaded or failed loading. I.e. show items or error msg.
+        Connections {
+            target: xmlDataModel
+            onModelReady: {
+                listView.model = xmlDataModel;
+                listView.header = titleBar;
+                listView.delegate = videoListItemDelegate;
+            }
+            onModelError: {
+                listView.model = 1;
+                listView.header = titleBar;
+                listView.delegate = networkErrorItem;
+            }
+        }
+
+        Component {
+            id: titleBar
+
+            TitleBar {
+                height: visual.titleBarHeight
+                width: listView.width
+            }
         }
 
         Component {
@@ -76,20 +85,5 @@ Page {
     ScrollDecorator {
         // flickableItem binds the scroll decorator to the ListView.
         flickableItem: listView
-    }
-
-    Loader {
-        anchors.centerIn: parent
-        height: visual.busyIndicatorHeight
-        width: visual.busyIndicatorWidth
-        sourceComponent: listView.model.loading ? busyIndicator : undefined
-
-        Component {
-            id: busyIndicator
-
-            BusyIndicator {
-                running: true
-            }
-        }
     }
 }

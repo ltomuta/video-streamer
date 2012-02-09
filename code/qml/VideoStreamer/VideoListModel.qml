@@ -12,7 +12,10 @@ XmlListModel {
     property string channelNameUserReadable: "Nokia Developer"
     property string searchTerm: ""
     property int startIndex: 1
-    property int maxResults: 10
+    property int maxResults: 20
+
+    signal modelReady
+    signal modelError
 
     source: "http://gdata.youtube.com/feeds/mobile/videos?" +
             "q=" + model.searchTerm +
@@ -71,8 +74,11 @@ XmlListModel {
     }
 
     onStatusChanged: {
-        if (status === XmlListModel.Error) {
+        if (status === XmlListModel.Ready) {
+            modelReady();
+        } else if (status === XmlListModel.Error) {
             console.log("Error in XmlListModel: " + errorString());
+            modelError();
         }
     }
 }
