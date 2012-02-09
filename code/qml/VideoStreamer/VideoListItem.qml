@@ -13,18 +13,20 @@ ListItem {
     height: visual.videoListItemHeight
 
     onClicked: {
-        var component = Qt.createComponent("VideoPlayPage.qml");
-        if (component.status === Component.Ready) {
-            // Instanciate the VideoPlayPage Element here. It will take care
-            // of destructing it itself.
-            var player = component.createObject(container);
-            pageStack.push(player);
+//        var component = Qt.createComponent("VideoPlayPage.qml");
+//        if (component.status === Component.Ready) {
+//            // Instanciate the VideoPlayPage Element here. It will take care
+//            // of destructing it itself.
+//            var player = component.createObject(container);
+//            pageStack.push(player);
 
-            // setVideoData expects parameter to contain video data
-            // information properties. Expected properties are identical to
-            // used XmlListModel.
-            player.setVideoData(model);
-        }
+//            // setVideoData expects parameter to contain video data
+//            // information properties. Expected properties are identical to
+//            // used XmlListModel.
+//            player.setVideoData(model);
+//        }
+
+        playerLauncher.launchPlayer(m_contentUrl)
     }
 
     // The ListItem's default implementation doesn't handle the Right Key

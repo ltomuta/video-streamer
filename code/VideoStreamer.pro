@@ -15,8 +15,10 @@ qml_sources.source = qml/VideoStreamer
 qml_sources.target = qml
 DEPLOYMENTFOLDERS = qml_sources
 
-SOURCES += main.cpp loadhelper.cpp
-HEADERS += loadhelper.h
+SOURCES += main.cpp loadhelper.cpp \
+    playerlauncher.cpp
+HEADERS += loadhelper.h \
+    playerlauncher.h
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \
