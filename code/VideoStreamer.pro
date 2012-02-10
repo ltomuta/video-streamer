@@ -38,7 +38,8 @@ symbian {
     SOURCES += volumekeys.cpp
     HEADERS += volumekeys.h
     LIBS += -lremconcoreapi -lremconinterfacebase
-} else:harmattan {
+}
+contains(MEEGO_EDITION,harmattan) {
     icon_file.files = VideoStreamer.svg
     icon_file.path = /usr/share/icons/hicolor/scalable/apps
     INSTALLS += icon_file
