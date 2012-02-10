@@ -4,12 +4,15 @@
 
 #include <QtCore/QString>
 #include <QtCore/QTimer>
+#include <QtCore/QDir>
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeComponent>
-#include "qmlapplicationviewer.h"
+#include <QtDeclarative/QDeclarativeEngine>
 
+#include "qmlapplicationviewer.h"
 #include "loadhelper.h"
+#include "playerlauncher.h"
 
 #if defined(Q_OS_SYMBIAN)
 #include "volumekeys.h"
@@ -27,6 +30,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
                     QUrl::fromLocalFile("qml/VideoStreamer/VideoListModel.qml")) );
     QScopedPointer<QObject> dataModel(dataModelComponent->create());
     viewer->rootContext()->setContextProperty("xmlDataModel", dataModel.data());
+    QScopedPointer<PlayerLauncher> playerLauncher(new PlayerLauncher);
+    viewer->rootContext()->setContextProperty("playerLauncher", playerLauncher.data());
 
 #if defined(Q_OS_SYMBIAN)
     // Context property for listening the HW Volume key events in QML
