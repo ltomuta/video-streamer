@@ -4,11 +4,13 @@
 
 #include <QtCore/QString>
 #include <QtCore/QTimer>
+#include <QtCore/QDir>
 #include <QtGui/QApplication>
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtDeclarative/QDeclarativeComponent>
-#include "qmlapplicationviewer.h"
+#include <QtDeclarative/QDeclarativeEngine>
 
+#include "qmlapplicationviewer.h"
 #include "loadhelper.h"
 #include "playerlauncher.h"
 
