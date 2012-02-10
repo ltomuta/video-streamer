@@ -23,6 +23,9 @@ Item {
     // Property, that holds the currently set volume level.
     property double currentVolume: 0
 
+    // Property, that defines which player is used (Platform player vs. QML Player)
+    property variant usePlatformPlayer: false
+
     // General
     property int margins: 4
     property int spacing: 8

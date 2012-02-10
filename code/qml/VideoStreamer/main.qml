@@ -4,6 +4,7 @@
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
+import Qt.labs.components 1.1
 import QtMobility.systeminfo 1.1
 import "VideoPlayer"
 
@@ -83,6 +84,9 @@ Window {
         // Set the initial volume level (from the device's profile)
         DeviceInfo {id: devInfo}
         currentVolume: devInfo.voiceRingtoneVolume / 100
+        // Track, which player is being used.
+        usePlatformPlayer: checkableGroup.selectedValue ===
+                           platformPlayerButton.text
     }
 
     // Background, shown behind the lists. Will fade to black when hiding it.
@@ -115,6 +119,11 @@ Window {
             // Create the SearchView to the pageStack dynamically.
             onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"),
                                       {pageStack: stack})
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-settings"
+            onClicked: playerSelectionDlg.open()
         }
         ToolButton {
             flat: true
@@ -153,6 +162,32 @@ Window {
         width: parent.width
         visible: root.showStatusBar
         platformInverted: root.platformInverted
+    }
+
+    QueryDialog {
+        id: playerSelectionDlg
+
+        acceptButtonText: qsTr("Ok")
+        titleText: qsTr("Select used video player:")
+
+        content: Item {
+            height: buttonColumn.height
+            CheckableGroup { id: checkableGroup }
+            Column {
+                id: buttonColumn
+                spacing: platformStyle.paddingMedium
+                RadioButton {
+                    id: qmlPlayerButton
+                    text: qsTr("QML Video Player")
+                    platformExclusiveGroup: checkableGroup
+                }
+                RadioButton {
+                    id: platformPlayerButton
+                    text: qsTr("Platform Video Player")
+                    platformExclusiveGroup: checkableGroup
+                }
+            }
+        }
     }
 
     // event preventer when page transition is active
