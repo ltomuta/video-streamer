@@ -85,8 +85,7 @@ Window {
         DeviceInfo {id: devInfo}
         currentVolume: devInfo.voiceRingtoneVolume / 100
         // Track, which player is being used.
-        usePlatformPlayer: checkableGroup.selectedValue ===
-                           platformPlayerButton.text
+        usePlatformPlayer: playerSelectionDlg.selectedIndex === 1
     }
 
     // Background, shown behind the lists. Will fade to black when hiding it.
@@ -164,30 +163,11 @@ Window {
         platformInverted: root.platformInverted
     }
 
-    QueryDialog {
+    SelectionDialog {
         id: playerSelectionDlg
-
-        acceptButtonText: qsTr("Ok")
+        selectedIndex: 0
         titleText: qsTr("Select used video player:")
-
-        content: Item {
-            height: buttonColumn.height
-            CheckableGroup { id: checkableGroup }
-            Column {
-                id: buttonColumn
-                spacing: platformStyle.paddingMedium
-                RadioButton {
-                    id: qmlPlayerButton
-                    text: qsTr("QML Video Player")
-                    platformExclusiveGroup: checkableGroup
-                }
-                RadioButton {
-                    id: platformPlayerButton
-                    text: qsTr("Platform Video Player")
-                    platformExclusiveGroup: checkableGroup
-                }
-            }
-        }
+        model: [qsTr("QML Video Player"), qsTr("Platform Video Player")]
     }
 
     // event preventer when page transition is active
