@@ -54,9 +54,10 @@ Item {
                 width: backButton.width + separatorLine.width
                 height: videoPlayerControls.height
 
-                Button {
+                ToolButton {
                     id: backButton
 
+                    flat: true
                     iconSource: privateStyle.imagePath("toolbar-back", false)
                     width: visual.controlWidth
                     height: visual.controlHeight
