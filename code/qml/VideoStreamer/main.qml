@@ -167,7 +167,11 @@ Window {
         id: playerSelectionDlg
         selectedIndex: 0
         titleText: qsTr("Select used video player:")
-        model: [qsTr("QML Video Player"), qsTr("Platform Video Player")]
+
+        model: ListModel {
+            ListElement { name: "QML Video Player" }
+            ListElement { name: "Platform Video Player" }
+        }
     }
 
     // event preventer when page transition is active
