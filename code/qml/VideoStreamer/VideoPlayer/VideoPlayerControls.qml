@@ -36,11 +36,12 @@ Item {
         Loader {
             id: backButtonLoader
 
+            width: childrenRect.width
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 leftMargin: videoPlayerControls.showBackButton
-                                ? visual.controlMargins : 0
+                                ? visual.controlMargins / 2 : 0
             }
             sourceComponent: videoPlayerControls.showBackButton
                              ? backButtonComponent
@@ -93,7 +94,7 @@ Item {
             anchors {
                 verticalCenter: backButtonLoader.verticalCenter
                 left: backButtonLoader.right
-                leftMargin: visual.controlMargins
+                leftMargin: visual.controlMargins * 2
             }
 
             onClicked: {
