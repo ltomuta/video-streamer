@@ -52,66 +52,133 @@ Item {
         VideoInfoTextLabel {
             anchors {
                 top: viewCount.bottom
-                horizontalCenter: viewCount.horizontalCenter
+                horizontalCenter: visual.inPortrait ? viewCount.horizontalCenter : undefined
+                left: visual.inPortrait ? undefined : viewCount.left
             }
             text: qsTr("views")
         }
     }
 
-    // Item bundling the likes & dislikes amounts + strings together.
-    Item {
-        id: likesAndDislikes
+    Loader {
+        id: likesAndDislikesLoader
 
         width: parent.width
         anchors {
             top: views.bottom
             topMargin: visual.margins * 2
-            horizontalCenter: parent.horizontalCenter
+            horizontalCenter: visual.inPortrait ? parent.horizontalCenter : undefined
+            left: visual.inPortrait ? undefined : views.left
         }
 
-        // Two Text elements on top of each other,
-        // amount of likes + "likes" string.
-        VideoInfoTextLabel {
-            id: likesCount
+        sourceComponent: visual.inPortrait ? likesAndDislikes : likesAndDislikesLS
+    }
 
-            anchors.left: parent.left
-            font.pixelSize: visual.extraLargeFontSize
-            // The forward zeros aren't prepended at the time being.
-            //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
-            text: videoInformationView.numLikes
-        }
-        VideoInfoTextLabel {
-            id: likesLabel
+    Component {
+        id: likesAndDislikes
 
-            anchors {
-                top: likesCount.bottom
-                horizontalCenter: likesCount.horizontalCenter
+        // Item bundling the likes & dislikes amounts + strings together.
+        Item {
+            // Two Text elements on top of each other,
+            // amount of likes + "likes" string.
+            VideoInfoTextLabel {
+                id: likesCount
+
+                anchors.left: parent.left
+                font.pixelSize: visual.extraLargeFontSize
+                // The forward zeros aren't prepended at the time being.
+                //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+                text: videoInformationView.numLikes
             }
-            text: qsTr("likes")
-        }
+            VideoInfoTextLabel {
+                id: likesLabel
 
-        // Two Text elements on top of each other,
-        // amount of dislikes + "dislikes" string.
-        VideoInfoTextLabel {
-            id: dislikesCount
-
-            anchors {
-                right: parent.right
-                rightMargin: visual.margins
+                anchors {
+                    top: likesCount.bottom
+                    horizontalCenter: likesCount.horizontalCenter
+                }
+                text: qsTr("likes")
             }
-            font.pixelSize: visual.extraLargeFontSize
-            // The forward zeros aren't prepended at the time being.
-            //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
-            text: videoInformationView.numDislikes
-        }
-        VideoInfoTextLabel {
-            id: dislikesLabel
 
-            anchors {
-                horizontalCenter: dislikesCount.horizontalCenter
-                top: dislikesCount.bottom
+            // Two Text elements on top of each other,
+            // amount of dislikes + "dislikes" string.
+            VideoInfoTextLabel {
+                id: dislikesCount
+
+                anchors {
+                    right: parent.right
+                    rightMargin: visual.margins
+                }
+                font.pixelSize: visual.extraLargeFontSize
+                // The forward zeros aren't prepended at the time being.
+                //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+                text: videoInformationView.numDislikes
             }
-            text: qsTr("dislikes")
+            VideoInfoTextLabel {
+                id: dislikesLabel
+
+                anchors {
+                    horizontalCenter: dislikesCount.horizontalCenter
+                    top: dislikesCount.bottom
+                }
+                text: qsTr("dislikes")
+            }
+        }
+    }
+
+    Component {
+        id: likesAndDislikesLS
+
+        // Item bundling the likes & dislikes amounts + strings together.
+        Item {
+            // Two Text elements on top of each other,
+            // amount of likes + "likes" string.
+            VideoInfoTextLabel {
+                id: likesCount
+
+                //anchors.horizontalCenter: parent.horizontalCenter
+                anchors.left: parent.left
+                font.pixelSize: visual.extraLargeFontSize
+                // The forward zeros aren't prepended at the time being.
+                //text: videoInformationView.__prependToLength(videoInformationView.numLikes, 4, 0)
+                text: videoInformationView.numLikes
+            }
+            VideoInfoTextLabel {
+                id: likesLabel
+
+                anchors {
+                    top: likesCount.bottom
+                    //horizontalCenter: likesCount.horizontalCenter
+                    left: likesCount.left
+                }
+                text: qsTr("likes")
+            }
+
+            // Two Text elements on top of each other,
+            // amount of dislikes + "dislikes" string.
+            VideoInfoTextLabel {
+                id: dislikesCount
+
+                anchors {
+                    //horizontalCenter: parent.horizontalCenter
+                    left: parent.left
+                    top: likesLabel.bottom
+                    topMargin: visual.margins
+                }
+                font.pixelSize: visual.extraLargeFontSize
+                // The forward zeros aren't prepended at the time being.
+                //text: videoInformationView.__prependToLength(videoInformationView.numDislikes, 4, 0)
+                text: videoInformationView.numDislikes
+            }
+            VideoInfoTextLabel {
+                id: dislikesLabel
+
+                anchors {
+                    //horizontalCenter: dislikesCount.horizontalCenter
+                    left: dislikesCount.left
+                    top: dislikesCount.bottom
+                }
+                text: qsTr("dislikes")
+            }
         }
     }
 }
