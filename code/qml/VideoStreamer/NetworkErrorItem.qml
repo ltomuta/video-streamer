@@ -14,7 +14,7 @@ Item {
             fill: parent
             margins: visual.margins
         }
-        text: qsTr("No network connection available. Please check your settings")
+        text: qsTr("No network connection available. Please check your device's internet connections.")
         wrapMode: Text.WordWrap
     }
 }
