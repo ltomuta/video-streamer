@@ -107,26 +107,42 @@ Window {
         id: toolBarLayout
 
         ToolButton {
+            id: backButton
+
             flat: true
             iconSource: "toolbar-back"
+            onPlatformReleased: backButtonTip.opacity = 0;
+            onPlatformPressAndHold: backButtonTip.opacity = 1;
             onClicked: root.pageStack.depth <= 1 ?
                            Qt.quit() : root.pageStack.pop()
         }
         ToolButton {
+            id: searchButton
+
             flat: true
             iconSource: "toolbar-search"
+            onPlatformReleased: searchButtonTip.opacity = 0;
+            onPlatformPressAndHold: searchButtonTip.opacity = 1;
             // Create the SearchView to the pageStack dynamically.
             onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"),
                                       {pageStack: stack})
         }
         ToolButton {
+            id: settingsButton
+
             flat: true
             iconSource: "toolbar-settings"
+            onPlatformReleased: settingsButtonTip.opacity = 0;
+            onPlatformPressAndHold: settingsButtonTip.opacity = 1;
             onClicked: playerSelectionDlg.open()
         }
         ToolButton {
+            id: aboutButton
+
             flat: true
             iconSource: visual.images.infoIcon
+            onPlatformReleased: aboutButtonTip.opacity = 0;
+            onPlatformPressAndHold: aboutButtonTip.opacity = 1;
             onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"),
                                       {pageStack: stack})
         }
@@ -153,6 +169,35 @@ Window {
         visible: root.showToolBar ? true : false
         anchors.bottom: parent.bottom
         platformInverted: root.platformInverted
+    }
+
+    // The ToolTips have to appear above every view, thus defined here.
+    ToolTip {
+        id: backButtonTip
+        text: qsTr("Back")
+        target: backButton
+        visible: false
+    }
+
+    ToolTip {
+        id: searchButtonTip
+        text: qsTr("Search")
+        target: searchButton
+        visible: false
+    }
+
+    ToolTip {
+        id: settingsButtonTip
+        text: qsTr("Settings")
+        target: settingsButton
+        visible: false
+    }
+
+    ToolTip {
+        id: aboutButtonTip
+        text: qsTr("About")
+        target: aboutButton
+        visible: false
     }
 
     StatusBar {
