@@ -133,7 +133,7 @@ There are two ways to install the application on a phone.
 2. After the installation is complete, return to the application menu and
    open the Applications folder.
    
-3. Locate the WeeklyPlanner icon and select it to launch the application.
+3. Locate the VideoStreamer icon and select it to launch the application.
 
 
 Nokia N9
@@ -152,7 +152,7 @@ Nokia N9
 
 5. Launch the Applications menu.
 
-6. Locate the WeeklyPlanner icon and select it to launch the application.
+6. Locate the VideoStreamer icon and select it to launch the application.
 
 
 COMPATIBILITY
