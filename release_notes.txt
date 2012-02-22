@@ -86,12 +86,16 @@ FILES
 
 design/*
 
-- UI design files
+- UI design files.
 
-weeklyplanner/*
+meego/* & symbian/*
 
-- The application itself. Contains a PRO file that can be opened in 
-  Qt SDK 1.2
+- The application itself. Contains a PRO file that can be opened in Qt SDK 1.2.
+
+screenshots/*
+
+- Application screenshots.
+
 
 KNOWN ISSUES & DESIGN LIMITATIONS
 -------------------------------------------------------------------------------
@@ -113,6 +117,7 @@ Header item can’t be seen, if navigating with keyboard.
 Seeking in video is not supported (when using QML Video Player).
 - There's support for it in the QML Video element provided 'seekable'-property,
   but unfortunately it does not behave well with streamed content.
+
 
 INSTALLATION INSTRUCTIONS
 -------------------------------------------------------------------------------
