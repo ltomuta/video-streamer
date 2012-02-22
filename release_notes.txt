@@ -1,0 +1,185 @@
+Video Streamer v1.0
+===================
+
+The QML Video Streamer example application showcases the QML video streaming 
+and playing capabilities, and Qt Mobility bindings to Multimedia package and
+the QML Video element. The QML Video Streamer application has been designed
+to use the official Qt Quick Components for navigation and UI look'n'feel.
+
+The customized QML Video player has been componentized so, that any 3rd party
+developer can take it use it in his/her own QML application. One showcase of
+this approach is the QML Media Browser example application.
+
+The QML Video Streamer also utilises Qt Quick Components in numerous places.
+For example, when navigating deeper into the application the PageStack is used.
+The StatusBar and ToolBar (with all the ToolButtons etc.) are used as well.
+
+This example application is hosted in Nokia Developer Projects:
+- https://projects.developer.nokia.com/QMLVideoStreamer
+
+For more information on implementation, visit the wiki page:
+- https://projects.developer.nokia.com/QMLVideoStreamer/wiki
+
+
+IMPORTANT CLASSES AND QML ELEMENTS
+-------------------------------------------------------------------------------
+
+Qt:
+- QmlApplicationViewer
+- QDeclarativeComponent
+- QDeclarativeView
+- QDir
+- QScopedPointer
+- QString
+- QTimer
+
+Standard QML elements used:
+- BorderImage
+- Component
+- Connections
+- Gradient
+- Image
+- Item
+- ListView
+- Loader
+- MouseArea
+- Rectangle
+- Text
+- TextField
+- Timer
+- XmlListModel
+- XmlRole
+
+- Behavior
+- NumberAnimation
+- ParallelAnimation
+- PropertyAnimation
+- PropertyChanges
+- SequentialAnimation
+- State
+- Transition
+
+QML elements from Qt Quick Components used:
+- BusyIndicator
+- Button
+- ListItem
+- Page
+- PageStack
+- ProgressBar
+- ScrollDecorator
+- SelectionDialog
+- SearchBox (from QQC Extras)
+- Slider
+- StatusBar
+- ToolBar
+- ToolBarLayout
+- ToolButton / ToolIcon
+- Window
+
+QML elements from Qt Mobility used:
+- DeviceInfo
+- Video
+
+
+FILES
+-------------------------------------------------------------------------------
+
+design/*
+
+- UI design files
+
+weeklyplanner/*
+
+- The application itself. Contains a PRO file that can be opened in 
+  Qt SDK 1.2
+
+KNOWN ISSUES & DESIGN LIMITATIONS
+-------------------------------------------------------------------------------
+
+- Video streaming might not start on some device & operator combos. This might
+  be due to the used video streaming access point. Changing it can help. Select:
+  "Menu" - "Settings" - "Application settings" - "Videos" - "Access point in use"
+  to change the currently used streaming access point (i.e. in Symbian devices).
+
+After video playback there are severe performance bugs.
+- https://bugreports.qt.nokia.com/browse/QTMOBILITY-1570 & -1818
+
+Video play view flickers sometimes and can be seen through.
+- https://bugreports.qt.nokia.com/browse/QTMOBILITY-1569
+
+Header item can’t be seen, if navigating with keyboard.
+- https://bugreports.qt.nokia.com/browse/QTBUG-20926
+
+Seeking in video is not supported (when using QML Video Player).
+- There's support for it in the QML Video element provided 'seekable'-property,
+  but unfortunately it does not behave well with streamed content.
+
+INSTALLATION INSTRUCTIONS
+-------------------------------------------------------------------------------
+
+Symbian^3 phone
+~~~~~~~~~~~~~~~
+
+There are two ways to install the application on a phone.
+
+1. a) Drag the videostreamer_1.0.0_installer.sis file to the Nokia Suite
+      while your phone is connected with a USB cable.
+   
+   OR
+   
+   b) Send the application directly to the Messaging Inbox (for example,
+      over a Bluetooth connection).
+
+2. After the installation is complete, return to the application menu and
+   open the Applications folder.
+   
+3. Locate the WeeklyPlanner icon and select it to launch the application.
+
+
+Nokia N9
+~~~~~~~~
+
+1. Copy the videostreamer_1.0.0_armel.deb file into a specific folder 
+   on the phone (for example, 'MyDocs').
+
+2. Start XTerm. Type 'sudo gainroot' to get root access.
+
+3. 'cd' to the directory in to which you copied the package
+   (for example, 'cd MyDocs').
+
+4. As root, install the package:
+   dpkg -i videostreamer_1.0.0_armel.deb
+
+5. Launch the Applications menu.
+
+6. Locate the WeeklyPlanner icon and select it to launch the application.
+
+
+COMPATIBILITY
+-------------------------------------------------------------------------------
+
+- Symbian^3 with Qt version 4.7.4 or higher
+
+- Nokia N9 or N950 with Qt 4.7.4
+
+Tested on:
+
+- Nokia E6
+- Nokia E7-00
+- Nokia N9
+
+Developed with:
+
+- Qt SDK 1.2
+
+
+VERSION HISTORY
+-------------------------------------------------------------------------------
+v1.0.0 Published on the Nokia Developer website.
+v0.6.0 Final UI tweaks & fixes
+v0.5.0 Added platform player launch, upgraded graphical look 'n feel
+v0.4.0 Video playback modulized, new UI look & gfx tuning
+v0.3.0 Lots of fixes, feature improvements & UI tweaking
+v0.2.0 First release with Harmattan/MeeGo support
+v0.1.1 First release with E6 support
+v0.0.1 Initial Release.
