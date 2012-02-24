@@ -1,28 +1,41 @@
 Video Streamer v1.0
 ===================
 
-The QML Video Streamer example application showcases the QML video streaming 
+The QML Video Streamer example application showcases the QML video streaming
 and playing capabilities, and Qt Mobility bindings to Multimedia package and
 the QML Video element. The QML Video Streamer application has been designed
 to use the official Qt Quick Components for navigation and UI look'n'feel.
 
-The customized QML Video player has been componentized so, that any 3rd party
-developer can take it use it in his/her own QML application. One showcase of
-this approach is the QML Media Browser example application.
+The application uses a customized QML Video player which has been componentized
+so, that any 3rd party developer can take it use it in his/her own QML
+application. The video player component is also used in the QML Media Browser
+example application, available at:
+http://projects.developer.nokia.com/mediabrowser.
 
-The QML Video Streamer also utilises Qt Quick Components in numerous places.
-For example, when navigating deeper into the application the PageStack is used.
+Alternatively, the default platform player can be taken into use in the
+application settings.
+
+The application shows videos of Nokia Developer that are streamed from a
+'nokiadevforum' channel in YouTube using YouTube's mobile APIs.
+
+The QML Video Streamer utilises Qt Quick Components in numerous places. For
+example, when navigating deeper into the application the PageStack is used.
 The StatusBar and ToolBar (with all the ToolButtons etc.) are used as well.
 
-This example application is hosted in Nokia Developer Projects:
-- https://projects.developer.nokia.com/QMLVideoStreamer
-
 This example application demonstrates:
-- Using QML Video playing capabilities
+- QML video streaming and playing capabilities
+- custom QML video player component
+- use of Qt Quick Components in an application supporting multiple resolutions
+  and both touch UI and keypad.
+- smart startup of the application (content and application UI loaded during
+  splash screen (see more in the project's wiki pages)
 - Handling volume keys of a Symbian phone within QML code
 
+This example application is hosted in Nokia Developer Projects:
+- http://projects.developer.nokia.com/QMLVideoStreamer
+
 For more information on implementation, visit the wiki page:
-- https://projects.developer.nokia.com/QMLVideoStreamer/wiki
+- http://projects.developer.nokia.com/QMLVideoStreamer/wiki
 
 
 What's new
@@ -168,8 +181,12 @@ Header item can’t be seen, if navigating with keyboard.
 - https://bugreports.qt.nokia.com/browse/QTBUG-20926
 
 Seeking in video is not supported (when using QML Video Player).
-- There's support for it in the QML Video element provided 'seekable'-property,
-  but unfortunately it does not behave well with streamed content.
+- There is support for it in the QML Video element provided 'seekable'-property,
+  but it wasn't taken into use in this application as seeking did not work
+  seamlessly with streamed content.
+
+Streamed video has a considerably low resolution.
+- This is a restriction set by the YouTube mobile API.
 
 
 5. Building, installing, and running the application
