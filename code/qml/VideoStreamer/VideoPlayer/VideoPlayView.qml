@@ -27,8 +27,23 @@ Item {
     // Ease of access handle for the VideoPlayerView Item.
     property alias videoPlayer: videoPlayerLoader.item
 
+    // Property to observe the application shown/hidden status
+    property bool applicationActive: Qt.application.active
+    onApplicationActiveChanged: {
+        if (videoPlayer) {
+            if(applicationActive) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
+            }
+        }
+    }
+
+    // Signalled, when exiting the Video player.
     signal videoExit
 
+    // Function for setting the shown video informatino & setting the
+    // video URL.
     function setVideoData(videoData) {
         videoPlayView.videoTitle = videoData.m_title;
         videoPlayView.videoLength = videoData.m_duration;
