@@ -2,54 +2,47 @@ Video Streamer v1.0
 ===================
 
 The QML Video Streamer example application showcases the QML video streaming
-and playing capabilities, and Qt Mobility bindings to Multimedia package and
-the QML Video element. The QML Video Streamer application has been designed
-to use the official Qt Quick Components for navigation and UI look'n'feel.
+and playback capabilities as well as Qt Mobility bindings to the Multimedia 
+package and the QML Video element. The QML Video Streamer application uses the
+official Qt Quick Components for navigation and UI.
 
-The application uses a customized QML Video player which has been componentized
-so, that any 3rd party developer can take it use it in his/her own QML
-application. The video player component is also used in the QML Media Browser
-example application, available at:
-http://projects.developer.nokia.com/mediabrowser.
+The application uses a customised QML Video player which has been componentised
+so that any developer can use it in his or her own QML application. The video
+player component is also used in the QML Media Browser example application
+available at: http://projects.developer.nokia.com/mediabrowser.
 
 Alternatively, the default platform player can be taken into use in the
 application settings.
 
-The application shows videos of Nokia Developer that are streamed from a
+The application shows Nokia Developer videos that are streamed from the
 'nokiadevforum' channel in YouTube using YouTube's mobile APIs.
 
-The QML Video Streamer utilises Qt Quick Components in numerous places. For
-example, when navigating deeper into the application the PageStack is used.
+The QML Video Streamer ues Qt Quick Components in numerous places. For
+example, when navigating deeper into the application, the PageStack is used.
 The StatusBar and ToolBar (with all the ToolButtons etc.) are used as well.
 
 This example application demonstrates:
 - QML video streaming and playing capabilities
-- custom QML video player component
-- use of Qt Quick Components in an application supporting multiple resolutions
-  and both touch UI and keypad.
-- smart startup of the application (content and application UI loaded during
+- A custom QML video player component
+- Using Qt Quick Components in an application that supports multiple
+  resolutions and both touch UI and keypad
+- Smart startup of the application (content and application UI loaded during
   splash screen (see more in the project's wiki pages)
-- Handling volume keys of a Symbian phone within QML code
+- Handling volume keys of a Symbian phone within the QML code
 
 This example application is hosted in Nokia Developer Projects:
 - http://projects.developer.nokia.com/QMLVideoStreamer
 
-For more information on implementation, visit the wiki page:
+For more information on the implementation, visit the wiki page:
 - http://projects.developer.nokia.com/QMLVideoStreamer/wiki
-
-
-What's new
-----------
-
-First public release with all the current functionality.
 
 
 1. Usage
 -------------------------------------------------------------------------------
 
-The customized QML VideoPlayer component can be taken into use in 3rd party
+The customised QML VideoPlayer component can be taken into use in 3rd party
 applications simply by adding the VideoPlayer QML sources into the project, and
-by importing it into some QML file. The player itself can be created simply by
+by importing it into a QML file. The player itself can be created simply by
 instantiating the VideoPlayView and by calling its setVideoData() function.
 
 
@@ -74,15 +67,15 @@ instantiating the VideoPlayView and by calling its setVideoData() function.
  |
  |- screenshots      Contains screenshots taken from the application.
  |
- |- meego            MeeGo platform specific code files.
+ |- meego            MeeGo platform-specific code files.
  |  |
- |  |- code          Root folder for project, gfx, QML and Javascript files.
+ |  |- code          Root folder for project, gfx, QML, and Javascript files.
  |  |
  |  |- qtc_packaging Contains the Harmattan (Debian) packaging files.
  |
- |- symbian          Symbian (Anna/Belle) platform specific code files.
+ |- symbian          Symbian (Anna/Belle) platform-specific code files.
  |  |
- |  |- code          Root folder for project, gfx, QML and Javascript files.
+ |  |- code          Root folder for project, gfx, QML, and Javascript files.
  |
 
 
@@ -91,19 +84,21 @@ instantiating the VideoPlayView and by calling its setVideoData() function.
 
 | Class                   | Description                                       |
 |-------------------------|---------------------------------------------------|
-| LoadHelper              | Helper class, that is used to load the main QML   |
+| LoadHelper              | Helper class that is used to load the main QML    |
 |                         | file right after showing the splash screen.       |
 |-------------------------|---------------------------------------------------|
-| PlayerLauncher          | Helper class, that can be used to launch the      |
+| PlayerLauncher          | Helper class that can be used to launch the       |
 |                         | platform player for streaming.                    |
 |-------------------------|---------------------------------------------------|
-| VolumeKeys              | Class, that implements the MRemConCoreApiTarget-  |
-|                         | Observer, for reacting to hardware volume buttons.|
+| VolumeKeys              | Class that implements the MRemConCoreApiTarget-   |
+|                         | Observer for reacting to hardware volume buttons. |
 |-------------------------|---------------------------------------------------|
 
 
 3.3 Used APIs/QML elements/Qt Quick Components
 ----------------------------------------------
+
+The following APIs, QML elements, and Qt Quick Components have been used. 
 
 Qt:
 - QDir
@@ -111,7 +106,7 @@ Qt:
 - QString
 - QTimer
 
-Standard QML elements used:
+Standard QML elements:
 - Connections
 - ListView
 - Loader
@@ -127,7 +122,7 @@ Standard QML elements used:
 - State
 - Transition
 
-QML elements from Qt Quick Components used:
+QML elements from Qt Quick Components:
 - BusyIndicator
 - ListItem
 - ProgressBar
@@ -136,7 +131,7 @@ QML elements from Qt Quick Components used:
 - SelectionDialog
 - SearchBox (from QQC Extras)
 
-QML elements from Qt Mobility used:
+QML elements from Qt Mobility:
 - DeviceInfo
 - Video
 
@@ -157,33 +152,34 @@ Developed with:
  - Qt SDK 1.2
 
 
-4.1 Required Capabilities
+4.1 Required capabilities
 -------------------------
 
 None; The application can be self signed on Symbian.
 
 
-4.2 Known Issues and Design Limitations
+4.2 Known issues and design limitations
 ---------------------------------------
 
-- Video streaming might not start on some device & operator combos. This might
-  be due to the used video streaming access point. Changing it can help. Select
+- Video streaming might not start on some device & operator combinations. This
+  might be due to the used video streaming access point. Changing it can help.
+  In Symbian devices, select
   "Menu" - "Settings" - "Application settings" - "Videos" - "Access point in use"
-  to change the currently used streaming access point (i.e. in Symbian devices)
+  to change the currently used streaming access point.
 
 After video playback there are severe performance bugs.
 - https://bugreports.qt.nokia.com/browse/QTMOBILITY-1570 & -1818
 
-Video play view flickers sometimes and can be seen through.
+The video play view flickers sometimes and may be transparent.
 - https://bugreports.qt.nokia.com/browse/QTMOBILITY-1569
 
-Header item can’t be seen, if navigating with keyboard.
+The header item cannott be seen if navigating with the keyboard.
 - https://bugreports.qt.nokia.com/browse/QTBUG-20926
 
-Seeking in video is not supported (when using QML Video Player).
-- There is support for it in the QML Video element provided 'seekable'-property,
-  but it wasn't taken into use in this application as seeking did not work
-  seamlessly with streamed content.
+Seeking in video is not supported (when using the QML Video Player).
+- Seeking is suppprted in the the 'seekable'-property provided by the QML Video
+  element but it was not taken into use in this application as seeking did not
+  work seamlessly with streamed content.
 
 Streamed video has a considerably low resolution.
 - This is a restriction set by the YouTube mobile API.
@@ -213,7 +209,7 @@ visit the Qt Getting Started section at Nokia Developer
 ------------------
 
 Make sure your device is connected to your computer. Locate the .sis
-installation file and open it with Ovi Suite. Accept all requests from Ovi
+installation file and open it with Nokia Suite. Accept all requests from Nokia
 Suite and the device. Note that you can also install the application by copying
 the installation file onto your device and opening it with the Symbian File
 Manager application.
@@ -235,10 +231,10 @@ Once the application is installed, locate the application icon from the
 application menu and launch the application by tapping the icon.
 
 
-6. License
+6. Licence
 -------------------------------------------------------------------------------
 
-See the license text file delivered with this project. The license file is also
+See the licence text file delivered with this project. The licence file is also
 available online at
 https://projects.developer.nokia.com/QMLVideoStreamer/browser/Licence.txt
 
@@ -253,11 +249,5 @@ Qt Quick Components
 8. Version history
 -------------------------------------------------------------------------------
 
-1.0.0 Published on the Nokia Developer website.
-0.6.0 Final UI tweaks & fixes.
-0.5.0 Added platform player launch, upgraded graphical look 'n feel.
-0.4.0 Video playback modulized, new UI look & gfx tuning.
-0.3.0 Lots of fixes, feature improvements & UI tweaking.
-0.2.0 First release with Harmattan/MeeGo support.
-0.1.1 First release with E6 support.
-0.0.1 Initial Release.
+1.0 Published on the Nokia Developer website.
+
