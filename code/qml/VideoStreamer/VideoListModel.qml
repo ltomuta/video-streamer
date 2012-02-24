@@ -10,6 +10,7 @@ XmlListModel {
     property bool loading: status == XmlListModel.Loading
     property string channelName: "nokiadevforum"
     property string channelNameUserReadable: "Nokia Developer"
+    property string orderBy: "published"
     property string searchTerm: ""
     property int startIndex: 1
     property int maxResults: 20
@@ -21,6 +22,7 @@ XmlListModel {
             "q=" + model.searchTerm +
             "&author=" + model.channelName +
             "&start-index=" + model.startIndex +
+            "&orderby=" + model.orderBy +
             "&v=2"
     // Max result count currently omitted. Uncomment to re-enable.
 //            "&max-results=" + model.maxResults +
