@@ -17,7 +17,7 @@ application settings.
 The application shows Nokia Developer videos that are streamed from the
 'nokiadevforum' channel in YouTube using YouTube's mobile APIs.
 
-The QML Video Streamer ues Qt Quick Components in numerous places. For
+The QML Video Streamer uses Qt Quick Components in numerous places. For
 example, when navigating deeper into the application, the PageStack is used.
 The StatusBar and ToolBar (with all the ToolButtons etc.) are used as well.
 
@@ -27,7 +27,7 @@ This example application demonstrates:
 - Using Qt Quick Components in an application that supports multiple
   resolutions and both touch UI and keypad
 - Smart startup of the application (content and application UI loaded during
-  splash screen (see more in the project's wiki pages)
+  splash screen (for more information, see the project's wiki pages)
 - Handling volume keys of a Symbian phone within the QML code
 
 This example application is hosted in Nokia Developer Projects:
@@ -41,8 +41,8 @@ For more information on the implementation, visit the wiki page:
 -------------------------------------------------------------------------------
 
 The customised QML VideoPlayer component can be taken into use in 3rd party
-applications simply by adding the VideoPlayer QML sources into the project, and
-by importing it into a QML file. The player itself can be created simply by
+applications simply by adding the VideoPlayer QML sources into the project and
+importing it into a QML file. The player itself can be created simply by
 instantiating the VideoPlayView and by calling its setVideoData() function.
 
 
@@ -60,7 +60,7 @@ instantiating the VideoPlayView and by calling its setVideoData() function.
 3.1 Folders
 -----------
 
- |                   The root folder contains the license information and
+ |                   The root folder contains the licence information and
  |                   this file (release notes).
  |
  |- design           Contains UX design files.
@@ -71,7 +71,7 @@ instantiating the VideoPlayView and by calling its setVideoData() function.
  |  |
  |  |- code          Root folder for project, gfx, QML, and Javascript files.
  |  |
- |  |- qtc_packaging Contains the Harmattan (Debian) packaging files.
+ |  |- qtc_packaging Contains the MeeGo 1.2 Harmattan (Debian) packaging files.
  |
  |- symbian          Symbian (Anna/Belle) platform-specific code files.
  |  |
@@ -129,7 +129,7 @@ QML elements from Qt Quick Components:
 - Slider
 - ScrollDecorator
 - SelectionDialog
-- SearchBox (from QQC Extras)
+- SearchBox (from Qt Quick Components Extras)
 
 QML elements from Qt Mobility:
 - DeviceInfo
@@ -162,10 +162,10 @@ None; The application can be self signed on Symbian.
 ---------------------------------------
 
 - Video streaming might not start on some device & operator combinations. This
-  might be due to the used video streaming access point. Changing it can help.
-  In Symbian devices, select
-  "Menu" - "Settings" - "Application settings" - "Videos" - "Access point in use"
-  to change the currently used streaming access point.
+might be due to the used video streaming access point. Changing it can help.
+In Symbian devices, select
+"Menu" - "Settings" - "Application settings" - "Videos" - "Access point in use"
+to change the currently used streaming access point.
 
 After video playback there are severe performance bugs.
 - https://bugreports.qt.nokia.com/browse/QTMOBILITY-1570 & -1818
@@ -173,13 +173,17 @@ After video playback there are severe performance bugs.
 The video play view flickers sometimes and may be transparent.
 - https://bugreports.qt.nokia.com/browse/QTMOBILITY-1569
 
-The header item cannott be seen if navigating with the keyboard.
+Swiping the application to the background on the Nokia N9 while the video is
+playing causes the application to crash.
+- https://bugreports.qt-project.org/browse/QTMOBILITY-1995
+
+The header item cannot be seen if navigating with the keyboard.
 - https://bugreports.qt.nokia.com/browse/QTBUG-20926
 
 Seeking in video is not supported (when using the QML Video Player).
-- Seeking is suppprted in the the 'seekable'-property provided by the QML Video
-  element but it was not taken into use in this application as seeking did not
-  work seamlessly with streamed content.
+- Seeking is supported in the the 'seekable'-property provided by the QML Video
+  element but it was not taken into use in this application because seeking
+  did not work seamlessly with streamed content.
 
 Streamed video has a considerably low resolution.
 - This is a restriction set by the YouTube mobile API.
