@@ -36,6 +36,11 @@ Item {
         volumeConnections.target = null;
     }
 
+    // Sets the playback position to given time (in milliseconds).
+    function setPosition(position) {
+        videoPlayerImpl.position = position;
+    }
+
     function __volumeUp() {
         var maxVol = 1.0;
         var volThreshold = 0.1;

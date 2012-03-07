@@ -10,6 +10,8 @@ Item {
 
     property bool isFullScreen: false
     property bool isPortrait: visual.inPortrait
+    // Enable/Disable rewinding/fast forwarding.
+    property bool enableScrubbing: false
 
     property string videoTitle: ""
     property int videoLength: 0
@@ -291,6 +293,7 @@ Item {
             timePlayed: videoPlayer ? videoPlayer.timePlayed : 0
             timeDuration: videoPlayer ? videoPlayer.duration : 0
             isPlaying: videoPlayer ? videoPlayer.isPlaying : false
+            enableScrubbing: videoPlayView.enableScrubbing
 
             onBackButtonPressed: {
                 __handleExit();
@@ -302,6 +305,10 @@ Item {
 
             onPlayPressed: {
                 videoPlayer.play();
+            }
+
+            onPlaybackPositionChanged: {
+                videoPlayer.setPosition(playbackPosition);
             }
         }
     }

@@ -15,6 +15,11 @@ Item {
     property bool showBackground: true
     property bool showBackButton: true
 
+    // Property used to indicate scrubbed position. Calculated directly to
+    // milliseconds (from the given timeDuration property).
+    property int playbackPosition: 0
+    property bool enableScrubbing: false
+
     signal backButtonPressed
     signal playPressed
     signal pausePressed
@@ -89,6 +94,7 @@ Item {
                         : privateStyle.imagePath("toolbar-mediacontrol-play",
                                                  false)
 
+            opacity: visual.controlOpacity
             width: visual.controlWidth
             height: visual.controlHeight
             anchors {
@@ -142,6 +148,26 @@ Item {
 
             value: videoPlayerControls.timePlayed /
                    videoPlayerControls.timeDuration
+        }
+
+        MouseArea {
+            id: progressMA
+
+            enabled: videoPlayerControls.enableScrubbing
+            width: progressBar.width
+            height: parent.height
+            anchors.bottom: parent.bottom
+            anchors.left: progressBar.left
+
+            onPositionChanged: {
+                var selectedPosition = mouseX < 0 ?
+                            0 : mouseX/progressMA.width * videoPlayerControls.timeDuration;
+                videoPlayerControls.playbackPosition = selectedPosition;
+            }
+            onPressed: {
+                videoPlayerControls.playbackPosition =
+                        mouseX/progressMA.width * videoPlayerControls.timeDuration;
+            }
         }
     }
 }
