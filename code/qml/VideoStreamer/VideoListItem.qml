@@ -169,26 +169,15 @@ ListItem {
                 anchors.left: parent.left
             }
 
-            // Item bundling the 'eye' icon & views amount together.
-            Item {
-                id: viewAmount
+            InfoTextLabel {
+                id: viewsText
 
-                height: viewsText.height
+                text: model.m_viewCount + qsTr(" views")
+                horizontalAlignment: Text.AlignRight
                 anchors {
-                    left: duration.right
                     right: parent.right
-                }
-
-                InfoTextLabel {
-                    id: viewsText
-
-                    text: model.m_viewCount + qsTr(" views")
-                    horizontalAlignment: Text.AlignRight
-                    anchors {
-                        right: parent.right
-                        rightMargin: visual.inPortrait
-                                     ? visual.margins*2 : visual.margins*3
-                    }
+                    rightMargin: visual.inPortrait
+                                 ? visual.margins*2 : visual.margins*3
                 }
             }
         }
