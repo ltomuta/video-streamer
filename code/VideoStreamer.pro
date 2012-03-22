@@ -3,6 +3,8 @@
 # Basic Qt configuration
 QT += declarative
 CONFIG += qt qt-components mobility
+# add the In App Analytics library
+CONFIG += analytics
 MOBILITY += multimedia
 
 # Version number & version string definition (for using it inside the app)
@@ -34,6 +36,13 @@ symbian {
     # Allow network access on Symbian
     TARGET.CAPABILITY += NetworkServices
     TARGET.UID3 = 0xE0546EDD
+
+    # Capabilities needed by the Analytics library
+    TARGET.CAPABILITY = LocalServices ReadUserData WriteUserData \
+                        UserEnvironment ReadDeviceData
+    # Define In-App Analytics dependency (for the Smart Installer to work)
+    analytics_deploy.pkg_prerules = "(0x20031574), 3, 0, 8, {\"In-App Analytics\"}"
+    DEPLOYMENT += analytics_deploy
 
     SOURCES += volumekeys.cpp
     HEADERS += volumekeys.h

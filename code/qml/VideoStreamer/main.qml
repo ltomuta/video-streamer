@@ -2,6 +2,7 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
+import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import Qt.labs.components 1.1
@@ -35,6 +36,19 @@ Window {
         if (comp.status === Component.Ready) {
             busySplash = comp.createObject(root);
         }
+
+        // Analytics: initialize the analytics item with the Application key &
+        // version and start gathering analytics events.
+        analytics.initialize("13d513e3acc000acad979f7d1b31be21", cp_versionNumber);
+    }
+
+    // Create Analytics QML-item and set values for all available optional properties.
+    Analytics {
+        id: analytics
+
+        connectionTypePreference: Analytics.AnyConnection
+        minBundleSize: 20
+        loggingEnabled: true
     }
 
     Component {
@@ -113,8 +127,15 @@ Window {
             iconSource: "toolbar-back"
             onPlatformReleased: backButtonTip.opacity = 0;
             onPlatformPressAndHold: backButtonTip.opacity = 1;
-            onClicked: root.pageStack.depth <= 1 ?
-                           Qt.quit() : root.pageStack.pop()
+            onClicked: {
+                if (root.pageStack.depth <= 1) {
+                    // Stop gathering the analytics events.
+                    analytics.stop("MainScreen", Analytics.AppExit);
+                    Qt.quit();
+                } else {
+                    root.pageStack.pop();
+                }
+            }
         }
         ToolButton {
             id: searchButton
@@ -143,8 +164,12 @@ Window {
             iconSource: visual.images.infoIcon
             onPlatformReleased: aboutButtonTip.opacity = 0;
             onPlatformPressAndHold: aboutButtonTip.opacity = 1;
-            onClicked: pageStack.push(Qt.resolvedUrl("AboutView.qml"),
-                                      {pageStack: stack})
+            onClicked: {
+                analytics.logEvent("MainView", "Checked about",
+                                   Analytics.ActivityLogEvent);
+                pageStack.push(Qt.resolvedUrl("AboutView.qml"),
+                               {pageStack: stack});
+            }
         }
     }
 

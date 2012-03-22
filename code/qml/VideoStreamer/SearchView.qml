@@ -2,6 +2,7 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
+import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
@@ -23,6 +24,16 @@ Page {
                 listView.forceActiveFocus();
                 break;
             }
+        }
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating) {
+            // Analytics: start gathering analytics events for the SearchView.
+            analytics.start("SearchView");
+        } else if (status === PageStatus.Deactivating) {
+            // Analytics: Stop measuring & logging events for SearchView.
+            analytics.stop("SearchView", Analytics.SessionCloseReason);
         }
     }
 
@@ -66,6 +77,32 @@ Page {
 
             VideoListItem {
                 width: listView.width
+
+                onClicked: {
+                    if (visual.usePlatformPlayer) {
+                        playerLauncher.launchPlayer(m_contentUrl)
+                        // Analytics: log the player launch event with "platformPlayer".
+                        analytics.logEvent("SearchView", "PlatformPlayer launch",
+                                           Analytics.ActivityLogEvent);
+                    } else {
+                        var component = Qt.createComponent("VideoPlayPage.qml");
+                        if (component.status === Component.Ready) {
+                            // Instanciate the VideoPlayPage Element here. It will take care
+                            // of destructing it itself.
+                            var player = component.createObject(parent);
+                            pageStack.push(player);
+
+                            // setVideoData expects parameter to contain video data
+                            // information properties. Expected properties are identical to
+                            // used XmlListModel.
+                            player.setVideoData(model);
+
+                            // Analytics: log the player launch event with "QMLVideoPlayer".
+                            analytics.logEvent("SearchView", "QMLVideoPlayer launch",
+                                               Analytics.ActivityLogEvent);
+                        }
+                    }
+                }
             }
         }
 

@@ -2,6 +2,7 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
+import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
@@ -17,6 +18,9 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             mainPage.forceKeyboardFocus();
+            analytics.start("MainView");
+        } else if (status === PageStatus.Deactivating) {
+            analytics.stop("MainView", Analytics.SessionCloseReason);
         }
     }
 
@@ -70,6 +74,32 @@ Page {
 
             VideoListItem {
                 width: listView.width
+
+                onClicked: {
+                    if (visual.usePlatformPlayer) {
+                        playerLauncher.launchPlayer(m_contentUrl)
+                        // Analytics: log the player launch event with "platformPlayer".
+                        analytics.logEvent("MainView", "PlatformPlayer launch",
+                                           Analytics.ActivityLogEvent);
+                    } else {
+                        var component = Qt.createComponent("VideoPlayPage.qml");
+                        if (component.status === Component.Ready) {
+                            // Instanciate the VideoPlayPage Element here. It will take care
+                            // of destructing it itself.
+                            var player = component.createObject(parent);
+                            pageStack.push(player);
+
+                            // setVideoData expects parameter to contain video data
+                            // information properties. Expected properties are identical to
+                            // used XmlListModel.
+                            player.setVideoData(model);
+
+                            // Analytics: log the player launch event with "QMLVideoPlayer".
+                            analytics.logEvent("MainView", "QMLVideoPlayer launch",
+                                               Analytics.ActivityLogEvent);
+                        }
+                    }
+                }
             }
         }
 
