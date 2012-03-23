@@ -3,10 +3,11 @@
  */
 
 import Analytics 1.0
-import QtQuick 1.1
 import com.nokia.symbian 1.1
-import Qt.labs.components 1.1
+import QtQuick 1.1
 import QtMobility.systeminfo 1.1
+import Qt.labs.components 1.1
+import "storage.js" as Storage
 import "VideoPlayer"
 
 Window {
@@ -35,6 +36,17 @@ Window {
         var comp = busySplashComp;
         if (comp.status === Component.Ready) {
             busySplash = comp.createObject(root);
+        }
+
+        // Get the saved settings from the Storage database.
+        // Initialize the database.
+        Storage.initialize();
+
+        // If the analytics acceptance setting doesn't exist yet, query the
+        // permission to log analytics data from the user.
+        if (Storage.getSetting("analyticsAccepted") === "Unknown") {
+            analyticsQueryLoader.sourceComponent = analyticsQuery;
+            analyticsQueryLoader.item.open();
         }
 
         // Analytics: initialize the analytics item with the Application key &
@@ -248,5 +260,33 @@ Window {
     MouseArea {
         anchors.fill: parent
         enabled: pageStack.busy
+    }
+
+    Loader {
+        id: analyticsQueryLoader
+        anchors.centerIn: parent
+    }
+
+    Component {
+        id: analyticsQuery
+
+        QueryDialog {
+            titleText: qsTr("Analytics Disclaimer")
+            message: qsTr("The service includes a voluntary "
+                     + "service improvement program, which collects statistical "
+                     + "information about your use of the application. The information "
+                     + "is not used to identify you personally. You may control your "
+                     + "participation to the program from the settings of the "
+                     + "application. The information is collected in accordance with "
+                     + "Nokia Privacy Policy.")
+            acceptButtonText: qsTr("Accept")
+            rejectButtonText: qsTr("Reject")
+
+            onAccepted: {
+                // User has accepted for gathering the application usage data.
+                // Save the setting to persistent db.
+                Storage.setSetting("analyticsAccepted", true);
+            }
+        }
     }
 }
