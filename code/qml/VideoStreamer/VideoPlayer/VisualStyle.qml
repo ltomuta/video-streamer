@@ -26,6 +26,10 @@ Item {
     // Property, that defines which player is used (Platform player vs. QML Player)
     property variant usePlatformPlayer: false
 
+    // Analytics: Property, that defines whether or not the user has accepted
+    // the gathering of the anonymous user statistics data.
+    property bool analyticsAccepted: false
+
     // General
     property int margins: 4
     property int spacing: 8

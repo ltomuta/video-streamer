@@ -80,11 +80,16 @@ Page {
 
                 onClicked: {
                     if (visual.usePlatformPlayer) {
-                        playerLauncher.launchPlayer(m_contentUrl)
                         // Analytics: log the player launch event with "platformPlayer".
                         analytics.logEvent("SearchView", "PlatformPlayer launch",
                                            Analytics.ActivityLogEvent);
+
+                        playerLauncher.launchPlayer(m_contentUrl);
                     } else {
+                        // Analytics: log the player launch event with "QMLVideoPlayer".
+                        analytics.logEvent("SearchView", "QMLVideoPlayer launch",
+                                           Analytics.ActivityLogEvent);
+
                         var component = Qt.createComponent("VideoPlayPage.qml");
                         if (component.status === Component.Ready) {
                             // Instanciate the VideoPlayPage Element here. It will take care
@@ -96,10 +101,6 @@ Page {
                             // information properties. Expected properties are identical to
                             // used XmlListModel.
                             player.setVideoData(model);
-
-                            // Analytics: log the player launch event with "QMLVideoPlayer".
-                            analytics.logEvent("SearchView", "QMLVideoPlayer launch",
-                                               Analytics.ActivityLogEvent);
                         }
                     }
                 }

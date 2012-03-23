@@ -48,19 +48,9 @@ Window {
             analyticsQueryLoader.sourceComponent = analyticsQuery;
             analyticsQueryLoader.item.open();
         }
-
         // Analytics: initialize the analytics item with the Application key &
         // version and start gathering analytics events.
         analytics.initialize("13d513e3acc000acad979f7d1b31be21", cp_versionNumber);
-    }
-
-    // Create Analytics QML-item and set values for all available optional properties.
-    Analytics {
-        id: analytics
-
-        connectionTypePreference: Analytics.AnyConnection
-        minBundleSize: 20
-        loggingEnabled: true
     }
 
     Component {
@@ -110,8 +100,21 @@ Window {
         // Set the initial volume level (from the device's profile)
         DeviceInfo {id: devInfo}
         currentVolume: devInfo.voiceRingtoneVolume / 100
+
         // Track, which player is being used.
-        usePlatformPlayer: playerSelectionDlg.selectedIndex === 1
+        usePlatformPlayer: Storage.getSetting("usePlatformPlayer") === "true"
+        // Analytics: use the visual.analyticsAccepted to be able to do
+        // bindings to properties, when the the state of acceptance changes.
+        analyticsAccepted: Storage.getSetting("analyticsAccepted") === "true"
+    }
+
+    // Create Analytics QML-item and set values for all available optional properties.
+    Analytics {
+        id: analytics
+
+        connectionTypePreference: Analytics.AnyConnection
+        minBundleSize: 20                           // Send patches of 20 events.
+        loggingEnabled: visual.analyticsAccepted    // No logging, if unaccepted.
     }
 
     // Background, shown behind the lists. Will fade to black when hiding it.
@@ -167,7 +170,8 @@ Window {
             iconSource: "toolbar-settings"
             onPlatformReleased: settingsButtonTip.opacity = 0;
             onPlatformPressAndHold: settingsButtonTip.opacity = 1;
-            onClicked: playerSelectionDlg.open()
+            onClicked: pageStack.push(Qt.resolvedUrl("SettingsView.qml"),
+                                      {pageStack: stack});
         }
         ToolButton {
             id: aboutButton
@@ -245,23 +249,14 @@ Window {
         platformInverted: root.platformInverted
     }
 
-    SelectionDialog {
-        id: playerSelectionDlg
-        selectedIndex: 0
-        titleText: qsTr("Select used video player:")
-
-        model: ListModel {
-            ListElement { name: "QML Video Player" }
-            ListElement { name: "Platform Video Player" }
-        }
-    }
-
-    // event preventer when page transition is active
+    // Event preventer when page transition is active
     MouseArea {
         anchors.fill: parent
         enabled: pageStack.busy
     }
 
+    // Loader & Component for querying the user's acceptance in gathering
+    // the anonymous user data.
     Loader {
         id: analyticsQueryLoader
         anchors.centerIn: parent
@@ -286,6 +281,7 @@ Window {
                 // User has accepted for gathering the application usage data.
                 // Save the setting to persistent db.
                 Storage.setSetting("analyticsAccepted", true);
+                visual.analyticsAccepted = true;
             }
         }
     }
