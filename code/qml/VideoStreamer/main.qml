@@ -265,18 +265,7 @@ Window {
     Component {
         id: analyticsQuery
 
-        QueryDialog {
-            titleText: qsTr("Analytics Disclaimer")
-            message: qsTr("The service includes a voluntary "
-                     + "service improvement program, which collects statistical "
-                     + "information about your use of the application. The information "
-                     + "is not used to identify you personally. You may control your "
-                     + "participation to the program from the settings of the "
-                     + "application. The information is collected in accordance with "
-                     + "Nokia Privacy Policy.")
-            acceptButtonText: qsTr("Accept")
-            rejectButtonText: qsTr("Reject")
-
+        AnalyticsQuery {
             onAccepted: {
                 // User has accepted for gathering the application usage data.
                 // Save the setting to persistent db.

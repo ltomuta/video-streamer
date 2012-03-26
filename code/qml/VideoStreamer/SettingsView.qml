@@ -79,19 +79,49 @@ Page {
     }
 
     CheckBox {
+        id: checkBox
+
         anchors {
             top: playerSelection.bottom
             left: parent.left
             right: parent.right
-            margins: visual.margins
+            margins: visual.margins*3
         }
-
         text: "Accept gathering user statistics"
         checked: visual.analyticsAccepted
         // Save the checked status persistently.
         onCheckedChanged: {
             Storage.setSetting("analyticsAccepted", checked);
             visual.analyticsAccepted = checked;
+        }
+    }
+
+    Text {
+        anchors {
+            top: checkBox.bottom
+            horizontalCenter: checkBox.horizontalCenter
+        }
+
+        text: qsTr("<a href=\"query\">In-App Analytics Terms And Conditions</a>")
+        color: platformStyle.colorNormalLight
+        textFormat: Text.RichText
+        onLinkActivated: {
+            queryLoader.sourceComponent = analyticsQuery;
+            queryLoader.item.open();
+        }
+    }
+
+    Loader {
+        id: queryLoader
+        anchors.centerIn: parent
+    }
+
+    Component {
+        id: analyticsQuery
+
+        AnalyticsQuery {
+            onAccepted: checkBox.checked = true;
+            onRejected: checkBox.checked = false;
         }
     }
 }
