@@ -11,25 +11,13 @@ Page {
     property variant pageStack
     
     // Background gradient
-    Rectangle {
+    TitleBar {
         id: logo
 
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
-        }
-        height: visual.titleBarHeight
-        color: "white"
-
-        Image {
-            id: logoImg
-
-            anchors {
-                left: parent.left
-                verticalCenter: parent.verticalCenter
-            }
-            source: visual.images.developerLogo
         }
     }
 

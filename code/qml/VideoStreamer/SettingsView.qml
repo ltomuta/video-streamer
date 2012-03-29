@@ -31,17 +31,26 @@ Page {
         }
     }
 
-    // Label for the settings view.
-    InfoTextLabel {
-        id: titleText
+    TitleBar {
+        id: logo
 
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: visual.margins
         }
+    }
 
+    // Label for the settings view.
+    InfoTextLabel {
+        id: titleText
+
+        anchors {
+            top: logo.bottom
+            topMargin: visual.margins*3
+            left: parent.left
+            leftMargin: visual.margins
+        }
         horizontalAlignment: Text.AlignLeft
         font.pixelSize: visual.largeFontSize
         font.bold: true
@@ -78,36 +87,48 @@ Page {
         }
     }
 
-    CheckBox {
-        id: checkBox
-
+    ListItem {
         anchors {
             top: playerSelection.bottom
             left: parent.left
             right: parent.right
-            margins: visual.margins*3
         }
-        text: "Accept gathering user statistics"
-        checked: visual.analyticsAccepted
-        // Save the checked status persistently.
-        onCheckedChanged: {
-            Storage.setSetting("analyticsAccepted", checked);
-            visual.analyticsAccepted = checked;
-        }
-    }
+        height: checkBox.height + tncText.height + platformStyle.paddingLarge*2.5
+        onClicked: checkBox.checked = !checkBox.checked
 
-    Text {
-        anchors {
-            top: checkBox.bottom
-            horizontalCenter: checkBox.horizontalCenter
+        CheckBox {
+            id: checkBox
+
+            anchors {
+                top: parent.paddingItem.top
+                left: parent.paddingItem.left
+                right: parent.paddingItem.right
+            }
+
+            text: "Accept gathering user statistics"
+            checked: visual.analyticsAccepted
+            // Save the checked status persistently.
+            onCheckedChanged: {
+                Storage.setSetting("analyticsAccepted", checked);
+                visual.analyticsAccepted = checked;
+            }
         }
 
-        text: qsTr("<a href=\"query\">In-App Analytics Terms And Conditions</a>")
-        color: platformStyle.colorNormalLight
-        textFormat: Text.RichText
-        onLinkActivated: {
-            queryLoader.sourceComponent = analyticsQuery;
-            queryLoader.item.open();
+        Text {
+            id: tncText
+
+            anchors {
+                top: checkBox.bottom
+                left: checkBox.left
+            }
+
+            text: qsTr("<a href=\"query\">In-App Analytics Terms And Conditions</a>")
+            color: platformStyle.colorNormalLight
+            textFormat: Text.RichText
+            onLinkActivated: {
+                queryLoader.sourceComponent = analyticsQuery;
+                queryLoader.item.open();
+            }
         }
     }
 
