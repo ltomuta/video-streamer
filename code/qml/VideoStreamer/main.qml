@@ -53,6 +53,12 @@ Window {
         analytics.initialize("13d513e3acc000acad979f7d1b31be21", cp_versionNumber);
     }
 
+    Component.onDestruction: {
+        // Stop logging the analytics data & close the session for the currently
+        // showing view, when the application has been exited.
+        analytics.stop(pageStack.currentPage.viewName, Analytics.AppExit);
+    }
+
     Component {
         id: busySplashComp
 
@@ -144,8 +150,6 @@ Window {
             onPlatformPressAndHold: backButtonTip.opacity = 1;
             onClicked: {
                 if (root.pageStack.depth <= 1) {
-                    // Stop gathering the analytics events.
-                    analytics.stop("MainScreen", Analytics.AppExit);
                     Qt.quit();
                 } else {
                     root.pageStack.pop();
@@ -181,8 +185,6 @@ Window {
             onPlatformReleased: aboutButtonTip.opacity = 0;
             onPlatformPressAndHold: aboutButtonTip.opacity = 1;
             onClicked: {
-                analytics.logEvent("MainView", "Checked about",
-                                   Analytics.ActivityLogEvent);
                 pageStack.push(Qt.resolvedUrl("AboutView.qml"),
                                {pageStack: stack});
             }

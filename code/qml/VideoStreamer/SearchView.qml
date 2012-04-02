@@ -12,7 +12,8 @@ Page {
 
     // Declared properties
     property variant pageStack
-
+    property string viewName: "searchView"
+    
     // If the user moves up/down, focus on the list instead of the search box.
     Keys.onPressed: {
         if (!event.isAutoRepeat) {
@@ -30,10 +31,10 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             // Analytics: start gathering analytics events for the SearchView.
-            analytics.start("SearchView");
+            analytics.start(searchView.viewName);
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for SearchView.
-            analytics.stop("SearchView", Analytics.SessionCloseReason);
+            analytics.stop(searchView.viewName, Analytics.SessionCloseReason);
         }
     }
 
@@ -81,13 +82,13 @@ Page {
                 onClicked: {
                     if (visual.usePlatformPlayer) {
                         // Analytics: log the player launch event with "platformPlayer".
-                        analytics.logEvent("SearchView", "PlatformPlayer launch",
+                        analytics.logEvent(searchView.viewName, "PlatformPlayer launch",
                                            Analytics.ActivityLogEvent);
 
                         playerLauncher.launchPlayer(m_contentUrl);
                     } else {
                         // Analytics: log the player launch event with "QMLVideoPlayer".
-                        analytics.logEvent("SearchView", "QMLVideoPlayer launch",
+                        analytics.logEvent(searchView.viewName, "QMLVideoPlayer launch",
                                            Analytics.ActivityLogEvent);
 
                         var component = Qt.createComponent("VideoPlayPage.qml");

@@ -10,6 +10,8 @@ import "VideoPlayer"
 Page {
     id: videoPlayPage
 
+    property string viewName: "videoPlayView"
+
     function setVideoData(videoData) {
         videoPlayView.setVideoData(videoData);
     }
@@ -17,13 +19,13 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             // Analytics: Start the session for the VideoPlayer screen.
-            analytics.start("VideoPlayView");
+            analytics.start(videoPlayPage.viewName);
 
             // Don't show the bg image behind the video play view.
             visual.showBackground = false;
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for VideoPlayer.
-            analytics.stop("VideoPlayView", Analytics.SessionCloseReason);
+            analytics.stop(videoPlayPage.viewName, Analytics.SessionCloseReason);
 
             // The background image can be shown once again.
             visual.showBackground = true;

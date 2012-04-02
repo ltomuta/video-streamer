@@ -10,6 +10,7 @@ Page {
     id: mainPage
 
     property int listHeight: parent.height
+    property string viewName: "mainView"
 
     function forceKeyboardFocus() {
         listView.forceActiveFocus();
@@ -18,9 +19,9 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Activating) {
             mainPage.forceKeyboardFocus();
-            analytics.start("MainView");
+            analytics.start(mainPage.viewName);
         } else if (status === PageStatus.Deactivating) {
-            analytics.stop("MainView", Analytics.SessionCloseReason);
+            analytics.stop(mainPage.viewName, Analytics.SessionCloseReason);
         }
     }
 
@@ -78,13 +79,13 @@ Page {
                 onClicked: {
                     if (visual.usePlatformPlayer) {
                         // Analytics: log the player launch event with "platformPlayer".
-                        analytics.logEvent("MainView", "PlatformPlayer launch",
+                        analytics.logEvent(mainPage.viewName, "PlatformPlayer launch",
                                            Analytics.ActivityLogEvent);
 
                         playerLauncher.launchPlayer(m_contentUrl);
                     } else {
                         // Analytics: log the player launch event with "QMLVideoPlayer".
-                        analytics.logEvent("MainView", "QMLVideoPlayer launch",
+                        analytics.logEvent(mainPage.viewName, "QMLVideoPlayer launch",
                                            Analytics.ActivityLogEvent);
 
                         var component = Qt.createComponent("VideoPlayPage.qml");
