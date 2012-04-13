@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import com.nokia.symbian 1.1
 import QtQuick 1.1
 import QtMobility.systeminfo 1.1
@@ -22,6 +21,39 @@ Window {
     property alias pageStack: stack
     property bool platformSoftwareInputPanelEnabled: false
 
+    // Analytics: method for handling starting / stopping the analytics logging
+    // for a certain Page. This function is meant to be bound to Page element's
+    // onStatusChanged -signal.
+    function __handlePageStatusChange(status, viewName) {
+        if (status === PageStatus.Activating) {
+            // Analytics: start gathering analytics events for the view.
+            analytics.start(viewName);
+        } else if (status === PageStatus.Deactivating) {
+            // Analytics: Stop measuring & logging events for the view.
+            analytics.stop(viewName, false);
+        }
+    }
+
+    // Method for launching the Custom QML VideoPlayer Component.
+    // Analytics: Demonstrates the use of Analytics::logEvent()s.
+    function __handlePlayerStart(url, dataModel, viewName) {
+        if (visual.usePlatformPlayer) {
+            // Analytics: log the player launch event with "platformPlayer".
+            analytics.logEvent(viewName, "PlatformPlayer launch");
+
+            playerLauncher.launchPlayer(url);
+        } else {
+            // Analytics: log the player launch event with "QMLVideoPlayer".
+            analytics.logEvent(viewName, "QMLVideoPlayer launch");
+
+            var player = pageStack.push(videoPlayViewComp, {pageStack: stack});
+            // setVideoData expects parameter to contain video data
+            // information properties. Expected properties are identical to
+            // used XmlListModel.
+            player.setVideoData(dataModel);
+        }
+    }
+
     // Attribute definitions
     initialPage: VideoListView {
         tools: toolBarLayout
@@ -29,33 +61,8 @@ Window {
         // the ToolBar prevents the pagestack from being anchored to it.
         listHeight: parent.height - toolbar.height
 
-        onPlayerStart: {
-            if (visual.usePlatformPlayer) {
-                // Analytics: log the player launch event with "platformPlayer".
-                analytics.logEvent(viewName, "PlatformPlayer launch",
-                                   Analytics.ActivityLogEvent);
-
-                playerLauncher.launchPlayer(url);
-            } else {
-                console.log("URL: " + url + " model: " + dataModel)
-                // Analytics: log the player launch event with "QMLVideoPlayer".
-                analytics.logEvent(viewName, "QMLVideoPlayer launch",
-                                   Analytics.ActivityLogEvent);
-
-                var component = Qt.createComponent("VideoPlayPage.qml");
-                if (component.status === Component.Ready) {
-                    // Instanciate the VideoPlayPage Element here. It will take care
-                    // of destructing it itself.
-                    var player = component.createObject(parent);
-                    pageStack.push(player);
-
-                    // setVideoData expects parameter to contain video data
-                    // information properties. Expected properties are identical to
-                    // used XmlListModel.
-                    player.setVideoData(dataModel);
-                }
-            }
-        }
+        onStatusChanged: __handlePageStatusChange(status, viewName)
+        onPlayerStart: __handlePlayerStart(url, dataModel, viewName)
     }
 
     Component.onCompleted: {
@@ -84,7 +91,38 @@ Window {
     Component.onDestruction: {
         // Stop logging the analytics data & close the session for the currently
         // showing view, when the application has been exited.
-        analytics.stop(pageStack.currentPage.viewName, Analytics.AppExit);
+        analytics.stop(pageStack.currentPage.viewName, true);
+    }
+
+    // Page Component definitions. Pages are created & destroyed dynamically
+    // with using the PageStack's push()/pop() methods with QML Components.
+    Component {
+        id: searchViewComp
+        SearchView {
+            onStatusChanged: __handlePageStatusChange(status, viewName)
+            onPlayerStart: __handlePlayerStart(url, dataModel, viewName)
+        }
+    }
+
+    Component {
+        id: settingsViewComp
+        SettingsView {
+            onStatusChanged: __handlePageStatusChange(status, viewName)
+        }
+    }
+
+    Component {
+        id: aboutViewComp
+        AboutView {
+            onStatusChanged: __handlePageStatusChange(status, viewName)
+        }
+    }
+
+    Component {
+        id: videoPlayViewComp
+        VideoPlayPage {
+            onStatusChanged: __handlePageStatusChange(status, viewName)
+        }
     }
 
     Component {
@@ -122,6 +160,19 @@ Window {
         }
     }
 
+    Component {
+        id: analyticsQuery
+
+        AnalyticsQuery {
+            onAccepted: {
+                // User has accepted for gathering the application usage data.
+                // Save the setting to persistent db.
+                Storage.setSetting("analyticsAccepted", true);
+                visual.analyticsAccepted = true;
+            }
+        }
+    }
+
     // VisualStyle has platform differentiation attribute definitions.
     VisualStyle {
         id: visual
@@ -143,10 +194,15 @@ Window {
     }
 
     // Create Analytics QML-item and set values for all available optional properties.
+    //
+    // NOTE! The real used Analytics plugin (e.g. In-App Analytics or Console logging)
+    // is abstracted underneath the VideoAnalytics Element, which in its own stead
+    // selects the way it does the analyzing. The In-App Analytics plugin can be
+    // enabled from the VideoStreamer.pro file.
     VideoAnalytics {
         id: analytics
 
-        connectionTypePreference: Analytics.AnyConnection
+        connectionTypePreference: 0
         minBundleSize: 20                           // Send patches of 20 events.
         loggingEnabled: visual.analyticsAccepted    // No logging, if unaccepted.
     }
@@ -176,13 +232,8 @@ Window {
             iconSource: "toolbar-back"
             onPlatformReleased: backButtonTip.opacity = 0;
             onPlatformPressAndHold: backButtonTip.opacity = 1;
-            onClicked: {
-                if (root.pageStack.depth <= 1) {
-                    Qt.quit();
-                } else {
-                    root.pageStack.pop();
-                }
-            }
+            onClicked: root.pageStack.depth <= 1 ?
+                           Qt.quit() : root.pageStack.pop()
         }
         ToolButton {
             id: searchButton
@@ -192,8 +243,7 @@ Window {
             onPlatformReleased: searchButtonTip.opacity = 0;
             onPlatformPressAndHold: searchButtonTip.opacity = 1;
             // Create the SearchView to the pageStack dynamically.
-            onClicked: pageStack.push(Qt.resolvedUrl("SearchView.qml"),
-                                      {pageStack: stack})
+            onClicked: pageStack.push(searchViewComp, {pageStack: stack})
         }
         ToolButton {
             id: settingsButton
@@ -202,8 +252,7 @@ Window {
             iconSource: "toolbar-settings"
             onPlatformReleased: settingsButtonTip.opacity = 0;
             onPlatformPressAndHold: settingsButtonTip.opacity = 1;
-            onClicked: pageStack.push(Qt.resolvedUrl("SettingsView.qml"),
-                                      {pageStack: stack});
+            onClicked: pageStack.push(settingsViewComp, {pageStack: stack});
         }
         ToolButton {
             id: aboutButton
@@ -212,10 +261,7 @@ Window {
             iconSource: visual.images.infoIcon
             onPlatformReleased: aboutButtonTip.opacity = 0;
             onPlatformPressAndHold: aboutButtonTip.opacity = 1;
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("AboutView.qml"),
-                               {pageStack: stack});
-            }
+            onClicked: pageStack.push(aboutViewComp, {pageStack: stack});
         }
     }
 
@@ -290,18 +336,5 @@ Window {
     Loader {
         id: analyticsQueryLoader
         anchors.centerIn: parent
-    }
-
-    Component {
-        id: analyticsQuery
-
-        AnalyticsQuery {
-            onAccepted: {
-                // User has accepted for gathering the application usage data.
-                // Save the setting to persistent db.
-                Storage.setSetting("analyticsAccepted", true);
-                visual.analyticsAccepted = true;
-            }
-        }
     }
 }

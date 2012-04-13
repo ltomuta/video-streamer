@@ -17,17 +17,16 @@ QtObject {
             console.log("VideoAnalytics::start(" + screen + ")");
     }
 
-    function stop(screen, closeReason) {
+    function stop(screen, isAppExit) {
         if (loggingEnabled)
-            console.log("VideoAnalytics::stop(" + screen + ", " + closeReason + ")" );
+            console.log("VideoAnalytics::stop(" + screen + ", isAppExit: " + isAppExit + ")" );
     }
 
-    function logEvent(screen, eventName, eventType) {
+    function logEvent(screen, eventName) {
         if (loggingEnabled)
             console.log("VideoAnalytics::logEvent(" +
                     screen + ", " +
-                    eventName + ", " +
-                    eventType + ")");
+                    eventName + ")");
     }
 
     Component.onCompleted: {

@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
@@ -20,10 +19,7 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            mainPage.forceKeyboardFocus();
-            analytics.start(mainPage.viewName);
-        } else if (status === PageStatus.Deactivating) {
-            analytics.stop(mainPage.viewName, Analytics.EndSession);
+            forceKeyboardFocus();
         }
     }
 

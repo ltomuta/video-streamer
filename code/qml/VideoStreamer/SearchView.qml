@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
@@ -14,6 +13,8 @@ Page {
     property variant pageStack
     property string viewName: "searchView"
     
+    signal playerStart(string url, variant dataModel)
+
     // If the user moves up/down, focus on the list instead of the search box.
     Keys.onPressed: {
         if (!event.isAutoRepeat) {
@@ -25,16 +26,6 @@ Page {
                 listView.forceActiveFocus();
                 break;
             }
-        }
-    }
-
-    onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            // Analytics: start gathering analytics events for the SearchView.
-            analytics.start(searchView.viewName);
-        } else if (status === PageStatus.Deactivating) {
-            // Analytics: Stop measuring & logging events for SearchView.
-            analytics.stop(searchView.viewName, Analytics.EndSession);
         }
     }
 
@@ -78,33 +69,7 @@ Page {
 
             VideoListItem {
                 width: listView.width
-
-                onClicked: {
-                    if (visual.usePlatformPlayer) {
-                        // Analytics: log the player launch event with "platformPlayer".
-                        analytics.logEvent(searchView.viewName, "PlatformPlayer launch",
-                                           Analytics.ActivityLogEvent);
-
-                        playerLauncher.launchPlayer(m_contentUrl);
-                    } else {
-                        // Analytics: log the player launch event with "QMLVideoPlayer".
-                        analytics.logEvent(searchView.viewName, "QMLVideoPlayer launch",
-                                           Analytics.ActivityLogEvent);
-
-                        var component = Qt.createComponent("VideoPlayPage.qml");
-                        if (component.status === Component.Ready) {
-                            // Instanciate the VideoPlayPage Element here. It will take care
-                            // of destructing it itself.
-                            var player = component.createObject(parent);
-                            pageStack.push(player);
-
-                            // setVideoData expects parameter to contain video data
-                            // information properties. Expected properties are identical to
-                            // used XmlListModel.
-                            player.setVideoData(model);
-                        }
-                    }
-                }
+                onClicked: searchView.playerStart(m_contentUrl, model)
             }
         }
 

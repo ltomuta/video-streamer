@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import com.nokia.symbian 1.1
 import QtQuick 1.1
 import "storage.js" as Storage
@@ -12,16 +11,6 @@ Page {
 
     property variant pageStack
     property string viewName: "settingsView"
-
-    onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            // Analytics: start gathering analytics events for the SettingsView.
-            analytics.start(settingsView.viewName);
-        } else if (status === PageStatus.Deactivating) {
-            // Analytics: Stop measuring & logging events for SettingsView.
-            analytics.stop(settingsView.viewName, Analytics.EndSession);
-        }
-    }
 
     tools: ToolBarLayout {
         ToolButton {

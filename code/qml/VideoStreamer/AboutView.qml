@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
@@ -11,16 +10,6 @@ Page {
 
     property variant pageStack
     property string viewName: "aboutView"
-
-    onStatusChanged: {
-        if (status === PageStatus.Activating) {
-            // Analytics: start gathering analytics events for the AboutView.
-            analytics.start(aboutView.viewName);
-        } else if (status === PageStatus.Deactivating) {
-            // Analytics: Stop measuring & logging events for AboutView.
-            analytics.stop(aboutView.viewName, Analytics.EndSession);
-        }
-    }
 
     // Background gradient
     TitleBar {

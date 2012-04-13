@@ -2,7 +2,6 @@
  * Copyright (c) 2012 Nokia Corporation.
  */
 
-import Analytics 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "VideoPlayer"
@@ -10,6 +9,7 @@ import "VideoPlayer"
 Page {
     id: videoPlayPage
 
+    property variant pageStack
     property string viewName: "videoPlayView"
 
     function setVideoData(videoData) {
@@ -18,15 +18,9 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Activating) {
-            // Analytics: Start the session for the VideoPlayer screen.
-            analytics.start(videoPlayPage.viewName);
-
             // Don't show the bg image behind the video play view.
             visual.showBackground = false;
         } else if (status === PageStatus.Deactivating) {
-            // Analytics: Stop measuring & logging events for VideoPlayer.
-            analytics.stop(videoPlayPage.viewName, Analytics.EndSession);
-
             // The background image can be shown once again.
             visual.showBackground = true;
         }

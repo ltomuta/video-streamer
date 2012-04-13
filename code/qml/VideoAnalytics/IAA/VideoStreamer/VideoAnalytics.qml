@@ -16,19 +16,20 @@ Item {
         analytics.start(screen);
     }
 
-    function stop(screen, closeReason) {
-        analytics.stop(screen, closeReason);
+    function stop(screen, isAppExit) {
+        analytics.stop(screen, isAppExit ? Analytics.AppExit
+                                         : Analytics.EndSession);
     }
 
-    function logEvent(screen, eventName, eventType) {
-        analytics.logEvent(screen, eventName, eventType);
+    function logEvent(screen, eventName) {
+        analytics.logEvent(screen, eventName, Analytics.ActivityLogEvent);
     }
 
     // Create Analytics QML-item and set values for all available optional properties.
     Analytics {
         id: analytics
 
-        connectionTypePreference: videoAnalytics.connectionTypePreference
+        connectionTypePreference: Analytics.AnyConnection
         minBundleSize: videoAnalytics.minBundleSize
         loggingEnabled: videoAnalytics.loggingEnabled
     }
