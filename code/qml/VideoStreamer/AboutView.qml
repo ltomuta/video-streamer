@@ -18,7 +18,7 @@ Page {
             analytics.start(aboutView.viewName);
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for AboutView.
-            analytics.stop(aboutView.viewName, Analytics.SessionCloseReason);
+            analytics.stop(aboutView.viewName, Analytics.EndSession);
         }
     }
 
@@ -65,7 +65,7 @@ Page {
         wrapMode: Text.WordWrap
         text: qsTr("<p>Version: " + cp_versionNumber + " (with In-App Analytics)</p>" +
                    "<p>QML VideoStreamer application is a Nokia Developer example " +
-                   "demonstrating the QML Video playing capabilies." +
+                   "demonstrating the QML Video playing capabilies. " +
                    "Videos are streamed from Nokia Developer's YouTube channel " +
                    "<a href=\"http://www.youtube.com/nokiadevforum\">NokiaDevForum</a></p>" +
                    "<p>Developed and published by Nokia. All rights reserved.</p>" +

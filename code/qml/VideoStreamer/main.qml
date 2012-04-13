@@ -28,6 +28,34 @@ Window {
         // Set the height for the VideoListView's list, as hiding / showing
         // the ToolBar prevents the pagestack from being anchored to it.
         listHeight: parent.height - toolbar.height
+
+        onPlayerStart: {
+            if (visual.usePlatformPlayer) {
+                // Analytics: log the player launch event with "platformPlayer".
+                analytics.logEvent(viewName, "PlatformPlayer launch",
+                                   Analytics.ActivityLogEvent);
+
+                playerLauncher.launchPlayer(url);
+            } else {
+                console.log("URL: " + url + " model: " + dataModel)
+                // Analytics: log the player launch event with "QMLVideoPlayer".
+                analytics.logEvent(viewName, "QMLVideoPlayer launch",
+                                   Analytics.ActivityLogEvent);
+
+                var component = Qt.createComponent("VideoPlayPage.qml");
+                if (component.status === Component.Ready) {
+                    // Instanciate the VideoPlayPage Element here. It will take care
+                    // of destructing it itself.
+                    var player = component.createObject(parent);
+                    pageStack.push(player);
+
+                    // setVideoData expects parameter to contain video data
+                    // information properties. Expected properties are identical to
+                    // used XmlListModel.
+                    player.setVideoData(dataModel);
+                }
+            }
+        }
     }
 
     Component.onCompleted: {
@@ -115,7 +143,7 @@ Window {
     }
 
     // Create Analytics QML-item and set values for all available optional properties.
-    Analytics {
+    VideoAnalytics {
         id: analytics
 
         connectionTypePreference: Analytics.AnyConnection

@@ -34,7 +34,7 @@ Page {
             analytics.start(searchView.viewName);
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for SearchView.
-            analytics.stop(searchView.viewName, Analytics.SessionCloseReason);
+            analytics.stop(searchView.viewName, Analytics.EndSession);
         }
     }
 

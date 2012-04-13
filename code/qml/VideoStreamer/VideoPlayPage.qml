@@ -25,7 +25,7 @@ Page {
             visual.showBackground = false;
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for VideoPlayer.
-            analytics.stop(videoPlayPage.viewName, Analytics.SessionCloseReason);
+            analytics.stop(videoPlayPage.viewName, Analytics.EndSession);
 
             // The background image can be shown once again.
             visual.showBackground = true;

@@ -19,7 +19,7 @@ Page {
             analytics.start(settingsView.viewName);
         } else if (status === PageStatus.Deactivating) {
             // Analytics: Stop measuring & logging events for SettingsView.
-            analytics.stop(settingsView.viewName, Analytics.SessionCloseReason);
+            analytics.stop(settingsView.viewName, Analytics.EndSession);
         }
     }
 
