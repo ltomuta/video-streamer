@@ -8,11 +8,13 @@ import com.nokia.symbian 1.1
 Item {
     id: videoPlayView
 
-    property bool isFullScreen: false
-    property bool isPortrait: visual.inPortrait
     // Enable/Disable rewinding/fast forwarding.
     property bool enableScrubbing: false
+    // Set the video playback in either full or partial screen.
+    property bool isFullScreen: false
+    property bool isPortrait: visual.inPortrait
 
+    // Video information data to be shown, when in partial screen mode.
     property string videoTitle: ""
     property int videoLength: 0
     property string videoAuthor: ""
@@ -26,36 +28,30 @@ Item {
     property double bottomAreaProportion: visual.bottomAreaProportion
     property double leftAreaProportion: visual.leftAreaProportion
     property double rightAreaProportion: visual.rightAreaProportion
+
     // Ease of access handle for the VideoPlayerView Item.
     property alias videoPlayer: videoPlayerLoader.item
 
     // Property to observe the application shown/hidden status
     property bool applicationActive: Qt.application.active
-    onApplicationActiveChanged: {
-        if (videoPlayer) {
-            if(applicationActive) {
-                videoPlayer.play();
-            } else {
-                videoPlayer.pause();
-            }
-        }
-    }
 
     // Signalled, when exiting the Video player.
     signal videoExit
 
-    // Function for setting the shown video informatino & setting the
+    // Function for setting the shown video information & setting the
     // video URL.
     function setVideoData(videoData) {
-        videoPlayView.videoTitle = videoData.m_title;
-        videoPlayView.videoLength = videoData.m_duration;
-        videoPlayView.videoAuthor = videoData.m_author;
+        videoPlayView.videoTitle = videoData.m_title ? videoData.m_title : "";
+        videoPlayView.videoLength = videoData.m_duration ? videoData.m_duration : 0;
+        videoPlayView.videoAuthor = videoData.m_author ? videoData.m_author : "";
 
-        videoPlayView.numLikes = videoData.m_numLikes;
-        videoPlayView.numDislikes = videoData.m_numDislikes;
-        videoPlayView.viewCount = videoData.m_viewCount;
+        videoPlayView.numLikes = videoData.m_numLikes ? videoData.m_numLikes : 0;
+        videoPlayView.numDislikes = videoData.m_numDislikes ? videoData.m_numDislikes : 0;
+        videoPlayView.viewCount = videoData.m_viewCount ? videoData.m_viewCount : 0;
 
-        videoPlayView.videoDescription = videoData.m_description;
+        videoPlayView.videoDescription = videoData.m_description ? videoData.m_description : "";
+
+        // At least the m_contentUrl HAS to be defined!
         videoPlayView.videoSource = videoData.m_contentUrl;
     }
 
@@ -106,6 +102,18 @@ Item {
                 }
                 event.accepted = true;
                 break;
+            }
+        }
+    }
+
+    // When going to background, pause the playback. And when returning from
+    // background, resume playback.
+    onApplicationActiveChanged: {
+        if (videoPlayer) {
+            if(applicationActive) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
             }
         }
     }
