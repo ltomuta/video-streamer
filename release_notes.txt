@@ -155,7 +155,13 @@ Developed with:
 4.1 Required capabilities
 -------------------------
 
-None; The application can be self signed on Symbian.
+Without In-App Analytics: None; The application can be self signed on Symbian.
+This is the default behaviour for application compilation and sis creation.
+
+With In-App Analytics: ReadDeviceData. The application has to be signed with a
+Symbian Signing approved certificate. The In-App Analytics can be taken into
+use by enabling the IAA define in the VideoStreamer.pro file.
+
 
 
 4.2 Known issues and design limitations
@@ -253,5 +259,6 @@ Qt Quick Components
 8. Version history
 -------------------------------------------------------------------------------
 
+1.1 Added In-App Analytics / console logging stub implementation for analyzing
+    application usage behaviour.
 1.0 Published on the Nokia Developer website.
-

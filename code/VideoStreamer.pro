@@ -6,7 +6,7 @@ CONFIG += qt qt-components mobility
 MOBILITY += multimedia
 
 # Version number & version string definition (for using it inside the app)
-VERSION = 1.0.0
+VERSION = 1.1.0
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 
