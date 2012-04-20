@@ -52,7 +52,9 @@ Page {
 
         textFormat: Text.RichText
         wrapMode: Text.WordWrap
-        text: qsTr("<p>Version: " + cp_versionNumber + " (with In-App Analytics)</p>" +
+        text: qsTr("<p>Version: " + cp_versionNumber + " (with " +
+                   (cp_IAADefined ? "In-App Analytics" : "console logging stub") +
+                   ")</p>" +
                    "<p>QML VideoStreamer application is a Nokia Developer example " +
                    "demonstrating the QML Video playing capabilies. " +
                    "Videos are streamed from Nokia Developer's YouTube channel " +

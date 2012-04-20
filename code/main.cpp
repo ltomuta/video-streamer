@@ -53,6 +53,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationVersion(VERSION_NUMBER);
     viewer->rootContext()->setContextProperty(QString("cp_versionNumber"), VERSION_NUMBER);
     viewer->setMainQmlFile(QLatin1String("qml/VideoStreamer/Splash.qml"));
+#if defined(IAA)
+    viewer->rootContext()->setContextProperty(QString("cp_IAADefined"), true);
+#else
+    viewer->rootContext()->setContextProperty(QString("cp_IAADefined"), false);
+#endif
 
     // Then trigger loading the *real* main.qml file, which can take longer to load.
     QScopedPointer<LoadHelper> loadHelper(
