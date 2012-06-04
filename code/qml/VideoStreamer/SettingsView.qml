@@ -77,24 +77,26 @@ Page {
     }
 
     ListItem {
+        id: tacCheckBoxItem
+
         anchors {
             top: playerSelection.bottom
             left: parent.left
             right: parent.right
         }
-        height: checkBox.height + tncText.height + platformStyle.paddingLarge*2.5
+        height: playerSelection.height
         onClicked: checkBox.checked = !checkBox.checked
 
         CheckBox {
             id: checkBox
 
             anchors {
-                top: parent.paddingItem.top
+                verticalCenter: parent.paddingItem.verticalCenter
                 left: parent.paddingItem.left
                 right: parent.paddingItem.right
             }
 
-            text: "Accept gathering user statistics"
+            text: qsTr("Accept gathering user statistics")
             checked: visual.analyticsAccepted
             // Save the checked status persistently.
             onCheckedChanged: {
@@ -102,22 +104,44 @@ Page {
                 visual.analyticsAccepted = checked;
             }
         }
+    }
+
+    ListItem {
+        anchors {
+            top: tacCheckBoxItem.bottom
+            left: parent.left
+            right: parent.right
+        }
+        height: playerSelection.height
+        onClicked: {
+            queryLoader.sourceComponent = analyticsQuery;
+            queryLoader.item.open();
+        }
 
         Text {
             id: tncText
 
             anchors {
-                top: checkBox.bottom
-                left: checkBox.left
+                top: parent.paddingItem.top
+                horizontalCenter: parent.paddingItem.horizontalCenter
             }
 
-            text: qsTr("<a href=\"query\">In-App Analytics Terms And Conditions</a>")
+            text: qsTr("In-App Analytics Terms And Conditions")
+            color: platformStyle.colorNormalLight
+        }
+
+        Text {
+            id: privacyPolicy
+
+            anchors {
+                top: tncText.bottom
+                topMargin: 5
+                horizontalCenter: parent.paddingItem.horizontalCenter
+            }
+            text: qsTr("<a href=\"http://www.nokia.com/global/privacy/privacy/policy/privacy-policy/\">Nokia Privacy Policy</a>")
             color: platformStyle.colorNormalLight
             textFormat: Text.RichText
-            onLinkActivated: {
-                queryLoader.sourceComponent = analyticsQuery;
-                queryLoader.item.open();
-            }
+            onLinkActivated: Qt.openUrlExternally(link);
         }
     }
 

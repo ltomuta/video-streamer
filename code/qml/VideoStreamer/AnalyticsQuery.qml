@@ -7,12 +7,10 @@ import QtQuick 1.1
 
 QueryDialog {
     titleText: qsTr("In-App Analytics Disclaimer")
-    message: qsTr("The service includes a voluntary "
-             + "service improvement program, which collects statistical "
-             + "information about your use of the application. The information "
-             + "is not used to identify you personally. You may control your "
-             + "participation to the program from the settings of the "
-             + "application. The information is collected in accordance with "
+    message: qsTr("To enable future improvements, application usage data is "
+             + "being collected by this Nokia example application. "
+             + "You can switch the analytics data collection on/off from "
+             + "the settings at any time. The information is collected in accordance with "
              + "Nokia Privacy Policy.")
     acceptButtonText: qsTr("Accept")
     rejectButtonText: qsTr("Reject")
