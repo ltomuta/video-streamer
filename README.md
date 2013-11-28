@@ -9,7 +9,8 @@ official Qt Quick Components for navigation and UI.
 The application uses a customised QML Video player which has been componentised
 so that any developer can use it in his or her own QML application. The video
 player component is also used in the QML Media Browser example application
-available at: http://projects.developer.nokia.com/mediabrowser.
+available at: http://github.com/nokia-developer/media-browser
+
 
 Alternatively, the default platform player can be taken into use in the
 application settings.
@@ -30,11 +31,8 @@ This example application demonstrates:
   splash screen (for more information, see the project's wiki pages)
 - Handling volume keys of a Symbian phone within the QML code
 
-This example application is hosted in Nokia Developer Projects:
-- http://projects.developer.nokia.com/QMLVideoStreamer
 
-For more information on the implementation, visit the wiki page:
-- http://projects.developer.nokia.com/QMLVideoStreamer/wiki
+For more information on the implementation, visit the wiki
 
 
 1. Usage
@@ -246,7 +244,7 @@ application menu and launch the application by tapping the icon.
 
 See the licence text file delivered with this project. The licence file is also
 available online at
-https://projects.developer.nokia.com/QMLVideoStreamer/browser/Licence.txt
+https://github.com/nokia-developer/video-streamer/blob/master/Licence.txt
 
 
 7. Related documentation
