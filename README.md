@@ -34,6 +34,12 @@ This example application demonstrates:
 
 For more information on the implementation, visit the wiki
 
+<img src="https://raw.github.com/nokia-developer/video-streamer/master/screenshots/Videostreamer_1.png" width="200px"/>
+<img src="https://raw.github.com/nokia-developer/video-streamer/master/screenshots/Videostreamer_2.png" width="200px"/>
+<img src="https://raw.github.com/nokia-developer/video-streamer/master/screenshots/Videostreamer_3.png" width="200px"/>
+<img src="https://raw.github.com/nokia-developer/video-streamer/master/screenshots/Videostreamer_4.png" width="200px"/>
+<img src="https://raw.github.com/nokia-developer/video-streamer/master/screenshots/Videostreamer_5.png" width="200px"/>
+
 
 1. Usage
 -------------------------------------------------------------------------------
