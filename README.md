@@ -64,23 +64,23 @@ instantiating the VideoPlayView and by calling its setVideoData() function.
 3.1 Folders
 -----------
 
- |                   The root folder contains the licence information and
- |                   this file (release notes).
- |
- |- design           Contains UX design files.
- |
- |- screenshots      Contains screenshots taken from the application.
- |
- |- meego            MeeGo platform-specific code files.
- |  |
- |  |- code          Root folder for project, gfx, QML, and Javascript files.
- |  |
- |  |- qtc_packaging Contains the MeeGo 1.2 Harmattan (Debian) packaging files.
- |
- |- symbian          Symbian (Anna/Belle) platform-specific code files.
- |  |
- |  |- code          Root folder for project, gfx, QML, and Javascript files.
- |
+ <br/>|                   The root folder contains the licence information and
+ <br/>|                   this file (release notes).
+ <br/>|
+ <br/>|- design           Contains UX design files.
+ <br/>|
+ <br/>|- screenshots      Contains screenshots taken from the application.
+ <br/>|
+ <br/>|- meego            MeeGo platform-specific code files.
+ <br/>|  |
+ <br/>|  |- code          Root folder for project, gfx, QML, and Javascript files.
+ <br/>|  |
+ <br/>|  |- qtc_packaging Contains the MeeGo 1.2 Harmattan (Debian) packaging files.
+ <br/>|
+ <br/>|- symbian          Symbian (Anna/Belle) platform-specific code files.
+ <br/>|  |
+ <br/>|  |- code          Root folder for project, gfx, QML, and Javascript files.
+ <br/>|
 
 
 3.2 Important files and classes
