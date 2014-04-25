@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 Nokia Corporation.
+ * Copyright (c) 2012-2014 Microsoft Mobile.
  */
 
 // First, let's create a short helper function to get the database connection.
